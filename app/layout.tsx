@@ -2,13 +2,18 @@ import type { Metadata } from 'next'
 import { Header } from './_components/Header'
 import './globals.css'
 
+const siteUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'http://localhost:3000'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: 'Sparkia — 電気系セレクトツール',
+    default: 'Board Finder — マイコンボード選びで迷わない | Sparkia',
     template: '%s | Sparkia',
   },
   description:
-    '要件や用途を入力するだけで最適なマイコンをおすすめ度つきランキングでご提案。Sparkiaは電気系エンジニア・学生のための選択支援サービスです。',
+    '「Wi-Fi対応にしたい」「入門向けで安いもの」など用途を入れるだけで最適なマイコンをランキング提案。Arduino・Raspberry Pi Pico・ESP32・M5Stack など全25種に対応。無料で使えます。',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
