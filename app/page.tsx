@@ -1,65 +1,131 @@
-import Image from "next/image";
+import { SearchBox } from './_components/SearchBox'
+import { HeroBoardAnnotated } from './_components/HeroBoardAnnotated'
+
+const QUERY_EXAMPLES = [
+  { label: 'Lチカ・入門',       q: 'Lチカ入門に使いたい' },
+  { label: 'Wi-Fi IoT',         q: 'Wi-Fiでデータを送りたい' },
+  { label: 'USB キーボード',     q: 'USBキーボードとして動かしたい' },
+  { label: 'LoRa 長距離',       q: 'LoRaで長距離通信したい' },
+  { label: '小型・省スペース',   q: '小型でブレッドボードに挿したい' },
+  { label: 'AI・機械学習',       q: 'IMUセンサーと機械学習に使いたい' },
+]
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main>
+      {/* ─── Hero ─────────────────────────────────────────── */}
+      <section className="bg-gray-950 text-white relative">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/pcb-pattern-dark.svg')",
+            backgroundSize: '240px 240px',
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+        <div className="relative max-w-5xl mx-auto px-4 py-12 md:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+
+            {/* Left: コピー + SearchBox */}
+            <div className="text-center md:text-left">
+              <p className="text-xs font-semibold tracking-widest uppercase text-blue-400 mb-4">
+                Board Finder
+              </p>
+              <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-3">
+                「要件を入力」するだけで<br />
+                <span className="text-blue-400">最適なマイコンボード</span>を選べる
+              </h1>
+              <p className="text-gray-400 text-sm mb-8">
+                おすすめ度・スペック・特徴をランキング形式で表示。25種のボードから即絞り込み。
+              </p>
+              <SearchBox />
+            </div>
+
+            {/* Right: annotated board image */}
+            <div className="flex justify-center md:justify-end">
+              <div className="w-full max-w-sm md:max-w-none">
+                <HeroBoardAnnotated />
+              </div>
+            </div>
+
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* ─── 使い方 ────────────────────────────────────────── */}
+      <section className="border-b border-gray-200 bg-white">
+        <div className="max-w-3xl mx-auto px-4 py-10">
+          <div className="grid sm:grid-cols-3 gap-6">
+            {[
+              { n: '01', title: '要件を入力',    body: '「Wi-Fi対応で安いもの」「初心者向け」など自由に記入' },
+              { n: '02', title: 'ランキング表示', body: 'おすすめ度・スペック・特徴・価格を一覧で比較' },
+              { n: '03', title: 'ボードを選択',   body: '総評と公式ページを確認して最適な一枚を決める' },
+            ].map(s => (
+              <div key={s.n} className="flex gap-4">
+                <span className="text-3xl font-black text-gray-200 leading-none shrink-0">{s.n}</span>
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">{s.title}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{s.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      {/* ─── クイック検索 ──────────────────────────────────── */}
+      <section className="max-w-3xl mx-auto px-4 py-10">
+        <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">よく使われる検索</p>
+        <div className="flex flex-wrap gap-2">
+          {QUERY_EXAMPLES.map(ex => (
+            <a
+              key={ex.q}
+              href={`/search?q=${encodeURIComponent(ex.q)}`}
+              className="px-4 py-2 rounded-full border border-gray-200 bg-white text-sm text-gray-700 hover:border-blue-400 hover:text-blue-700 hover:bg-blue-50 transition-colors"
+            >
+              {ex.label}
+            </a>
+          ))}
+        </div>
+
+        {/* ─── 対応ボード一覧 ─────────────────────────────── */}
+        <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mt-10 mb-4">
+          対応ボード一覧（25種）
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
+          {[
+            ['Uno Rev3',           '入門定番'],
+            ['Uno R4 Minima',      '入門'],
+            ['Uno R4 WiFi',        'WiFi / BLE'],
+            ['Nano',               '小型入門'],
+            ['Nano Every',         '小型・高性能'],
+            ['Nano 33 BLE Sense',  'BLE / センサー / ML'],
+            ['Nano 33 IoT',        'WiFi / BLE 小型'],
+            ['Nano ESP32',         'WiFi / Python'],
+            ['Mega 2560',          '多ピン / 大型'],
+            ['Leonardo',           'USB HID'],
+            ['Micro',              'USB HID 小型'],
+            ['MKR WiFi 1010',      'WiFi / バッテリー'],
+            ['MKR WAN 1300',       'LoRa'],
+            ['Portenta H7',        '産業 / AI'],
+            ['GIGA R1 WiFi',       'フラッグシップ'],
+            ['Pico',               'Python / 入門'],
+            ['Pico W',             'Python / WiFi'],
+            ['Pico 2',             'Python / 高性能'],
+            ['Pico 2 W',           'Python / WiFi 高性能'],
+            ['ESP32-DevKitC',      'WiFi / BLE 定番'],
+            ['ESP32-S3-DevKitC',   'AI / USB-HID'],
+            ['ESP32-C3-DevKitM',   '省電力 / 安価'],
+            ['M5Stack Core2',      'タッチ画面付き'],
+            ['M5StickC Plus2',     '超小型 / 画面付き'],
+            ['M5Atom S3',          '極小 / Grove対応'],
+          ].map(([name, tag]) => (
+            <div key={name} className="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-3 py-2">
+              <span className="font-medium text-gray-800 text-xs">{name}</span>
+              <span className="text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full ml-2 shrink-0">{tag}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  )
 }
