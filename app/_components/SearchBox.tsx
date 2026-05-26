@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 
 const EXAMPLES = [
   'Lチカや入門に使いたい',
@@ -22,21 +22,19 @@ export function SearchBox({
   const router = useRouter()
   const [value, setValue] = useState(defaultValue)
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const q = value.trim()
-    if (q) router.push(`/search?q=${encodeURIComponent(q)}`)
-  }
-
   return (
     <div className={compact ? '' : 'w-full'}>
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={e => {
+        e.preventDefault()
+        const q = value.trim()
+        if (q) router.push(`/search?q=${encodeURIComponent(q)}`)
+      }} className="flex gap-2">
         <input
           type="text"
           value={value}
           onChange={e => setValue(e.target.value)}
           placeholder="例：Wi-Fi対応、Lチカ入門、USBキーボード、省スペース..."
-          className={`flex-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white ${compact ? 'px-3 py-2 text-sm' : 'px-4 py-3 text-base'}`}
+          className={`flex-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 placeholder:text-gray-400 ${compact ? 'px-3 py-2 text-sm' : 'px-4 py-3 text-base'}`}
         />
         <button
           type="submit"
