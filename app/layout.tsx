@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Header } from './_components/Header'
 import './globals.css'
+
+const GA_ID = 'G-NMD0Z6C6E6'
 
 const siteUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -21,6 +24,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <body className="bg-gray-50 text-gray-900 antialiased min-h-screen flex flex-col">
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga-init" strategy="afterInteractive">{`
+          window.dataLayer=window.dataLayer||[];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js',new Date());
+          gtag('config','${GA_ID}');
+        `}</Script>
         <Header />
         <div className="flex-1">{children}</div>
         <footer className="border-t border-gray-200 bg-white mt-auto">
