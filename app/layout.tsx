@@ -5,12 +5,9 @@ import './globals.css'
 
 const GA_ID = 'G-NMD0Z6C6E6'
 
-const siteUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000'
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL('https://sparkia.jp'),
+  alternates: { canonical: 'https://sparkia.jp' },
   verification: { google: ['w3LGT5qvdOZkD3p_W1w8HRaxO_cBZNmhxR9iuuVtwv4', '7kM56nxLqzaP0AGAurulqJPIk3pMVm0kjtdOGfzpaqI'] },
   title: {
     default: 'Board Finder — マイコンボード選びで迷わない | Sparkia',
