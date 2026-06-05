@@ -11,7 +11,7 @@ const siteUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  verification: { google: 'w3LGT5qvdOZkD3p_W1w8HRaxO_cBZNmhxR9iuuVtwv4' },
+  verification: { google: ['w3LGT5qvdOZkD3p_W1w8HRaxO_cBZNmhxR9iuuVtwv4', '7kM56nxLqzaP0AGAurulqJPIk3pMVm0kjtdOGfzpaqI'] },
   title: {
     default: 'Board Finder — マイコンボード選びで迷わない | Sparkia',
     template: '%s | Sparkia',
