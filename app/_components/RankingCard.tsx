@@ -31,7 +31,7 @@ function Stars({ score }: { score: number }) {
   )
 }
 
-export function RankingCard({ mc, rank }: { mc: ArduinoBoard; rank: number }) {
+export function RankingCard({ mc, rank, aiReason }: { mc: ArduinoBoard; rank: number; aiReason?: string }) {
   const r = RANK[rank] ?? { badge: 'bg-blue-600 text-white', bar: 'border-t-4 border-blue-600', label: `${rank}位` }
   const lv = LEVEL[mc.level]
 
@@ -106,7 +106,12 @@ export function RankingCard({ mc, rank }: { mc: ArduinoBoard; rank: number }) {
           {/* 総評 + 公式リンク */}
           <div className="flex items-stretch gap-2">
             <div className="flex-1 border-l-4 border-blue-500 bg-blue-50 px-2.5 py-1.5 text-xs font-medium text-gray-800 leading-snug rounded-r">
-              {mc.verdict}
+              {aiReason ? (
+                <span>
+                  <span className="inline-block mr-1.5 text-[9px] font-bold px-1 py-0.5 rounded bg-blue-600 text-white align-middle">AI</span>
+                  {aiReason}
+                </span>
+              ) : mc.verdict}
             </div>
             <a
               href={mc.officialUrl}

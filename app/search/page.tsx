@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { SearchBox } from '../_components/SearchBox'
 import { RankingCard } from '../_components/RankingCard'
 import { recommend } from '../_lib/recommend'
+import { recommendAI } from '../_lib/recommend-ai'
 
 export async function generateMetadata({
   searchParams,
@@ -21,7 +22,9 @@ export default async function SearchPage({
 }) {
   const { q } = await searchParams
   const query = typeof q === 'string' ? q.trim() : ''
-  const results = recommend(query)
+
+  const aiResults = query ? await recommendAI(query).catch(() => null) : null
+  const results = aiResults ?? recommend(query)
 
   return (
     <main className="pcb-bg min-h-screen">
@@ -41,7 +44,12 @@ export default async function SearchPage({
 
           <div className="space-y-4">
             {results.map(mc => (
-              <RankingCard key={mc.id} mc={mc} rank={mc.rank} />
+              <RankingCard
+                key={mc.id}
+                mc={mc}
+                rank={mc.rank}
+                aiReason={'aiReason' in mc ? String(mc.aiReason) : undefined}
+              />
             ))}
           </div>
 
