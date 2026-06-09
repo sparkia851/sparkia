@@ -123,6 +123,16 @@ export function RankingCard({ mc, rank, aiReason }: { mc: ArduinoBoard; rank: nu
             </a>
           </div>
 
+          {/* Amazonリンク */}
+          <a
+            href={`https://www.amazon.co.jp/s?k=${encodeURIComponent(mc.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 w-full mt-1 py-1.5 rounded text-xs font-semibold bg-amber-400 hover:bg-amber-500 text-gray-900 transition-colors"
+          >
+            <span>Amazonで価格を見る</span>
+          </a>
+
         </div>
       </div>
     </article>

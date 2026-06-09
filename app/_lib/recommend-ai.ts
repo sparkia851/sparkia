@@ -24,16 +24,18 @@ const SYSTEM_PROMPT = `あなたはマイコンボード選択の専門家です
 - 関連性の低いボードは含めない
 
 カタログ:
-${JSON.stringify(CATALOG_FOR_PROMPT, null, 2)}
+${JSON.stringify(CATALOG_FOR_PROMPT)}
+
+reasonフィールドは、ユーザーの要望に直接応える形で「○○したいなら、〜だからこれがおすすめ」という自然な口調で2〜3文。堅すぎず、提案している感じで書くこと。
 
 以下のJSONのみで回答（他のテキストは一切含めないこと）:
-{"boards":[{"id":"board-id","reason":"選定理由（日本語1〜2文）"}]}`
+{"boards":[{"id":"board-id","reason":"..."}]}`
 
 export type AIResult = ArduinoBoard & { rank: number; aiReason: string }
 
 export async function recommendAI(query: string): Promise<AIResult[]> {
   const response = await client.messages.create({
-    model: 'claude-opus-4-8',
+    model: 'claude-sonnet-4-6',
     max_tokens: 1024,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: query }],
