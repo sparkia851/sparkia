@@ -1,6 +1,6 @@
-export type Connectivity = 'WiFi' | 'BLE' | 'LoRa' | 'NB-IoT' | 'USB-HID' | 'LTE-M'
+export type Connectivity = 'WiFi' | 'BLE' | 'LoRa' | 'NB-IoT' | 'USB-HID' | 'LTE-M' | 'Zigbee'
 export type Level = 'beginner' | 'intermediate' | 'advanced'
-export type FormFactor = 'Standard' | 'Nano' | 'Mega' | 'MKR' | 'Portenta' | 'GIGA' | 'Pico' | 'DevKit' | 'M5Stack'
+export type FormFactor = 'Standard' | 'Nano' | 'Mega' | 'MKR' | 'Portenta' | 'GIGA' | 'Pico' | 'DevKit' | 'M5Stack' | 'XIAO' | 'Feather' | 'Teensy' | 'Bluepill' | 'WioTerminal' | 'MicroBit'
 
 export type ArduinoBoard = {
   id: string
@@ -479,6 +479,278 @@ const catalog: ArduinoBoard[] = [
     imageUrl: '/api/board-image?m5=atoms3-dev-kit-w-0-85-inch-screen',
     tags: ['超小型', '最小', 'm5stack', 'm5', 'wifi', 'ble', 'センサー', 'grove', 'esp32-s3', '省スペース'],
   },
+
+  // ── 追加15ボード ────────────────────────────────────────
+  {
+    id: 'esp8266-nodemcu',
+    name: 'ESP8266 NodeMCU',
+    mcu: 'Tensilica LX106',
+    clockMhz: 80, ramKb: 128, flashKb: 4096,
+    digitalPins: 11, analogPins: 1,
+    connectivity: ['WiFi'], formFactor: 'DevKit', level: 'beginner', score: 3.8,
+    points: [
+      '500円前後で入手できる最安クラスのWiFi対応ボード',
+      'Arduino IDEで開発可能。日本語情報・書籍が豊富',
+      'シンプルなIoTセンサー送信・スマートプラグ制作に最適',
+    ],
+    verdict: '安さ最優先のWiFi IoTならこれ。ESP32が予算オーバーなときの選択肢',
+    price: '約500〜700円',
+    officialUrl: 'https://www.espressif.com/en/products/socs/esp8266',
+    imageUrl: '',
+    tags: ['wifi', '安い', '低コスト', '格安', '予算', 'iot', '入門', '初心者', 'esp8266', 'nodemcu', 'lua', 'シンプル'],
+  },
+  {
+    id: 'esp32-h2-devkitm',
+    name: 'ESP32-H2 DevKitM',
+    mcu: 'ESP32-H2 (RISC-V)',
+    clockMhz: 96, ramKb: 320, flashKb: 4096,
+    digitalPins: 19, analogPins: 5,
+    connectivity: ['BLE', 'Zigbee'], formFactor: 'DevKit', level: 'intermediate', score: 4.0,
+    points: [
+      'WiFiなし・BLE 5.2 + Zigbee 3.0 + Thread + Matter対応',
+      'スマートホーム・ホームオートメーション特化の省電力設計',
+      'Matter対応でApple Home / Google Home / Alexaと連携可能',
+    ],
+    verdict: 'Zigbee/Thread/MatterのスマートホームデバイスにはH2が最適。WiFi不要な用途に',
+    price: '約700〜1,000円',
+    officialUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32h2/esp32-h2-devkitm-1/user_guide.html',
+    imageUrl: '',
+    tags: ['zigbee', 'thread', 'matter', 'ble', 'bluetooth', 'スマートホーム', 'ホームオートメーション', '省電力', 'wifiなし', 'esp32-h2', 'h2', '802.15.4', '低消費電力'],
+  },
+  {
+    id: 'esp32-c3-supermini',
+    name: 'ESP32-C3 SuperMini',
+    mcu: 'ESP32-C3 (RISC-V)',
+    clockMhz: 160, ramKb: 400, flashKb: 4096,
+    digitalPins: 13, analogPins: 6,
+    connectivity: ['WiFi', 'BLE'], formFactor: 'DevKit', level: 'beginner', score: 4.1,
+    points: [
+      '22×18mmの超小型サイズにWiFi + BLE 5を搭載',
+      'ESP32-C3 DevKitMの半分以下のサイズで同等の機能',
+      '500円前後の低価格。量産・組み込みプロジェクトにも最適',
+    ],
+    verdict: '小さく安くWiFi+BLEを搭載したいときの筆頭候補',
+    price: '約500〜700円',
+    officialUrl: 'https://www.espressif.com/en/products/socs/esp32-c3',
+    imageUrl: '',
+    tags: ['超小型', '小型', 'wifi', 'ble', '安い', '低コスト', 'esp32-c3', 'c3', 'supermini', 'スーパーミニ', 'iot', '省スペース'],
+  },
+  {
+    id: 'esp32-c6-devkitc',
+    name: 'ESP32-C6 DevKitC',
+    mcu: 'ESP32-C6 (RISC-V)',
+    clockMhz: 160, ramKb: 512, flashKb: 8192,
+    digitalPins: 22, analogPins: 7,
+    connectivity: ['WiFi', 'BLE', 'Zigbee'], formFactor: 'DevKit', level: 'intermediate', score: 4.2,
+    points: [
+      'WiFi 6（802.11ax）+ BLE 5.3 + Zigbee 3.0 + Thread一枚で対応',
+      'ESP32の次世代。省電力性とセキュリティが大幅に向上',
+      'Matter対応でスマートホームエコシステムとの親和性が高い',
+    ],
+    verdict: 'WiFi 6・Zigbee・Threadを1枚で。次世代IoT標準ボードの筆頭候補',
+    price: '約700〜1,200円',
+    officialUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c6/esp32-c6-devkitc-1/user_guide.html',
+    imageUrl: '',
+    tags: ['wifi6', 'wifi', 'ble', 'bluetooth', 'zigbee', 'thread', 'matter', 'スマートホーム', 'iot', 'esp32-c6', 'c6', '省電力', '最新'],
+  },
+  {
+    id: 'xiao-esp32s3',
+    name: 'Seeed XIAO ESP32S3',
+    mcu: 'ESP32-S3 (Xtensa LX7 × 2)',
+    clockMhz: 240, ramKb: 8192, flashKb: 8192,
+    digitalPins: 11, analogPins: 9,
+    connectivity: ['WiFi', 'BLE'], formFactor: 'XIAO', level: 'intermediate', score: 4.5,
+    points: [
+      '21×17.5mmの爪サイズ。WiFi + BLE + 8MB PSRAM + カメラコネクタ内蔵',
+      'ESP32-S3搭載でTinyML・エッジAI・画像認識に対応',
+      'LiPo充電回路内蔵でバッテリー駆動のウェアラブルIoTに最適',
+    ],
+    verdict: '最小クラスのAI・カメラ対応ボード。ウェアラブルや超小型デバイスに最適',
+    price: '約1,800〜2,200円',
+    officialUrl: 'https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html',
+    imageUrl: '',
+    tags: ['超小型', '最小', 'xiao', 'wifi', 'ble', 'ai', '機械学習', 'ml', 'tinyml', 'カメラ', '画像認識', 'ウェアラブル', 'バッテリー', 'esp32-s3', 's3', 'psram'],
+  },
+  {
+    id: 'xiao-esp32c3',
+    name: 'Seeed XIAO ESP32C3',
+    mcu: 'ESP32-C3 (RISC-V)',
+    clockMhz: 160, ramKb: 400, flashKb: 4096,
+    digitalPins: 11, analogPins: 4,
+    connectivity: ['WiFi', 'BLE'], formFactor: 'XIAO', level: 'beginner', score: 4.2,
+    points: [
+      '20×17.5mmの超小型フォームファクター。親指の爪サイズ',
+      'WiFi + BLE 5搭載で800円程度。C3 SuperMiniと並ぶ最安クラス',
+      'XIAOシールドとの互換性でセンサー・ディスプレイを簡単増設',
+    ],
+    verdict: '超小型WiFi+BLEの定番。XIAOエコシステムで拡張しやすい',
+    price: '約800〜1,200円',
+    officialUrl: 'https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html',
+    imageUrl: '',
+    tags: ['超小型', '最小', 'xiao', 'wifi', 'ble', '安い', '小型', 'esp32-c3', 'c3', 'iot', '省スペース', 'ウェアラブル'],
+  },
+  {
+    id: 'wio-terminal',
+    name: 'Seeed Wio Terminal',
+    mcu: 'ATSAMD51P19A (ARM Cortex-M4F)',
+    clockMhz: 120, ramKb: 192, flashKb: 4096,
+    digitalPins: 26, analogPins: 6,
+    connectivity: ['WiFi', 'BLE'], formFactor: 'WioTerminal', level: 'intermediate', score: 4.3,
+    points: [
+      '2.4インチLCDディスプレイ搭載。IMU・マイク・赤外線・Groveコネクタ内蔵',
+      'WiFi 2.4G/5G + BLE 5.0対応。単体で完結するオールインワン開発ボード',
+      'MicroPython・Arduino両対応。40ピンRaspberry Pi互換GPIO',
+    ],
+    verdict: '液晶・センサー・WiFi全部入りのオールインワンボード。すぐ使える完成度の高さ',
+    price: '約4,500〜5,500円',
+    officialUrl: 'https://www.seeedstudio.com/Wio-Terminal-p-4509.html',
+    imageUrl: '',
+    tags: ['ディスプレイ', '画面', 'lcd', 'wifi', 'ble', 'imu', 'マイク', 'grove', 'オールインワン', '全部入り', 'micropython', 'センサー', 'wio', '赤外線'],
+  },
+  {
+    id: 'teensy-4-1',
+    name: 'Teensy 4.1',
+    mcu: 'NXP iMXRT1062 (ARM Cortex-M7)',
+    clockMhz: 600, ramKb: 1024, flashKb: 8192,
+    digitalPins: 42, analogPins: 18,
+    connectivity: ['USB-HID'], formFactor: 'Teensy', level: 'advanced', score: 4.7,
+    points: [
+      '600MHz Cortex-M7。Arduinoエコシステム最高クラスの演算性能',
+      'microSD・Ethernet・USBホスト内蔵。音声処理・音楽合成に定評',
+      '42デジタル・18アナログピン。FFT/DSPライブラリが充実',
+    ],
+    verdict: '本格的な音楽・音声処理、高速USB HID、大量I/O制御ならTeensy一択',
+    price: '約4,500〜6,000円',
+    officialUrl: 'https://www.pjrc.com/store/teensy41.html',
+    imageUrl: '',
+    tags: ['高性能', '高速', 'オーディオ', '音楽', '音声', '音声処理', 'dsp', 'fft', 'usb-hid', 'usb', 'ethernet', 'sd', 'teensy', 'プロ', '上級', 'cortex-m7'],
+  },
+  {
+    id: 'stm32-bluepill',
+    name: 'STM32F103 Bluepill',
+    mcu: 'STM32F103C8T6 (ARM Cortex-M3)',
+    clockMhz: 72, ramKb: 20, flashKb: 64,
+    digitalPins: 32, analogPins: 10,
+    connectivity: [], formFactor: 'Bluepill', level: 'intermediate', score: 3.9,
+    points: [
+      '72MHz Cortex-M3。多GPIO・多UART/SPI/I2Cでモーター制御・産業用途に強い',
+      '200〜500円の激安価格。エンコーダ・CAN通信など高度な機能も低コストで',
+      'STM32CubeIDEでプロ品質の開発環境を構築可能',
+    ],
+    verdict: '多ピン・高速・激安。組み込み上級者の定番。Arduinoでは物足りないときに',
+    price: '約200〜500円',
+    officialUrl: 'https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8.html',
+    imageUrl: '',
+    tags: ['安い', '格安', 'stm32', 'bluepill', 'ブルーピル', 'モーター', 'モーター制御', '産業', 'cortex-m3', '多ピン', 'can', '組み込み', '上級'],
+  },
+  {
+    id: 'feather-esp32-v2',
+    name: 'Adafruit Feather ESP32 V2',
+    mcu: 'ESP32-D0WDQ6-V3 (Xtensa LX6 × 2)',
+    clockMhz: 240, ramKb: 520, flashKb: 8192,
+    digitalPins: 21, analogPins: 4,
+    connectivity: ['WiFi', 'BLE'], formFactor: 'Feather', level: 'intermediate', score: 4.4,
+    points: [
+      'LiPoバッテリーコネクタ内蔵・充電回路付き。電池駆動IoTの定番フォームファクター',
+      'STEMMA QT(Qwiic)ポートでI2Cセンサーをケーブルワンタッチ接続',
+      'ディープスリープ70μAの超省電力。WiFi + BLE搭載',
+    ],
+    verdict: 'バッテリー駆動IoTの定番規格Feather。電池で長期間動かすプロジェクトに最適',
+    price: '約3,500〜4,500円',
+    officialUrl: 'https://www.adafruit.com/product/5400',
+    imageUrl: '',
+    tags: ['バッテリー', 'lipo', '電池', '電池駆動', '省電力', '長時間', 'wifi', 'ble', 'iot', 'feather', 'adafruit', 'stemma', 'qwiic', '充電', '野外', '屋外'],
+  },
+  {
+    id: 'microbit-v2',
+    name: 'BBC micro:bit v2',
+    mcu: 'Nordic nRF52833 (ARM Cortex-M4)',
+    clockMhz: 64, ramKb: 128, flashKb: 512,
+    digitalPins: 19, analogPins: 6,
+    connectivity: ['BLE'], formFactor: 'MicroBit', level: 'beginner', score: 4.3,
+    points: [
+      '5×5 LEDマトリクス・加速度センサー・スピーカー・マイク内蔵',
+      'MakeCode（ビジュアルプログラミング）・MicroPython・JavaScript対応',
+      'BLE 5.0で他のmicro:bitと無線通信。学校教育で世界的に採用',
+    ],
+    verdict: '教育・学習用として完成されたボード。センサー・LED・音声が全部載ってすぐ楽しめる',
+    price: '約2,500〜3,500円',
+    officialUrl: 'https://microbit.org/get-started/first-steps/introduction/',
+    imageUrl: '',
+    tags: ['教育', '学習', '初心者', '子供', '入門', 'ble', 'bluetooth', 'led', '加速度', 'センサー', 'スピーカー', 'マイク', 'makecode', 'micropython', 'microbit', 'マイクロビット', '学校'],
+  },
+  {
+    id: 'rp2040-zero',
+    name: 'Waveshare RP2040-Zero',
+    mcu: 'RP2040 (ARM Cortex-M0+ × 2)',
+    clockMhz: 133, ramKb: 264, flashKb: 2048,
+    digitalPins: 29, analogPins: 4,
+    connectivity: [], formFactor: 'Pico', level: 'beginner', score: 4.1,
+    points: [
+      '23.5×18mmの超小型。Pico(51×21mm)の半分以下のサイズ',
+      'USB-C搭載・WS2812 RGBオンボード。キャスタレートで基板直付け可能',
+      'MicroPython・C/C++どちらも使える。Picoの豊富な情報がそのまま活用可能',
+    ],
+    verdict: 'Picoの機能を最小サイズに凝縮。スペースが限られるプロジェクトに最適',
+    price: '約500〜800円',
+    officialUrl: 'https://www.waveshare.com/rp2040-zero.htm',
+    imageUrl: '',
+    tags: ['超小型', '最小', 'pico', 'rp2040', 'python', 'micropython', '小型', '省スペース', 'usb-c', 'waveshare', 'ラズパイ'],
+  },
+  {
+    id: 'nano-rp2040-connect',
+    name: 'Arduino Nano RP2040 Connect',
+    mcu: 'RP2040 (ARM Cortex-M0+ × 2)',
+    clockMhz: 133, ramKb: 264, flashKb: 16384,
+    digitalPins: 22, analogPins: 8,
+    connectivity: ['WiFi', 'BLE'], formFactor: 'Nano', level: 'intermediate', score: 4.5,
+    points: [
+      'NanoサイズにWiFi・BLE 4.2・6軸IMU・マイク・16MB Flashを搭載',
+      'TinyML対応。姿勢推定・振動検知・転倒検知プロジェクトに活用可能',
+      'Arduino公式のMicroPython対応。RP2040の豊富なライブラリも利用可',
+    ],
+    verdict: 'Nano互換ピンでWiFi+BLE+MLを実現。機械学習×IoTを小型でやるならベスト',
+    price: '約3,500〜4,500円',
+    officialUrl: 'https://store.arduino.cc/products/arduino-nano-rp2040-connect',
+    imageUrl: '/api/board-image?slug=arduino-nano-rp2040-connect',
+    tags: ['wifi', 'ble', 'bluetooth', 'nano', '小型', 'imu', 'ml', '機械学習', 'tinyml', 'マイク', 'rp2040', 'python', 'micropython', 'iot'],
+  },
+  {
+    id: 'esp32-s2-devkitc',
+    name: 'ESP32-S2 DevKitC',
+    mcu: 'ESP32-S2 (Xtensa LX7)',
+    clockMhz: 240, ramKb: 320, flashKb: 4096,
+    digitalPins: 43, analogPins: 20,
+    connectivity: ['WiFi', 'USB-HID'], formFactor: 'DevKit', level: 'intermediate', score: 4.0,
+    points: [
+      '追加チップ不要のネイティブUSB。HID・CDC・WebUSBデバイスとして動作',
+      'WiFi内蔵・BLEなし。シンプルな構成で消費電力を抑えやすい',
+      '43デジタル・20アナログと豊富なGPIO。LCD接続にも余裕',
+    ],
+    verdict: 'ネイティブUSBデバイス（キーボード・マウス等）作成に最適。S3より安価',
+    price: '約800〜1,200円',
+    officialUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s2/esp32-s2-devkitc-1/user_guide.html',
+    imageUrl: '',
+    tags: ['usb', 'usb-hid', 'キーボード', 'マウス', 'hid', 'wifi', 'esp32-s2', 's2', 'ネイティブusb', 'webusb', 'bleなし'],
+  },
+  {
+    id: 'xiao-samd21',
+    name: 'Seeed XIAO SAMD21',
+    mcu: 'SAMD21G18 (ARM Cortex-M0+)',
+    clockMhz: 48, ramKb: 32, flashKb: 256,
+    digitalPins: 11, analogPins: 11,
+    connectivity: [], formFactor: 'XIAO', level: 'beginner', score: 4.0,
+    points: [
+      '20×17.5mmの超小型。最小フォームファクターのArduino互換ボード',
+      'Arduino UNOとほぼ同じ開発環境でそのまま使える。USB-Cで快適接続',
+      'ネイティブUSBでHID（キーボード・マウス）として動作可能',
+    ],
+    verdict: '最小サイズのArduino互換機。WiFi不要で小型にArduinoを使いたいときに',
+    price: '約600〜1,000円',
+    officialUrl: 'https://www.seeedstudio.com/Seeed-XIAO-Arduino-p-4244.html',
+    imageUrl: '',
+    tags: ['超小型', '最小', 'xiao', 'arduino', '小型', 'usb-hid', 'usb', 'hid', 'キーボード', 'samd21', '入門'],
+  },
 ]
 
 function scoreMatch(board: ArduinoBoard, query: string): number {
@@ -502,8 +774,14 @@ function scoreMatch(board: ArduinoBoard, query: string): number {
     if (word.includes('ピン') && board.formFactor === 'Mega') score += 3
     if ((word.includes('python') || word.includes('パイソン') || word.includes('micropython') || word.includes('pico') || word.includes('ラズパイ') || word.includes('raspberry')) && board.formFactor === 'Pico') score += 5
     if ((word.includes('esp32') || word.includes('espressif') || word.includes('devkit')) && board.formFactor === 'DevKit') score += 5
-    if ((word.includes('ディスプレイ') || word.includes('画面') || word.includes('タッチ') || word.includes('m5') || word.includes('m5stack') || word.includes('スクリーン')) && board.formFactor === 'M5Stack') score += 5
-    if ((word.includes('ディスプレイ') || word.includes('画面') || word.includes('タッチ')) && board.formFactor !== 'M5Stack') score -= 2
+    if ((word.includes('ディスプレイ') || word.includes('画面') || word.includes('タッチ') || word.includes('m5') || word.includes('m5stack') || word.includes('スクリーン')) && (board.formFactor === 'M5Stack' || board.formFactor === 'WioTerminal')) score += 5
+    if ((word.includes('ディスプレイ') || word.includes('画面') || word.includes('タッチ')) && board.formFactor !== 'M5Stack' && board.formFactor !== 'WioTerminal') score -= 2
+    if ((word.includes('zigbee') || word.includes('thread') || word.includes('matter') || word.includes('スマートホーム') || word.includes('ホームオートメーション')) && board.connectivity.includes('Zigbee')) score += 5
+    if ((word.includes('バッテリー') || word.includes('電池') || word.includes('lipo') || word.includes('電池駆動')) && board.formFactor === 'Feather') score += 4
+    if ((word.includes('xiao') || word.includes('超小型') || word.includes('爪') || word.includes('指先')) && board.formFactor === 'XIAO') score += 5
+    if ((word.includes('teensy') || word.includes('オーディオ') || word.includes('音楽') || word.includes('音声処理') || word.includes('dsp')) && board.formFactor === 'Teensy') score += 5
+    if ((word.includes('stm32') || word.includes('bluepill') || word.includes('ブルーピル') || word.includes('モーター制御')) && board.formFactor === 'Bluepill') score += 5
+    if ((word.includes('教育') || word.includes('学校') || word.includes('子供') || word.includes('makecode') || word.includes('マイクロビット') || word.includes('microbit')) && board.formFactor === 'MicroBit') score += 5
   }
   return score
 }

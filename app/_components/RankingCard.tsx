@@ -14,6 +14,7 @@ const CONN_STYLE: Record<Connectivity, string> = {
   'NB-IoT':  'bg-orange-100 text-orange-800 border-orange-200',
   'USB-HID': 'bg-rose-100 text-rose-800 border-rose-200',
   'LTE-M':   'bg-purple-100 text-purple-800 border-purple-200',
+  Zigbee:    'bg-yellow-100 text-yellow-800 border-yellow-200',
 }
 
 const LEVEL: Record<Level, { label: string; cls: string }> = {

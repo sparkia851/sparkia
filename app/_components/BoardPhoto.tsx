@@ -5,15 +5,21 @@ import { useState } from 'react'
 import type { FormFactor } from '../_lib/recommend'
 
 const FAMILY_BG: Record<FormFactor, string> = {
-  Standard: 'linear-gradient(135deg,#1a3a1e 0%,#2d5a33 100%)',
-  Nano:     'linear-gradient(135deg,#0c2e3a 0%,#1a5068 100%)',
-  Mega:     'linear-gradient(135deg,#3a1a0a 0%,#6b3015 100%)',
-  MKR:      'linear-gradient(135deg,#1e0a3a 0%,#3d1470 100%)',
-  Portenta: 'linear-gradient(135deg,#2a1a00 0%,#5a3800 100%)',
-  GIGA:     'linear-gradient(135deg,#1a0a3a 0%,#2e1060 100%)',
-  Pico:     'linear-gradient(135deg,#3a0a0a 0%,#7a1f1f 100%)',
-  DevKit:   'linear-gradient(135deg,#0a1a3a 0%,#1a3d6b 100%)',
-  M5Stack:  'linear-gradient(135deg,#1a1a1a 0%,#3a3a3a 100%)',
+  Standard:   'linear-gradient(135deg,#1a3a1e 0%,#2d5a33 100%)',
+  Nano:       'linear-gradient(135deg,#0c2e3a 0%,#1a5068 100%)',
+  Mega:       'linear-gradient(135deg,#3a1a0a 0%,#6b3015 100%)',
+  MKR:        'linear-gradient(135deg,#1e0a3a 0%,#3d1470 100%)',
+  Portenta:   'linear-gradient(135deg,#2a1a00 0%,#5a3800 100%)',
+  GIGA:       'linear-gradient(135deg,#1a0a3a 0%,#2e1060 100%)',
+  Pico:       'linear-gradient(135deg,#3a0a0a 0%,#7a1f1f 100%)',
+  DevKit:     'linear-gradient(135deg,#0a1a3a 0%,#1a3d6b 100%)',
+  M5Stack:    'linear-gradient(135deg,#1a1a1a 0%,#3a3a3a 100%)',
+  XIAO:       'linear-gradient(135deg,#0a2a1a 0%,#1a5a3a 100%)',
+  Feather:    'linear-gradient(135deg,#1a0a2a 0%,#3a1a5a 100%)',
+  Teensy:     'linear-gradient(135deg,#2a1a00 0%,#6a4a00 100%)',
+  Bluepill:   'linear-gradient(135deg,#0a1a3a 0%,#1a3a6a 100%)',
+  WioTerminal:'linear-gradient(135deg,#0a2a2a 0%,#1a5a5a 100%)',
+  MicroBit:   'linear-gradient(135deg,#1a0a2a 0%,#4a1a6a 100%)',
 }
 
 export function BoardPhoto({
