@@ -12,8 +12,12 @@ export function Header() {
           </span>
         </Link>
         <nav className="flex items-center gap-4 text-sm text-gray-600">
-          <Link href="/" className="hover:text-blue-700 transition-colors">
+          <Link href="/board-finder" className="hover:text-blue-700 transition-colors">
             マイコン検索
+          </Link>
+          <span className="text-gray-300">|</span>
+          <Link href="/tool-finder" className="hover:text-blue-700 transition-colors">
+            工具検索
           </Link>
           <span className="text-gray-300">|</span>
           <span className="text-gray-400 cursor-default" title="近日公開">
