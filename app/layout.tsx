@@ -7,7 +7,6 @@ const GA_ID = 'G-NMD0Z6C6E6'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sparkia.jp'),
-  alternates: { canonical: 'https://sparkia.jp' },
   verification: { google: ['w3LGT5qvdOZkD3p_W1w8HRaxO_cBZNmhxR9iuuVtwv4', '7kM56nxLqzaP0AGAurulqJPIk3pMVm0kjtdOGfzpaqI'] },
   title: {
     default: 'Board Finder — マイコンボード選びで迷わない | Sparkia',
