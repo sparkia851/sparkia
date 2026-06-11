@@ -514,7 +514,7 @@ const catalog: ArduinoBoard[] = [
     verdict: 'Zigbee/Thread/MatterのスマートホームデバイスにはH2が最適。WiFi不要な用途に',
     price: '約700〜1,000円',
     officialUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32h2/esp32-h2-devkitm-1/user_guide.html',
-    imageUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/_images/esp32-h2-devkitm-1-45.png',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Fwww.espressif.com%2Fsites%2Fdefault%2Ffiles%2Fdev-board%2FESP32-H2-DevKitM-1_S_1.png',
     tags: ['zigbee', 'thread', 'matter', 'ble', 'bluetooth', 'スマートホーム', 'ホームオートメーション', '省電力', 'wifiなし', 'esp32-h2', 'h2', '802.15.4', '低消費電力'],
   },
   {
@@ -550,7 +550,7 @@ const catalog: ArduinoBoard[] = [
     verdict: 'WiFi 6・Zigbee・Threadを1枚で。次世代IoT標準ボードの筆頭候補',
     price: '約700〜1,200円',
     officialUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c6/esp32-c6-devkitc-1/user_guide.html',
-    imageUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/_images/esp32-c6-devkitc-1-isometric_v1.2.png',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Fwww.espressif.com%2Fsites%2Fdefault%2Ffiles%2Fdev-board%2FESP32-C6-DevKitC-1_S.png',
     tags: ['wifi6', 'wifi', 'ble', 'bluetooth', 'zigbee', 'thread', 'matter', 'スマートホーム', 'iot', 'esp32-c6', 'c6', '省電力', '最新'],
   },
   {
@@ -568,7 +568,7 @@ const catalog: ArduinoBoard[] = [
     verdict: '最小クラスのAI・カメラ対応ボード。ウェアラブルや超小型デバイスに最適',
     price: '約1,800〜2,200円',
     officialUrl: 'https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html',
-    imageUrl: 'https://files.seeedstudio.com/wiki/SeeedStudio-XIAO-ESP32S3/img/xiaoesp32s3.jpg',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Ffiles.seeedstudio.com%2Fwiki%2FSeeedStudio-XIAO-ESP32S3%2Fimg%2Fxiaoesp32s3.jpg',
     tags: ['超小型', '最小', 'xiao', 'wifi', 'ble', 'ai', '機械学習', 'ml', 'tinyml', 'カメラ', '画像認識', 'ウェアラブル', 'バッテリー', 'esp32-s3', 's3', 'psram'],
   },
   {
@@ -586,7 +586,7 @@ const catalog: ArduinoBoard[] = [
     verdict: '超小型WiFi+BLEの定番。XIAOエコシステムで拡張しやすい',
     price: '約800〜1,200円',
     officialUrl: 'https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html',
-    imageUrl: 'https://files.seeedstudio.com/wiki/XIAO_WiFi/board-pic.png',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Ffiles.seeedstudio.com%2Fwiki%2FXIAO_WiFi%2Fboard-pic.png',
     tags: ['超小型', '最小', 'xiao', 'wifi', 'ble', '安い', '小型', 'esp32-c3', 'c3', 'iot', '省スペース', 'ウェアラブル'],
   },
   {
@@ -604,7 +604,7 @@ const catalog: ArduinoBoard[] = [
     verdict: '液晶・センサー・WiFi全部入りのオールインワンボード。すぐ使える完成度の高さ',
     price: '約4,500〜5,500円',
     officialUrl: 'https://www.seeedstudio.com/Wio-Terminal-p-4509.html',
-    imageUrl: 'https://files.seeedstudio.com/wiki/Wio-Terminal/img/Wio-Terminal-Wiki.jpg',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Ffiles.seeedstudio.com%2Fwiki%2FWio-Terminal%2Fimg%2FWio-Terminal-Wiki.jpg',
     tags: ['ディスプレイ', '画面', 'lcd', 'wifi', 'ble', 'imu', 'マイク', 'grove', 'オールインワン', '全部入り', 'micropython', 'センサー', 'wio', '赤外線'],
   },
   {
@@ -622,7 +622,7 @@ const catalog: ArduinoBoard[] = [
     verdict: '本格的な音楽・音声処理、高速USB HID、大量I/O制御ならTeensy一択',
     price: '約4,500〜6,000円',
     officialUrl: 'https://www.pjrc.com/store/teensy41.html',
-    imageUrl: 'https://www.pjrc.com/teensy41_4.jpg',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Fwww.pjrc.com%2Fteensy41_4.jpg',
     tags: ['高性能', '高速', 'オーディオ', '音楽', '音声', '音声処理', 'dsp', 'fft', 'usb-hid', 'usb', 'ethernet', 'sd', 'teensy', 'プロ', '上級', 'cortex-m7'],
   },
   {
@@ -658,7 +658,7 @@ const catalog: ArduinoBoard[] = [
     verdict: 'バッテリー駆動IoTの定番規格Feather。電池で長期間動かすプロジェクトに最適',
     price: '約3,500〜4,500円',
     officialUrl: 'https://www.adafruit.com/product/5400',
-    imageUrl: 'https://cdn-shop.adafruit.com/970x728/5400-13.jpg',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Fcdn-shop.adafruit.com%2F970x728%2F5400-13.jpg',
     tags: ['バッテリー', 'lipo', '電池', '電池駆動', '省電力', '長時間', 'wifi', 'ble', 'iot', 'feather', 'adafruit', 'stemma', 'qwiic', '充電', '野外', '屋外'],
   },
   {
@@ -694,7 +694,7 @@ const catalog: ArduinoBoard[] = [
     verdict: 'Picoの機能を最小サイズに凝縮。スペースが限られるプロジェクトに最適',
     price: '約500〜800円',
     officialUrl: 'https://www.waveshare.com/rp2040-zero.htm',
-    imageUrl: '',
+    imageUrl: 'https://nuttx.apache.org/docs/latest/_images/WaveshareRP2040Zero.png',
     tags: ['超小型', '最小', 'pico', 'rp2040', 'python', 'micropython', '小型', '省スペース', 'usb-c', 'waveshare', 'ラズパイ'],
   },
   {
@@ -730,7 +730,7 @@ const catalog: ArduinoBoard[] = [
     verdict: 'ネイティブUSBデバイス（キーボード・マウス等）作成に最適。S3より安価',
     price: '約800〜1,200円',
     officialUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s2/esp32-s2-devkitc-1/user_guide.html',
-    imageUrl: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/_images/esp32-s2-devkitc-1-v1-isometric.png',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Fwww.espressif.com%2Fsites%2Fdefault%2Ffiles%2Fdev-board%2FESP32-S2-DevKitM-1%2520small_0.png',
     tags: ['usb', 'usb-hid', 'キーボード', 'マウス', 'hid', 'wifi', 'esp32-s2', 's2', 'ネイティブusb', 'webusb', 'bleなし'],
   },
   {
@@ -748,7 +748,7 @@ const catalog: ArduinoBoard[] = [
     verdict: '最小サイズのArduino互換機。WiFi不要で小型にArduinoを使いたいときに',
     price: '約600〜1,000円',
     officialUrl: 'https://www.seeedstudio.com/Seeed-XIAO-Arduino-p-4244.html',
-    imageUrl: 'https://files.seeedstudio.com/wiki/Seeeduino-XIAO/img/Seeeduino-XIAO-preview-1.jpg',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Ffiles.seeedstudio.com%2Fwiki%2FSeeeduino-XIAO%2Fimg%2FSeeeduino-XIAO-preview-1.jpg',
     tags: ['超小型', '最小', 'xiao', 'arduino', '小型', 'usb-hid', 'usb', 'hid', 'キーボード', 'samd21', '入門'],
   },
 ]

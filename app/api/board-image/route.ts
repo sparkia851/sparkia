@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const ARDUINO_CDN_BASE = 'https://cdn.shopify.com/s/files/1/0438/4735/2471/files/'
-const ALLOWED_EXT_HOSTS = ['www.espressif.com']
+const ALLOWED_EXT_HOSTS = [
+  'www.espressif.com',
+  'files.seeedstudio.com',
+  'www.pjrc.com',
+  'cdn-shop.adafruit.com',
+]
 
 function imageResponse(body: ArrayBuffer, contentType: string): NextResponse {
   return new NextResponse(body, {
