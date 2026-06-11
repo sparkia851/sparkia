@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SearchBox } from '../../_components/SearchBox'
-import { ToolCard } from '../../_components/ToolCard'
+import { ToolResultsClient } from '../../_components/ToolResultsClient'
 import { recommendToolAI } from '../../_lib/tool-recommend-ai'
 
 export async function generateMetadata({
@@ -21,7 +21,6 @@ export default async function ToolSearchPage({
 }) {
   const { q } = await searchParams
   const query = typeof q === 'string' ? q.trim() : ''
-
   const results = query ? await recommendToolAI(query).catch(() => []) : []
 
   return (
@@ -32,29 +31,7 @@ export default async function ToolSearchPage({
         </div>
 
         {query ? (
-          <>
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-gray-500">
-                「<span className="font-semibold text-gray-800">{query}</span>」の検索結果
-                <span className="ml-2 text-gray-400">— {results.length}件</span>
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {results.map(tool => (
-                <ToolCard
-                  key={tool.id}
-                  tool={tool}
-                  rank={tool.rank}
-                  aiReason={tool.aiReason}
-                />
-              ))}
-            </div>
-
-            <p className="mt-8 text-xs text-gray-400 text-center leading-relaxed">
-              ※ 掲載スペック・価格は参考値です。最新情報はAmazonの商品ページをご確認ください。
-            </p>
-          </>
+          <ToolResultsClient results={results} query={query} />
         ) : (
           <p className="text-gray-500 text-sm">検索キーワードを入力してください。</p>
         )}
