@@ -15,9 +15,11 @@ const EXAMPLES = [
 export function SearchBox({
   defaultValue = '',
   compact = false,
+  searchPath = '/search',
 }: {
   defaultValue?: string
   compact?: boolean
+  searchPath?: string
 }) {
   const router = useRouter()
   const [value, setValue] = useState(defaultValue)
@@ -27,7 +29,7 @@ export function SearchBox({
       <form onSubmit={e => {
         e.preventDefault()
         const q = value.trim()
-        if (q) router.push(`/search?q=${encodeURIComponent(q)}`)
+        if (q) router.push(`${searchPath}?q=${encodeURIComponent(q)}`)
       }} className="flex gap-2">
         <input
           type="text"
