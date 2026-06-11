@@ -622,7 +622,7 @@ const catalog: ArduinoBoard[] = [
     verdict: '本格的な音楽・音声処理、高速USB HID、大量I/O制御ならTeensy一択',
     price: '約4,500〜6,000円',
     officialUrl: 'https://www.pjrc.com/store/teensy41.html',
-    imageUrl: '/api/board-image?ext=https%3A%2F%2Fwww.pjrc.com%2Fteensy41_4.jpg',
+    imageUrl: '/api/board-image?ext=https%3A%2F%2Fwww.pjrc.com%2Fstore%2Fteensy41_4.jpg',
     tags: ['高性能', '高速', 'オーディオ', '音楽', '音声', '音声処理', 'dsp', 'fft', 'usb-hid', 'usb', 'ethernet', 'sd', 'teensy', 'プロ', '上級', 'cortex-m7'],
   },
   {

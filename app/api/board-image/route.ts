@@ -18,7 +18,10 @@ function imageResponse(body: ArrayBuffer, contentType: string): NextResponse {
 }
 
 async function proxyUrl(url: string): Promise<NextResponse> {
-  const res = await fetch(url, { next: { revalidate: 86400 } })
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Sparkia/1.0)' },
+    next: { revalidate: 86400 },
+  })
   if (!res.ok) return new NextResponse(null, { status: res.status === 404 ? 404 : 502 })
   const body = await res.arrayBuffer()
   return imageResponse(body, res.headers.get('content-type') ?? 'image/jpeg')
