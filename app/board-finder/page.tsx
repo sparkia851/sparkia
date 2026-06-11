@@ -3,8 +3,8 @@ import { SearchBox } from '../_components/SearchBox'
 import { HeroBoardAnnotated } from '../_components/HeroBoardAnnotated'
 
 export const metadata: Metadata = {
-  title: 'Board Finder | Sparkia',
-  description: '要件を入力するだけで最適なマイコンボードを選べるAI検索ツール。Arduino・Raspberry Pi Pico・ESP32など40種から即絞り込み。',
+  title: 'Board Finder — マイコンボードAI選定ツール | Sparkia',
+  description: '要件を入力するだけで最適なマイコンボードをAIが選定。Arduino・ESP32・Raspberry Pi Picoなど40種から即絞り込み。無料で使えるマイコン検索ツール。',
 }
 
 const QUERY_EXAMPLES = [
