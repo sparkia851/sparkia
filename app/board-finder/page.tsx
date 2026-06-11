@@ -4,7 +4,7 @@ import { HeroBoardAnnotated } from '../_components/HeroBoardAnnotated'
 
 export const metadata: Metadata = {
   title: 'Board Finder | Sparkia',
-  description: '要件を入力するだけで最適なマイコンボードを選べるAI検索ツール。Arduino・Raspberry Pi Pico・ESP32など25種から即絞り込み。',
+  description: '要件を入力するだけで最適なマイコンボードを選べるAI検索ツール。Arduino・Raspberry Pi Pico・ESP32など40種から即絞り込み。',
 }
 
 const QUERY_EXAMPLES = [
@@ -38,7 +38,7 @@ export default function BoardFinderPage() {
                 <span className="text-blue-400">最適なマイコンボード</span>を選べる
               </h1>
               <p className="text-gray-400 text-sm mb-8">
-                おすすめ度・スペック・特徴をランキング形式で表示。25種のボードから即絞り込み。
+                おすすめ度・スペック・特徴をランキング形式で表示。40種のボードから即絞り込み。
               </p>
               <SearchBox searchPath="/board-finder/search" />
             </div>
