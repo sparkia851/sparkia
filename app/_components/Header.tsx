@@ -11,7 +11,7 @@ export function Header() {
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}
     >
-      <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-8">
+      <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-4">
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <SparkiaLogo className="h-7 w-auto text-white" />
           <span className="hidden sm:inline text-xs font-normal" style={{ color: '#334155' }}>
@@ -25,7 +25,7 @@ export function Header() {
           <Link href="/tool-finder" className="hover:text-white transition-colors duration-150">
             工具検索
           </Link>
-          <span className="cursor-default" style={{ color: '#1e293b' }} title="近日公開">
+          <span className="hidden sm:inline cursor-default" style={{ color: '#1e293b' }} title="近日公開">
             IC・センサー
           </span>
         </nav>
