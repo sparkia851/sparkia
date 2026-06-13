@@ -260,7 +260,7 @@ export function BFTopClient() {
   const textY      = useTransform(heroScroll, [0, 1], ['0%', '12%'])
 
   return (
-    <main style={{ overflowX: 'hidden' }}>
+    <main>
 
       {/* ══════════════════════ HERO ══════════════════════════ */}
       <section
@@ -348,7 +348,7 @@ export function BFTopClient() {
       </section>
 
       {/* ══════════════════════ SPECS ═════════════════════════ */}
-      <section style={{ padding: '100px 24px', position: 'relative', background: '#060913' }}>
+      <section style={{ padding: '100px 24px', position: 'relative', background: '#060913', overflow: 'hidden' }}>
 
         {/* ── featured board photo — right side ── */}
         <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '46%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
@@ -396,7 +396,7 @@ export function BFTopClient() {
       </section>
 
       {/* ══════════════════════ BOARD WALL ════════════════════ */}
-      <section style={{ padding: '100px 24px 80px', position: 'relative', background: '#04060e' }}>
+      <section style={{ padding: '100px 24px 80px', position: 'relative', background: '#04060e', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: 0, right: '-10%', width: '60%', height: '100%', background: 'radial-gradient(ellipse at 100% 50%, rgba(16,185,129,0.04) 0%, transparent 55%)', pointerEvents: 'none' }} />
 
         <div className="max-w-5xl mx-auto">
