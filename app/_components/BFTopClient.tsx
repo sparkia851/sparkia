@@ -260,7 +260,7 @@ export function BFTopClient() {
   const textY      = useTransform(heroScroll, [0, 1], ['0%', '12%'])
 
   return (
-    <main>
+    <main style={{ overflowX: 'hidden' }}>
 
       {/* ══════════════════════ HERO ══════════════════════════ */}
       <section
