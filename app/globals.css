@@ -6,3 +6,27 @@
   background-image: url("/pcb-pattern.svg");
   background-size: 240px 240px;
 }
+
+/* スクロールバー非表示 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* BrandRow — デスクトップ: ラベル列固定幅 / モバイル: 縦積み */
+.brand-row-grid {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+@media (max-width: 600px) {
+  .brand-row-grid {
+    grid-template-columns: 1fr;
+  }
+  .brand-row-photos {
+    padding-left: 16px !important;
+  }
+}

@@ -1,138 +1,183 @@
 import type { ArduinoBoard, Connectivity, Level } from '../_lib/recommend'
 import { BoardPhoto } from './BoardPhoto'
 
-const RANK: Record<number, { badge: string; bar: string; label: string }> = {
-  1: { badge: 'bg-amber-400 text-white',   bar: 'border-t-4 border-amber-400',  label: '1位' },
-  2: { badge: 'bg-slate-400 text-white',   bar: 'border-t-4 border-slate-400',  label: '2位' },
-  3: { badge: 'bg-orange-700 text-white',  bar: 'border-t-4 border-orange-700', label: '3位' },
+const RANK: Record<number, { color: string; label: string; shadow: string }> = {
+  1: { color: '#f59e0b', label: '01', shadow: '0 0 0 1px rgba(245,158,11,0.2), 0 8px 32px rgba(0,0,0,0.4)' },
+  2: { color: '#6b7280', label: '02', shadow: '0 4px 20px rgba(0,0,0,0.3)' },
+  3: { color: '#92400e', label: '03', shadow: '0 4px 20px rgba(0,0,0,0.3)' },
 }
 
-const CONN_STYLE: Record<Connectivity, string> = {
-  WiFi:      'bg-sky-100 text-sky-800 border-sky-200',
-  BLE:       'bg-violet-100 text-violet-800 border-violet-200',
-  LoRa:      'bg-emerald-100 text-emerald-800 border-emerald-200',
-  'NB-IoT':  'bg-orange-100 text-orange-800 border-orange-200',
-  'USB-HID': 'bg-rose-100 text-rose-800 border-rose-200',
-  'LTE-M':   'bg-purple-100 text-purple-800 border-purple-200',
-  Zigbee:    'bg-yellow-100 text-yellow-800 border-yellow-200',
+const LEVEL: Record<Level, { label: string; color: string }> = {
+  beginner:     { label: '初心者', color: '#10b981' },
+  intermediate: { label: '中級',  color: '#3b82f6' },
+  advanced:     { label: 'プロ',  color: '#8b5cf6' },
 }
 
-const LEVEL: Record<Level, { label: string; cls: string }> = {
-  beginner:     { label: '初心者向け',   cls: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
-  intermediate: { label: '中級者向け',   cls: 'text-blue-700 bg-blue-50 border-blue-200' },
-  advanced:     { label: '上級者・業務', cls: 'text-violet-700 bg-violet-50 border-violet-200' },
-}
-
-function Stars({ score }: { score: number }) {
-  const n = Math.round(score)
+function RankBadge({ label, color }: { label: string; color: string }) {
   return (
-    <span className="text-amber-400 text-sm tracking-tight" aria-label={`${score}点`}>
-      {'★'.repeat(n)}{'☆'.repeat(5 - n)}
-    </span>
+    <div style={{
+      position: 'absolute',
+      top: 10,
+      left: 12,
+      color,
+      fontSize: 11,
+      fontWeight: 800,
+      letterSpacing: '0.1em',
+      fontFamily: 'ui-monospace, monospace',
+      textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+    }}>
+      {label}
+    </div>
   )
 }
 
 export function RankingCard({ mc, rank, aiReason }: { mc: ArduinoBoard; rank: number; aiReason?: string }) {
-  const r = RANK[rank] ?? { badge: 'bg-blue-600 text-white', bar: 'border-t-4 border-blue-600', label: `${rank}位` }
+  const r = RANK[rank] ?? { color: '#3b82f6', label: `0${rank}`, shadow: '0 4px 20px rgba(0,0,0,0.3)' }
   const lv = LEVEL[mc.level]
+  const verdict = aiReason ?? mc.verdict
+
+  const specs = [
+    mc.mcu.split(/[\s(+]/)[0],
+    `${mc.clockMhz}MHz`,
+    `RAM ${mc.ramKb >= 1024 ? `${mc.ramKb / 1024}MB` : `${mc.ramKb}KB`}`,
+    `Flash ${mc.flashKb >= 1024 ? `${mc.flashKb / 1024}MB` : `${mc.flashKb}KB`}`,
+  ]
 
   return (
-    <article className={`bg-white rounded-xl border border-gray-200 ${r.bar} shadow-sm overflow-hidden`}>
-      <div className="flex">
+    <article style={{
+      background: '#0d1425',
+      border: '1px solid rgba(255,255,255,0.07)',
+      borderRadius: 10,
+      overflow: 'hidden',
+      boxShadow: r.shadow,
+    }}>
+      {/* rank accent line */}
+      <div style={{ height: 2, background: r.color, opacity: rank === 1 ? 1 : 0.45 }} />
 
-        {/* 左カラム：写真 + 順位バッジ */}
-        <div className="relative shrink-0 w-32 sm:w-40 self-stretch min-h-[160px]">
+      <div className="flex flex-col sm:flex-row">
+
+        {/* mobile image — full width */}
+        <div className="sm:hidden relative" style={{ aspectRatio: '16/9' }}>
           <BoardPhoto imageUrl={mc.imageUrl} name={mc.name} formFactor={mc.formFactor} fillParent />
-          <div className={`absolute top-2 left-2 px-2 py-0.5 rounded shadow text-xs font-black ${r.badge}`}>
-            {r.label}
-          </div>
+          <RankBadge label={r.label} color={r.color} />
         </div>
 
-        {/* 右カラム：情報 */}
-        <div className="flex-1 min-w-0 px-4 py-3 space-y-2.5">
+        {/* desktop image — fixed side panel */}
+        <div className="hidden sm:block relative shrink-0" style={{ width: 200, minHeight: 180, alignSelf: 'stretch' }}>
+          <BoardPhoto imageUrl={mc.imageUrl} name={mc.name} formFactor={mc.formFactor} fillParent />
+          <RankBadge label={r.label} color={r.color} />
+        </div>
 
-          {/* 名前 + レベル */}
-          <div className="flex flex-wrap items-start justify-between gap-1.5">
-            <h2 className="text-sm font-bold text-gray-900 leading-tight">{mc.name}</h2>
-            <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded border whitespace-nowrap ${lv.cls}`}>
+        {/* info */}
+        <div style={{ flex: 1, minWidth: 0, padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 11 }}>
+
+          {/* name + level */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
+            <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#f1f5f9', lineHeight: 1.3 }}>
+              {mc.name}
+            </h2>
+            <span style={{
+              fontSize: 10,
+              fontWeight: 600,
+              color: lv.color,
+              background: `${lv.color}18`,
+              padding: '2px 8px',
+              borderRadius: 4,
+              flexShrink: 0,
+              letterSpacing: '0.03em',
+            }}>
               {lv.label}
             </span>
           </div>
 
-          {/* 評価 + 価格 */}
-          <div className="flex items-center gap-2">
-            <Stars score={mc.score} />
-            <span className="text-sm font-bold text-gray-700">{mc.score.toFixed(1)}</span>
-            <span className="text-xs text-gray-400 ml-auto">{mc.price}</span>
-          </div>
-
-          {/* 接続・フォームファクタ */}
-          <div className="flex flex-wrap gap-1">
-            {mc.connectivity.map(c => (
-              <span key={c} className={`text-[10px] font-semibold px-1.5 py-0.5 rounded border ${CONN_STYLE[c]}`}>
-                {c}
-              </span>
-            ))}
-            <span className="text-[10px] px-1.5 py-0.5 rounded border border-gray-200 text-gray-500 bg-gray-50">
-              {mc.formFactor}
+          {/* score + price */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: 22, fontWeight: 800, color: '#f8fafc', letterSpacing: '-0.03em', lineHeight: 1 }}>
+              {mc.score.toFixed(1)}
             </span>
-          </div>
-
-          {/* スペック */}
-          <div className="grid grid-cols-5 gap-1 bg-gray-50 rounded px-2 py-1.5 text-center">
-            {[
-              ['MCU',   mc.mcu.split(/[\s+]/)[0]],
-              ['Clock', `${mc.clockMhz}MHz`],
-              ['RAM',   mc.ramKb   >= 1024 ? `${mc.ramKb   / 1024}MB` : `${mc.ramKb}KB`],
-              ['Flash', mc.flashKb >= 1024 ? `${mc.flashKb / 1024}MB` : `${mc.flashKb}KB`],
-              ['Pins',  `${mc.digitalPins}/${mc.analogPins}`],
-            ].map(([label, val]) => (
-              <div key={label} className="flex flex-col">
-                <span className="text-[9px] text-gray-400 uppercase tracking-wide">{label}</span>
-                <span className="text-[11px] font-semibold text-gray-700 truncate">{val}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* 特徴 3件 */}
-          <ul className="space-y-1">
-            {mc.points.map((p, i) => (
-              <li key={i} className="flex gap-1.5 text-xs text-gray-700 leading-snug">
-                <span className="shrink-0 text-blue-500 mt-0.5">•</span>
-                {p}
-              </li>
-            ))}
-          </ul>
-
-          {/* 総評 + 公式リンク */}
-          <div className="flex items-stretch gap-2">
-            <div className="flex-1 border-l-4 border-blue-500 bg-blue-50 px-2.5 py-1.5 text-xs font-medium text-gray-800 leading-snug rounded-r">
-              {aiReason ? (
-                <span>
-                  <span className="inline-block mr-1.5 text-[9px] font-bold px-1 py-0.5 rounded bg-blue-600 text-white align-middle">AI</span>
-                  {aiReason}
-                </span>
-              ) : mc.verdict}
+            <div style={{ flex: 1, height: 2, background: 'rgba(255,255,255,0.07)', borderRadius: 99 }}>
+              <div style={{ width: `${(mc.score / 5) * 100}%`, height: '100%', background: r.color, borderRadius: 99 }} />
             </div>
+            <span style={{ fontSize: 12, color: '#475569', fontWeight: 600 }}>{mc.price}</span>
+          </div>
+
+          {/* verdict — no label, just prose */}
+          <p style={{ margin: 0, fontSize: 13, color: '#94a3b8', lineHeight: 1.7 }}>
+            {verdict}
+          </p>
+
+          {/* connectivity */}
+          {mc.connectivity.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+              {mc.connectivity.map(c => (
+                <span key={c} style={{
+                  fontSize: 10,
+                  fontWeight: 600,
+                  color: '#60a5fa',
+                  background: 'rgba(96,165,250,0.09)',
+                  border: '1px solid rgba(96,165,250,0.18)',
+                  padding: '2px 8px',
+                  borderRadius: 4,
+                }}>
+                  {c}
+                </span>
+              ))}
+              <span style={{
+                fontSize: 10,
+                color: '#475569',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                padding: '2px 8px',
+                borderRadius: 4,
+              }}>
+                {mc.formFactor}
+              </span>
+            </div>
+          )}
+
+          {/* specs */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, fontSize: 11, color: '#475569' }}>
+            {specs.map((s, i) => <span key={i}>{s}</span>)}
+          </div>
+
+          {/* buttons */}
+          <div style={{ display: 'flex', gap: 8, marginTop: 2 }}>
             <a
               href={mc.officialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 flex items-center text-xs font-semibold text-blue-700 border border-blue-200 rounded px-3 hover:bg-blue-50 transition-colors"
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                color: '#64748b',
+                border: '1px solid rgba(255,255,255,0.09)',
+                borderRadius: 6,
+                padding: '7px 14px',
+                textDecoration: 'none',
+                background: 'rgba(255,255,255,0.02)',
+              }}
             >
-              公式→
+              公式 →
+            </a>
+            <a
+              href={`https://www.amazon.co.jp/s?k=${encodeURIComponent(mc.name)}&tag=sparkia-22`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                flex: 1,
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#111827',
+                background: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+                borderRadius: 6,
+                padding: '7px 14px',
+                textDecoration: 'none',
+                textAlign: 'center',
+              }}
+            >
+              Amazon で見る
             </a>
           </div>
-
-          {/* Amazonリンク */}
-          <a
-            href={`https://www.amazon.co.jp/s?k=${encodeURIComponent(mc.name)}&tag=sparkia-22`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 w-full mt-1 py-1.5 rounded text-xs font-semibold bg-amber-400 hover:bg-amber-500 text-gray-900 transition-colors"
-          >
-            <span>Amazonで価格を見る</span>
-          </a>
 
         </div>
       </div>

@@ -1,7 +1,21 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Space_Grotesk, Noto_Sans_JP } from 'next/font/google'
 import { Header } from './_components/Header'
 import './globals.css'
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+})
+
+const notoSansJP = Noto_Sans_JP({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-jp',
+  display: 'swap',
+})
 
 const GA_ID = 'G-NMD0Z6C6E6'
 
@@ -19,7 +33,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body className="bg-gray-50 text-gray-900 antialiased min-h-screen flex flex-col">
+      <body
+        className={`${spaceGrotesk.variable} ${notoSansJP.variable} antialiased min-h-screen flex flex-col`}
+        style={{ background: '#05070f', color: '#f1f5f9', fontFamily: 'var(--font-jp), sans-serif' }}
+      >
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga-init" strategy="afterInteractive">{`
           window.dataLayer=window.dataLayer||[];
@@ -29,8 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}</Script>
         <Header />
         <div className="flex-1">{children}</div>
-        <footer className="border-t border-gray-200 bg-white mt-auto">
-          <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
+        <footer className="mt-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs" style={{ color: '#334155' }}>
             <span>© 2026 Sparkia. All rights reserved.</span>
             <span>電気系エンジニアのための選択支援サービス</span>
           </div>

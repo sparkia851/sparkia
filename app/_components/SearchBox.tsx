@@ -16,10 +16,12 @@ export function SearchBox({
   defaultValue = '',
   compact = false,
   searchPath = '/search',
+  dark = false,
 }: {
   defaultValue?: string
   compact?: boolean
   searchPath?: string
+  dark?: boolean
 }) {
   const router = useRouter()
   const [value, setValue] = useState(defaultValue)
@@ -36,7 +38,7 @@ export function SearchBox({
           value={value}
           onChange={e => setValue(e.target.value)}
           placeholder="例：Wi-Fi対応、Lチカ入門、USBキーボード、省スペース..."
-          className={`flex-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 placeholder:text-gray-400 ${compact ? 'px-3 py-2 text-sm' : 'px-4 py-3 text-base'}`}
+          className={`flex-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${compact ? 'px-3 py-2 text-sm' : 'px-4 py-3 text-base'} ${dark ? 'bg-white/5 border-white/10 text-gray-100 placeholder:text-gray-500' : 'bg-white border-gray-300 text-gray-900 placeholder:text-gray-400'}`}
         />
         <button
           type="submit"
@@ -53,9 +55,9 @@ export function SearchBox({
               type="button"
               onClick={() => {
                 setValue(ex)
-                router.push(`/search?q=${encodeURIComponent(ex)}`)
+                router.push(`${searchPath}?q=${encodeURIComponent(ex)}`)
               }}
-              className="text-xs px-3 py-1.5 rounded-full border border-gray-300 text-gray-600 hover:border-blue-400 hover:text-blue-700 bg-white transition-colors"
+              className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${dark ? 'border-white/10 text-slate-500 hover:text-gray-100 hover:border-white/20 bg-white/[0.03]' : 'border-gray-300 text-gray-600 hover:border-blue-400 hover:text-blue-700 bg-white'}`}
             >
               {ex}
             </button>

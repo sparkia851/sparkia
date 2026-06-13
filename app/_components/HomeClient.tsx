@@ -13,7 +13,23 @@ const BOARD_IMAGES = [
   '/api/board-image?m5=m5stack-core2-esp32-iot-development-kit',
 ]
 
-function BoardFinderCard({ index }: { index: number }) {
+function ServiceCard({
+  href,
+  label,
+  title,
+  description,
+  index,
+  accent,
+  visual,
+}: {
+  href: string
+  label: string
+  title: string
+  description: string
+  index: number
+  accent: string
+  visual: React.ReactNode
+}) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -22,64 +38,66 @@ function BoardFinderCard({ index }: { index: number }) {
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link
-        href="/board-finder"
-        className="group relative flex overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] hover:border-blue-500/50 transition-all duration-500 min-h-[200px]"
+        href={href}
+        className="group relative flex overflow-hidden min-h-[200px]"
+        style={{
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.07)',
+          background: 'rgba(255,255,255,0.02)',
+          transition: 'border-color 0.4s',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.borderColor = `${accent}40`)}
+        onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)')}
       >
-        {/* ボード画像モザイク背景 */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 grid grid-cols-3 gap-0.5 opacity-40 group-hover:opacity-60 transition-opacity duration-500">
-          {BOARD_IMAGES.map((src, i) => (
-            <div key={i} className="relative overflow-hidden bg-gray-900">
-              <img
-                src={src}
-                alt=""
-                className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
-              />
-            </div>
-          ))}
-          {/* 左からのグラデーションオーバーレイ */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0d1117] via-[#0d1117]/80 to-transparent" />
+        {/* visual right panel */}
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
+          {visual}
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(to right, #05070f 0%, rgba(5,7,15,0.7) 40%, transparent 100%)' }}
+          />
         </div>
 
-        {/* コンテンツ */}
+        {/* content */}
         <div className="relative z-10 flex flex-col justify-between p-7 w-3/5">
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <span className="text-[10px] font-bold tracking-widest uppercase text-blue-400 border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 rounded-full">
-                公開中
-              </span>
-            </div>
-            <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">
-              Board Finder
-            </h3>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              要件を入力するだけでAIが最適なマイコンボードを選定。Arduino・Pico・ESP32など25種から即絞り込み。
-            </p>
+            <span
+              className="inline-block text-[10px] font-bold tracking-widest uppercase mb-4 px-2 py-0.5 rounded-full"
+              style={{ color: accent, background: `${accent}14`, border: `1px solid ${accent}30` }}
+            >
+              {label}
+            </span>
+            <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">{title}</h3>
+            <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{description}</p>
           </div>
-
-          <div className="flex items-center gap-2 mt-6 text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
+          <div
+            className="flex items-center gap-2 mt-6 text-sm font-semibold transition-colors"
+            style={{ color: accent }}
+          >
             <span>使ってみる</span>
             <motion.span
               animate={{ x: [0, 4, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+              transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
             >
               →
             </motion.span>
           </div>
         </div>
 
-        {/* ホバー時の外枠グロー */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ boxShadow: 'inset 0 0 40px rgba(59,130,246,0.08)' }}
+        {/* hover glow */}
+        <div
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ boxShadow: `inset 0 0 40px ${accent}0d` }}
         />
       </Link>
     </motion.div>
   )
 }
 
-function LockedCard({ label, description, index }: { label: string; description: string; index: number }) {
+function LockedCard({ title, description, index }: { title: string; description: string; index: number }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -88,19 +106,26 @@ function LockedCard({ label, description, index }: { label: string; description:
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="relative flex overflow-hidden rounded-2xl border border-white/5 bg-[#0d1117]/60 min-h-[200px] cursor-default">
-        <div className="absolute inset-0 backdrop-blur-[1px]" />
+      <div
+        className="relative flex overflow-hidden min-h-[160px] cursor-default"
+        style={{
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.04)',
+          background: 'rgba(255,255,255,0.01)',
+        }}
+      >
         <div className="relative z-10 flex flex-col justify-between p-7 w-full">
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <span className="text-[10px] font-bold tracking-widest uppercase text-gray-600 border border-gray-700 bg-gray-800/50 px-2 py-0.5 rounded-full">
-                Coming Soon
-              </span>
-            </div>
-            <h3 className="text-2xl font-extrabold text-gray-600 mb-2 tracking-tight">{label}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
+            <span
+              className="inline-block text-[10px] font-bold tracking-widest uppercase mb-4 px-2 py-0.5 rounded-full"
+              style={{ color: '#1e293b', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+            >
+              Coming Soon
+            </span>
+            <h3 className="text-xl font-extrabold mb-2 tracking-tight" style={{ color: '#1e293b' }}>{title}</h3>
+            <p className="text-sm leading-relaxed" style={{ color: '#1e293b' }}>{description}</p>
           </div>
         </div>
       </div>
@@ -113,26 +138,20 @@ export function HomeClient() {
   const servicesInView = useInView(servicesRef, { once: true, margin: '-100px' })
 
   return (
-    <div className="bg-[#060810] min-h-screen">
+    <div style={{ minHeight: '100vh' }}>
 
       {/* Hero */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4">
 
-        {/* グリッド背景 */}
+        {/* center glow */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
           style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)
-            `,
-            backgroundSize: '64px 64px',
+            width: 800,
+            height: 500,
+            background: 'radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%)',
+            borderRadius: '50%',
           }}
-        />
-
-        {/* 中央グロー */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%)' }}
         />
 
         <motion.div
@@ -141,13 +160,13 @@ export function HomeClient() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="relative text-center max-w-3xl"
         >
-          {/* ロゴ */}
           <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-8xl sm:text-9xl font-black tracking-tighter mb-8 select-none"
+            className="font-black tracking-tighter mb-8 select-none"
             style={{
+              fontSize: 'clamp(72px, 14vw, 128px)',
               background: 'linear-gradient(135deg, #93c5fd 0%, #ffffff 30%, #60a5fa 50%, #ffffff 70%, #93c5fd 100%)',
               backgroundSize: '200% auto',
               WebkitBackgroundClip: 'text',
@@ -163,7 +182,8 @@ export function HomeClient() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="text-xl text-gray-300 mb-3 font-light tracking-wide"
+            className="text-xl font-light tracking-wide mb-3"
+            style={{ color: '#94a3b8' }}
           >
             電子工作・IoT開発を助けるAIツール集
           </motion.p>
@@ -172,51 +192,80 @@ export function HomeClient() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.6 }}
-            className="text-sm text-gray-500"
+            className="text-sm"
+            style={{ color: '#334155' }}
           >
             目的を入力するだけで、最適なパーツ・ボードを即選定
           </motion.p>
         </motion.div>
 
-        {/* スクロールインジケーター */}
+        {/* scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4 }}
           className="absolute bottom-10 flex flex-col items-center gap-2"
         >
-          <span className="text-[10px] text-gray-600 tracking-widest uppercase">Scroll</span>
+          <span className="text-[10px] tracking-widest uppercase" style={{ color: '#1e293b' }}>Scroll</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-            className="w-px h-10 bg-gradient-to-b from-gray-500 to-transparent"
+            className="w-px h-10"
+            style={{ background: 'linear-gradient(to bottom, #334155, transparent)' }}
           />
         </motion.div>
       </section>
 
-      {/* サービス一覧 */}
-      <section className="py-24 px-4" ref={servicesRef}>
+      {/* Services */}
+      <section className="px-4 pb-24" ref={servicesRef}>
         <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={servicesInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-center mb-14"
+            className="text-center mb-12"
           >
-            <p className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-3">Services</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#1e3a5f' }}>Services</p>
             <h2 className="text-3xl font-extrabold text-white tracking-tight">AIで選定を、瞬時に。</h2>
           </motion.div>
 
-          <div className="grid gap-4">
-            <BoardFinderCard index={0} />
-            <LockedCard
-              label="Parts Finder"
-              description="電子部品を用途・スペックから即絞り込み。抵抗・コンデンサ・センサーなど幅広く対応予定。"
+          <div className="flex flex-col gap-4">
+            <ServiceCard
+              href="/board-finder"
+              label="公開中"
+              title="Board Finder"
+              description="要件を入力するだけでAIが最適なマイコンボードを選定。Arduino・Pico・ESP32など40種から即絞り込み。"
+              index={0}
+              accent="#3b82f6"
+              visual={
+                <div className="absolute inset-0 grid grid-cols-3 gap-0.5">
+                  {BOARD_IMAGES.map((src, i) => (
+                    <div key={i} className="relative overflow-hidden" style={{ background: '#0a0f1a' }}>
+                      <img src={src} alt="" className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" />
+                    </div>
+                  ))}
+                </div>
+              }
+            />
+            <ServiceCard
+              href="/tool-finder"
+              label="公開中"
+              title="Tool Finder"
+              description="「DIY初心者」「予算1万円以内」など用途を入力すると最適な電動工具をランキングで提案。"
               index={1}
+              accent="#f59e0b"
+              visual={
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(245,158,11,0.15) 0%, rgba(251,191,36,0.05) 100%)',
+                  }}
+                />
+              }
             />
             <LockedCard
-              label="Kit Finder"
-              description="電子工作の入門キットを目的・レベルから選定。初心者から上級者まで対応予定。"
+              title="Parts Finder"
+              description="電子部品を用途・スペックから即絞り込み。抵抗・コンデンサ・センサーなど幅広く対応予定。"
               index={2}
             />
           </div>

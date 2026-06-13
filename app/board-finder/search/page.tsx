@@ -27,18 +27,18 @@ export default async function SearchPage({
   const results = aiResults ?? recommend(query)
 
   return (
-    <main className="pcb-bg min-h-screen">
+    <main style={{ minHeight: '100vh' }}>
       <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <SearchBox defaultValue={query} compact searchPath="/board-finder/search" />
+        <SearchBox defaultValue={query} compact dark searchPath="/board-finder/search" />
       </div>
 
       {query ? (
         <>
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-gray-500">
-              「<span className="font-semibold text-gray-800">{query}</span>」の検索結果
-              <span className="ml-2 text-gray-400">— {results.length}件</span>
+            <p className="text-sm" style={{ color: '#475569' }}>
+              「<span className="font-semibold" style={{ color: '#94a3b8' }}>{query}</span>」の検索結果
+              <span className="ml-2" style={{ color: '#334155' }}>— {results.length}件</span>
             </p>
           </div>
 
@@ -53,13 +53,12 @@ export default async function SearchPage({
             ))}
           </div>
 
-          <p className="mt-8 text-xs text-gray-400 text-center leading-relaxed">
-            ※ 掲載スペック・価格は参考値です。最新情報は各ボードの公式ページをご確認ください。<br />
-            ※ 本ツールはプロトタイプ版です。対応ボードは順次拡充予定。
+          <p className="mt-8 text-xs text-center leading-relaxed" style={{ color: '#334155' }}>
+            ※ 掲載スペック・価格は参考値です。最新情報は各ボードの公式ページをご確認ください。
           </p>
         </>
       ) : (
-        <p className="text-gray-500 text-sm">検索キーワードを入力してください。</p>
+        <p className="text-sm" style={{ color: '#334155' }}>検索キーワードを入力してください。</p>
       )}
       </div>
     </main>
