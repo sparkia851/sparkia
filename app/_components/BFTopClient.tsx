@@ -351,20 +351,22 @@ export function BFTopClient() {
       {/* ══════════════════════ SPECS ═════════════════════════ */}
       <section style={{ padding: '100px 24px', position: 'relative', background: '#060913', overflow: 'hidden' }}>
 
-        {/* ── featured board photo — right 55%, smooth mask on left edge ── */}
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '55%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 42%)', maskImage: 'linear-gradient(to right, transparent 0%, black 42%)' }}>
+        {/* ── featured board photo — full section background ── */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
           <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
             <Image
               src="/api/board-image?slug=portenta-h7"
               alt=""
               fill
-              sizes="55vw"
+              sizes="100vw"
               className="object-cover object-center"
               unoptimized
             />
           </div>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.38)' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #060913 0%, transparent 20%, transparent 80%, #060913 100%)' }} />
+          {/* flat dark overlay — no left-right gradient */}
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.62)' }} />
+          {/* top/bottom vignette only */}
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #060913 0%, transparent 12%, transparent 88%, #060913 100%)' }} />
         </div>
 
         {/* left ambient light */}
