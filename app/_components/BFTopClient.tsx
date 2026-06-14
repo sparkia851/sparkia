@@ -416,11 +416,18 @@ export function BFTopClient() {
       </section>
 
       {/* ══════════════════════ CTA ═══════════════════════════ */}
-      <section style={{ padding: '100px 24px 130px', textAlign: 'center', position: 'relative', overflow: 'hidden', background: '#05070f' }}>
+      <section style={{ padding: '100px 24px 130px', textAlign: 'center', position: 'relative', overflow: 'hidden', background: '#04060e' }}>
 
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 40%, rgba(59,130,246,0.07) 0%, transparent 55%)', pointerEvents: 'none' }} />
+        {/* full-bleed board photo */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+          <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
+            <Image src="/api/board-image?slug=uno-r4-wifi" alt="" fill sizes="100vw" className="object-cover object-center" unoptimized />
+          </div>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.65)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #04060e 0%, transparent 12%, transparent 88%, #04060e 100%)' }} />
+        </div>
         {/* thin top line */}
-        <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: 'linear-gradient(to right, transparent, rgba(59,130,246,0.3), transparent)' }} />
+        <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: 'linear-gradient(to right, transparent, rgba(59,130,246,0.3), transparent)', zIndex: 1 }} />
 
         <FadeUp className="relative max-w-lg mx-auto z-10">
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#1e3a5f', marginBottom: 24, fontFamily: HEADING }}>
