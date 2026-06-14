@@ -163,6 +163,19 @@ function FadeUp({ children, delay = 0, className = '' }: { children: React.React
 
 /* ── data ─────────────────────────────────────────────── */
 
+const FLOATING_TAGS = [
+  'Clock · 240MHz', 'RAM · 8MB', 'Flash · 16MB', 'WiFi 2.4GHz',
+  'BLE 5.0', 'LoRa', 'Arduino', 'ESP32', 'STM32', 'Nano',
+  'Feather', 'DevKit', 'XIAO', 'USB-C', 'OTA', 'I²C · SPI',
+  'ADC 12bit', 'Zigbee', 'FreeRTOS', '難易度 3段階',
+]
+
+const MOCK_RESULTS = [
+  { name: 'ESP32 DevKit C',      match: 94, tags: ['WiFi', 'BLE', '240MHz'] },
+  { name: 'Arduino Uno R4 WiFi', match: 81, tags: ['WiFi', '48MHz', 'USB'] },
+  { name: 'Raspberry Pi Pico W', match: 73, tags: ['WiFi', '133MHz', 'Python'] },
+]
+
 const HERO_BOARDS = [
   '/api/board-image?slug=arduino-uno-rev3',
   '/api/board-image?slug=uno-r4-wifi',
@@ -416,31 +429,71 @@ export function BFTopClient() {
       </section>
 
       {/* ══════════════════════ CTA ═══════════════════════════ */}
-      <section style={{ padding: '100px 24px 130px', textAlign: 'center', position: 'relative', overflow: 'hidden', background: '#04060e' }}>
+      <section style={{ padding: '100px 24px 130px', textAlign: 'center', position: 'relative', overflow: 'hidden', background: '#05070f' }}>
 
-        {/* full-bleed board photo */}
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-          <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
-            <Image src="/api/board-image?slug=uno-r4-wifi" alt="" fill sizes="100vw" className="object-cover object-center" unoptimized />
-          </div>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.65)' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #04060e 0%, transparent 12%, transparent 88%, #04060e 100%)' }} />
-        </div>
+        {/* B: floating spec chips */}
+        {FLOATING_TAGS.map((tag, i) => (
+          <motion.span
+            key={tag}
+            style={{
+              position: 'absolute',
+              left: `${(i * 43 + 8) % 82 + 4}%`,
+              top: `${(i * 31 + 13) % 76 + 8}%`,
+              fontSize: 9, fontWeight: 600, letterSpacing: '0.08em',
+              color: 'rgba(148,163,184,0.18)',
+              border: '1px solid rgba(148,163,184,0.07)',
+              borderRadius: 3, padding: '2px 7px',
+              pointerEvents: 'none', zIndex: 0, whiteSpace: 'nowrap', userSelect: 'none',
+            }}
+            animate={{ y: [0, -(6 + i % 6), 0] }}
+            transition={{ duration: 5 + (i * 0.6) % 4, repeat: Infinity, delay: (i * 0.3) % 3, ease: 'easeInOut' }}
+          >
+            {tag}
+          </motion.span>
+        ))}
+
         {/* thin top line */}
-        <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: 'linear-gradient(to right, transparent, rgba(59,130,246,0.3), transparent)', zIndex: 1 }} />
+        <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: 'linear-gradient(to right, transparent, rgba(59,130,246,0.3), transparent)' }} />
 
-        <FadeUp className="relative max-w-lg mx-auto z-10">
-          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#1e3a5f', marginBottom: 24, fontFamily: HEADING }}>
-            40 boards · AI‑powered · Free
-          </p>
-          <h2 style={{ fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 900, letterSpacing: '-0.025em', marginBottom: 14, fontFamily: HEADING, ...METALLIC }}>
-            あなたのプロジェクトに合った<br />ボードを見つける
-          </h2>
-          <p style={{ fontSize: 13, color: '#334155', marginBottom: 44, lineHeight: 1.9 }}>
-            用途・予算・接続要件——どんな条件でも即絞り込める。
-          </p>
-          <SearchBox searchPath="/board-finder/search" dark />
-        </FadeUp>
+        <div className="relative max-w-lg mx-auto" style={{ zIndex: 10 }}>
+          <FadeUp>
+            <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#1e3a5f', marginBottom: 24, fontFamily: HEADING }}>
+              40 boards · AI‑powered · Free
+            </p>
+            <h2 style={{ fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 900, letterSpacing: '-0.025em', marginBottom: 14, fontFamily: HEADING, ...METALLIC }}>
+              あなたのプロジェクトに合った<br />ボードを見つける
+            </h2>
+            <p style={{ fontSize: 13, color: '#334155', marginBottom: 44, lineHeight: 1.9 }}>
+              用途・予算・接続要件——どんな条件でも即絞り込める。
+            </p>
+            <SearchBox searchPath="/board-finder/search" dark />
+          </FadeUp>
+
+          {/* C: mock AI result preview */}
+          <div style={{ marginTop: 48, textAlign: 'left' }}>
+            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', color: '#1e3a5f', marginBottom: 10, fontFamily: HEADING }}>
+              AI PREVIEW · 「Wi‑Fiでデータを送りたい」
+            </p>
+            <div style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6, overflow: 'hidden' }}>
+              {MOCK_RESULTS.map((r, i) => (
+                <FadeUp key={r.name} delay={0.5 + i * 0.2}>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px',
+                    borderBottom: i < MOCK_RESULTS.length - 1 ? '1px solid rgba(255,255,255,0.04)' : undefined,
+                  }}>
+                    <span style={{ fontSize: 13, fontWeight: 800, color: '#3b82f6', minWidth: 34, fontFamily: HEADING }}>{r.match}%</span>
+                    <span style={{ fontSize: 12, color: '#94a3b8', flex: 1, fontFamily: HEADING }}>{r.name}</span>
+                    <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+                      {r.tags.map(t => (
+                        <span key={t} style={{ fontSize: 8, padding: '2px 5px', borderRadius: 2, border: '1px solid rgba(255,255,255,0.1)', color: '#334155', letterSpacing: '0.05em' }}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
     </main>
