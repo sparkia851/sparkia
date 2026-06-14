@@ -131,9 +131,9 @@ export function ToolFinderLanding() {
               <Link href="/tool-finder/search?q=DIY初心者、棚を作りたい" style={{ background: '#2563eb', color: '#fff', padding: '12px 28px', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
                 デモを試す →
               </Link>
-              <a href="https://twitter.com/sparkia_jp" target="_blank" rel="noopener noreferrer" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: '#e2e8f0', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+              <Link href="/contact" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: '#e2e8f0', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
                 導入を相談する
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -308,9 +308,9 @@ export function ToolFinderLanding() {
             <Link href="/tool-finder/search?q=DIY初心者、棚を作りたい" style={{ background: '#2563eb', color: '#fff', padding: '13px 32px', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
               デモを試す →
             </Link>
-            <a href="https://twitter.com/sparkia_jp" target="_blank" rel="noopener noreferrer" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: '#e2e8f0', padding: '13px 32px', borderRadius: 8, fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              X（Twitter）で相談する
-            </a>
+            <Link href="/contact" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: '#e2e8f0', padding: '13px 32px', borderRadius: 8, fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+              無料で相談する
+            </Link>
           </div>
         </FadeIn>
       </section>
