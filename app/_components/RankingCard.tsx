@@ -1,4 +1,4 @@
-import type { ArduinoBoard, Connectivity, Level } from '../_lib/recommend'
+import type { ArduinoBoard, Level } from '../_lib/recommend'
 import { BoardPhoto } from './BoardPhoto'
 
 const RANK: Record<number, { color: string; label: string; shadow: string }> = {
@@ -142,6 +142,21 @@ export function RankingCard({ mc, rank, aiReason }: { mc: ArduinoBoard; rank: nu
 
           {/* buttons */}
           <div style={{ display: 'flex', gap: 8, marginTop: 2 }}>
+            <a
+              href={`/board-finder/boards/${mc.id}`}
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                color: '#64748b',
+                border: '1px solid rgba(255,255,255,0.09)',
+                borderRadius: 6,
+                padding: '7px 14px',
+                textDecoration: 'none',
+                background: 'rgba(255,255,255,0.02)',
+              }}
+            >
+              詳細
+            </a>
             <a
               href={mc.officialUrl}
               target="_blank"
