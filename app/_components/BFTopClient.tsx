@@ -104,6 +104,7 @@ function SpecRow({ label, value, sub, color, delay }: {
       style={{
         display: 'flex',
         alignItems: 'baseline',
+        justifyContent: 'flex-start',
         gap: '0 28px',
         padding: '22px 0',
         borderBottom: '1px solid rgba(255,255,255,0.05)',
@@ -119,7 +120,7 @@ function SpecRow({ label, value, sub, color, delay }: {
         {label}
       </span>
       <span style={{
-        fontSize: 42, fontWeight: 700, lineHeight: 1,
+        fontSize: 'clamp(26px, 6.5vw, 42px)', fontWeight: 700, lineHeight: 1,
         fontFamily: HEADING, letterSpacing: '-0.025em',
         flex: '0 0 auto',
         ...metallicColor(color),
@@ -174,11 +175,11 @@ const HERO_BOARDS = [
 ]
 
 const SPECS = [
-  { label: 'Clock',   value: '16 – 240MHz',  sub: 'ATmega 8-bit から ESP32 Xtensa 240MHz まで対応',    color: '#60a5fa' },
-  { label: 'RAM',     value: '2KB – 8MB',    sub: '組み込みミニマムからエッジAIモデル展開まで',          color: '#34d399' },
-  { label: 'Flash',   value: '32KB – 16MB',  sub: 'スケッチサイズ・OTA更新の可否に直結',                color: '#6ee7b7' },
-  { label: '接続性',  value: '7 種',          sub: 'WiFi · BLE · LoRa · Zigbee · Ethernet · USB · Serial', color: '#38bdf8' },
-  { label: 'Form',    value: '15 種',         sub: 'Nano · Pico · DevKit · Feather · Hat · 産業用 他',  color: '#22d3ee' },
+  { label: 'Clock',   value: '16 – 240MHz',  sub: 'ATmega 8-bit から ESP32 Xtensa 240MHz まで対応',    color: '#3b82f6' },
+  { label: 'RAM',     value: '2KB – 8MB',    sub: '組み込みミニマムからエッジAIモデル展開まで',          color: '#059669' },
+  { label: 'Flash',   value: '32KB – 16MB',  sub: 'スケッチサイズ・OTA更新の可否に直結',                color: '#06b6d4' },
+  { label: '接続性',  value: '7 種',          sub: 'WiFi · BLE · LoRa · Zigbee · Ethernet · USB · Serial', color: '#0ea5e9' },
+  { label: 'Form',    value: '15 種',         sub: 'Nano · Pico · DevKit · Feather · Hat · 産業用 他',  color: '#2dd4bf' },
   { label: 'Level',   value: '3 段階',        sub: '電子工作入門から業務・エッジAI開発まで',             color: '#4ade80' },
 ]
 
@@ -351,7 +352,7 @@ export function BFTopClient() {
       <section style={{ padding: '100px 24px', position: 'relative', background: '#060913', overflow: 'hidden' }}>
 
         {/* ── featured board photo — right side ── */}
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '46%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+        <div className="hidden md:block" style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '46%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
           {/* board image — cropped tight so white margins are gone */}
           <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
             <Image
@@ -424,6 +425,7 @@ export function BFTopClient() {
 
         {/* left board — Uno R4 WiFi */}
         <motion.div
+          className="hidden md:block"
           initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
           style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '34%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}
@@ -441,6 +443,7 @@ export function BFTopClient() {
 
         {/* right board — M5Stack Core2 */}
         <motion.div
+          className="hidden md:block"
           initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           transition={{ duration: 1.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '34%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}
