@@ -170,11 +170,19 @@ const FLOATING_TAGS = [
   'ADC 12bit', 'Zigbee', 'FreeRTOS', '難易度 3段階',
 ]
 
-const MOCK_RESULTS = [
-  { name: 'ESP32 DevKit C',      match: 94, tags: ['WiFi', 'BLE', '240MHz'] },
-  { name: 'Arduino Uno R4 WiFi', match: 81, tags: ['WiFi', '48MHz', 'USB'] },
-  { name: 'Raspberry Pi Pico W', match: 73, tags: ['WiFi', '133MHz', 'Python'] },
+const SCROLL_BOARDS = [
+  { name: 'Uno R4 WiFi',   img: '/api/board-image?slug=uno-r4-wifi',                                                                                                                                  spec: 'WiFi · 48MHz' },
+  { name: 'ESP32 DevKit',  img: '/api/board-image?ext=https%3A%2F%2Fwww.espressif.com%2Fsites%2Fdefault%2Ffiles%2Fdev-board%2FESP32-DevKitC_S_0.png',                                                spec: 'WiFi · BLE · 240MHz' },
+  { name: 'Portenta H7',   img: '/api/board-image?slug=portenta-h7',                                                                                                                                  spec: 'BLE · 480MHz' },
+  { name: 'Pico W',        img: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/RPI_PICO_W_1.jpg',                                                                                               spec: 'WiFi · 133MHz' },
+  { name: 'M5Stack Core2', img: '/api/board-image?m5=m5stack-core2-esp32-iot-development-kit',                                                                                                        spec: '240MHz · Touch' },
+  { name: 'XIAO ESP32S3',  img: '/api/board-image?ext=https%3A%2F%2Ffiles.seeedstudio.com%2Fwiki%2FSeeedStudio-XIAO-ESP32S3%2Fimg%2Fxiaoesp32s3.jpg',                                                spec: 'WiFi · BLE · Tiny' },
+  { name: 'Nano 33 BLE',   img: '/api/board-image?slug=nano-33-ble-sense-rev2',                                                                                                                       spec: 'BLE · IMU · 64MHz' },
+  { name: 'Teensy 4.1',    img: '/api/board-image?ext=https%3A%2F%2Fwww.pjrc.com%2Fstore%2Fteensy41_4.jpg',                                                                                          spec: '600MHz · USB Host' },
 ]
+const MARQUEE_W = 140 // card width
+const MARQUEE_GAP = 10
+const MARQUEE_SHIFT = SCROLL_BOARDS.length * (MARQUEE_W + MARQUEE_GAP)
 
 const HERO_BOARDS = [
   '/api/board-image?slug=arduino-uno-rev3',
@@ -469,30 +477,28 @@ export function BFTopClient() {
             <SearchBox searchPath="/board-finder/search" dark />
           </FadeUp>
 
-          {/* C: mock AI result preview */}
-          <div style={{ marginTop: 48, textAlign: 'left' }}>
-            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', color: '#1e3a5f', marginBottom: 10, fontFamily: HEADING }}>
-              AI PREVIEW · 「Wi‑Fiでデータを送りたい」
-            </p>
-            <div style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6, overflow: 'hidden' }}>
-              {MOCK_RESULTS.map((r, i) => (
-                <FadeUp key={r.name} delay={0.5 + i * 0.2}>
-                  <div style={{
-                    display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px',
-                    borderBottom: i < MOCK_RESULTS.length - 1 ? '1px solid rgba(255,255,255,0.04)' : undefined,
-                  }}>
-                    <span style={{ fontSize: 13, fontWeight: 800, color: '#3b82f6', minWidth: 34, fontFamily: HEADING }}>{r.match}%</span>
-                    <span style={{ fontSize: 12, color: '#94a3b8', flex: 1, fontFamily: HEADING }}>{r.name}</span>
-                    <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-                      {r.tags.map(t => (
-                        <span key={t} style={{ fontSize: 8, padding: '2px 5px', borderRadius: 2, border: '1px solid rgba(255,255,255,0.1)', color: '#334155', letterSpacing: '0.05em' }}>{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          </div>
+        </div>
+
+        {/* C: board photo marquee */}
+        <div style={{ marginTop: 52, position: 'relative', overflow: 'hidden', zIndex: 10 }}>
+          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 72, background: 'linear-gradient(to right, #05070f, transparent)', zIndex: 2, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 72, background: 'linear-gradient(to left, #05070f, transparent)', zIndex: 2, pointerEvents: 'none' }} />
+          <motion.div
+            style={{ display: 'flex', gap: MARQUEE_GAP, paddingBottom: 2 }}
+            animate={{ x: [0, -MARQUEE_SHIFT] }}
+            transition={{ duration: 26, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
+          >
+            {[...SCROLL_BOARDS, ...SCROLL_BOARDS].map((b, i) => (
+              <div key={i} style={{ position: 'relative', width: MARQUEE_W, height: 96, flexShrink: 0, borderRadius: 6, overflow: 'hidden', background: '#04060e' }}>
+                <Image src={b.img} alt={b.name} fill className="object-cover object-center" sizes="140px" unoptimized />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(4,6,14,0.95) 0%, rgba(4,6,14,0.15) 55%, transparent 100%)' }} />
+                <div style={{ position: 'absolute', bottom: 7, left: 8, right: 4 }}>
+                  <p style={{ fontSize: 9, fontWeight: 700, color: '#e2e8f0', margin: 0, lineHeight: 1.3 }}>{b.name}</p>
+                  <p style={{ fontSize: 8, color: '#475569', margin: 0, marginTop: 1 }}>{b.spec}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
