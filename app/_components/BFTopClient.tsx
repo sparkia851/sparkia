@@ -351,24 +351,22 @@ export function BFTopClient() {
       {/* ══════════════════════ SPECS ═════════════════════════ */}
       <section style={{ padding: '100px 24px', position: 'relative', background: '#060913', overflow: 'hidden' }}>
 
-        {/* ── featured board photo — right side ── */}
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '46%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+        {/* ── featured board photo — full-width, long mask fade ── */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 22%, black 82%)', maskImage: 'linear-gradient(to right, transparent 0%, transparent 22%, black 82%)' }}>
           <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
             <Image
               src="/api/board-image?slug=portenta-h7"
               alt=""
               fill
-              sizes="46vw"
-              className="object-cover object-center"
+              sizes="100vw"
+              className="object-cover object-right"
               unoptimized
             />
           </div>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.45)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.4)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #060913 0%, transparent 20%, transparent 80%, #060913 100%)' }} />
-          <div style={{ position: 'absolute', right: '15%', top: '30%', width: 360, height: 360, background: 'radial-gradient(ellipse, rgba(34,211,238,0.08) 0%, transparent 65%)', filter: 'blur(20px)' }} />
+          <div style={{ position: 'absolute', right: '5%', top: '30%', width: 360, height: 360, background: 'radial-gradient(ellipse, rgba(34,211,238,0.08) 0%, transparent 65%)', filter: 'blur(20px)' }} />
         </div>
-        {/* section-wide horizontal fade — proportional to viewport, smooth on any screen */}
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1, background: 'linear-gradient(to right, #060913 0%, #060913 34%, rgba(6,9,19,0.9) 50%, rgba(6,9,19,0.48) 63%, rgba(6,9,19,0.12) 76%, transparent 88%)' }} />
 
         {/* left ambient light */}
         <div style={{ position: 'absolute', left: '-5%', top: '10%', width: 500, height: 500, background: 'radial-gradient(ellipse, rgba(59,130,246,0.06) 0%, transparent 60%)', pointerEvents: 'none', zIndex: 0 }} />
@@ -421,12 +419,12 @@ export function BFTopClient() {
 
         {/* left board — Uno R4 WiFi */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-          style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '34%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to right, black 0%, black 8%, transparent 58%)', maskImage: 'linear-gradient(to right, black 0%, black 8%, transparent 58%)' }}
         >
           <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
-            <Image src="/api/board-image?slug=uno-r4-wifi" alt="" fill className="object-cover object-center" sizes="34vw" unoptimized />
+            <Image src="/api/board-image?slug=uno-r4-wifi" alt="" fill className="object-cover object-left" sizes="100vw" loading="eager" unoptimized />
           </div>
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.35)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #05070f 0%, transparent 18%, transparent 82%, #05070f 100%)' }} />
@@ -434,20 +432,16 @@ export function BFTopClient() {
 
         {/* right board — M5Stack Core2 */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          transition={{ duration: 1.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '34%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', WebkitMaskImage: 'linear-gradient(to left, black 0%, black 8%, transparent 58%)', maskImage: 'linear-gradient(to left, black 0%, black 8%, transparent 58%)' }}
         >
           <div style={{ position: 'relative', width: '100%', height: '100%', background: '#04060e' }}>
-            <Image src="/api/board-image?m5=m5stack-core2-esp32-iot-development-kit" alt="" fill className="object-cover object-center" sizes="34vw" unoptimized />
+            <Image src="/api/board-image?m5=m5stack-core2-esp32-iot-development-kit" alt="" fill className="object-cover object-right" sizes="100vw" unoptimized />
           </div>
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(4,6,14,0.35)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #05070f 0%, transparent 18%, transparent 82%, #05070f 100%)' }} />
         </motion.div>
-        {/* section-wide left/right fades — proportional to viewport, smooth on any screen */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'linear-gradient(to right, #05070f 0%, rgba(5,7,15,0.88) 8%, rgba(5,7,15,0.42) 20%, rgba(5,7,15,0.06) 32%, transparent 42%)' }} />
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'linear-gradient(to left, #05070f 0%, rgba(5,7,15,0.88) 8%, rgba(5,7,15,0.42) 20%, rgba(5,7,15,0.06) 32%, transparent 42%)' }} />
-
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 40%, rgba(59,130,246,0.07) 0%, transparent 55%)', pointerEvents: 'none' }} />
         {/* thin top line */}
         <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: 'linear-gradient(to right, transparent, rgba(59,130,246,0.3), transparent)' }} />
