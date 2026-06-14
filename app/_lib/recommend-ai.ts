@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { unstable_cache } from 'next/cache'
 import { catalog } from './recommend'
 import type { ArduinoBoard } from './recommend'
 
@@ -33,7 +34,11 @@ reasonフィールドは、ユーザーの要望に直接応える形で「○�
 
 export type AIResult = ArduinoBoard & { rank: number; aiReason: string }
 
-export async function recommendAI(query: string): Promise<AIResult[]> {
+function normalizeQuery(q: string): string {
+  return q.toLowerCase().replace(/[\s　]+/g, ' ').trim()
+}
+
+async function _recommendAI(query: string): Promise<AIResult[]> {
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 1024,
@@ -51,4 +56,14 @@ export async function recommendAI(query: string): Promise<AIResult[]> {
       return { ...board, rank: i + 1, aiReason: b.reason }
     })
     .filter((b): b is AIResult => b !== null)
+}
+
+const getCachedRecommendation = unstable_cache(
+  (query: string) => _recommendAI(query),
+  ['recommend-ai'],
+  { revalidate: 86400 },
+)
+
+export function recommendAI(query: string): Promise<AIResult[]> {
+  return getCachedRecommendation(normalizeQuery(query))
 }
