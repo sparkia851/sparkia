@@ -31,10 +31,14 @@ const LEVEL: Record<Level, { label: string; color: string }> = {
 
 export default async function BoardDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>
+  searchParams: Promise<{ q?: string }>
 }) {
   const { slug } = await params
+  const { q } = await searchParams
+  const backHref = q ? `/board-finder/search?q=${encodeURIComponent(q)}` : '/board-finder/search'
   const board = catalog.find(b => b.id === slug)
   if (!board) notFound()
 
@@ -64,7 +68,7 @@ export default async function BoardDetailPage({
 
         {/* breadcrumb */}
         <div style={{ position: 'absolute', top: 18, left: 18 }}>
-          <Link href="/board-finder/search" style={{
+          <Link href={backHref} style={{
             fontSize: 11, fontWeight: 600, letterSpacing: '0.06em',
             color: 'rgba(148,163,184,0.8)', textDecoration: 'none',
             background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)',

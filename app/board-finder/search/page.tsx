@@ -49,6 +49,7 @@ export default async function SearchPage({
                 mc={mc}
                 rank={mc.rank}
                 aiReason={'aiReason' in mc ? String(mc.aiReason) : undefined}
+                query={query}
               />
             ))}
           </div>

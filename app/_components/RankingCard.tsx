@@ -31,7 +31,7 @@ function RankBadge({ label, color }: { label: string; color: string }) {
   )
 }
 
-export function RankingCard({ mc, rank, aiReason }: { mc: ArduinoBoard; rank: number; aiReason?: string }) {
+export function RankingCard({ mc, rank, aiReason, query }: { mc: ArduinoBoard; rank: number; aiReason?: string; query?: string }) {
   const r = RANK[rank] ?? { color: '#3b82f6', label: `0${rank}`, shadow: '0 4px 20px rgba(0,0,0,0.3)' }
   const lv = LEVEL[mc.level]
   const verdict = aiReason ?? mc.verdict
@@ -143,7 +143,7 @@ export function RankingCard({ mc, rank, aiReason }: { mc: ArduinoBoard; rank: nu
           {/* buttons */}
           <div style={{ display: 'flex', gap: 8, marginTop: 2 }}>
             <a
-              href={`/board-finder/boards/${mc.id}`}
+              href={`/board-finder/boards/${mc.id}${query ? `?q=${encodeURIComponent(query)}` : ''}`}
               style={{
                 fontSize: 11,
                 fontWeight: 600,
