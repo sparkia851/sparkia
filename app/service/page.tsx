@@ -4,23 +4,17 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 
-function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const inView = useInView(ref, { once: true, margin: '-64px' })
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 22 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}>
       {children}
     </motion.div>
   )
 }
 
-const METALLIC = {
-  background: 'linear-gradient(135deg, #e2e8f0 0%, #ffffff 40%, #94a3b8 70%, #e2e8f0 100%)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-}
-
+// ── Contact form (light theme) ───────────────────────────
 const CATEGORIES = ['電動工具・DIY用品', '釣り具・アウトドア', '楽器・音響機器', 'カメラ・映像機器', 'スポーツ用品', 'ファッション・アパレル', 'コスメ・美容', 'ペット用品', 'インテリア・家具', 'その他']
 type Status = 'idle' | 'sending' | 'done' | 'error'
 
@@ -46,155 +40,242 @@ function ContactForm() {
     }
   }
 
-  const field = {
+  const field: React.CSSProperties = {
     width: '100%',
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.09)',
-    borderRadius: 8,
+    background: '#fff',
+    border: '1px solid #cbd5e1',
+    borderRadius: 4,
     padding: '12px 14px',
-    color: '#f1f5f9',
+    color: '#0f172a',
     fontSize: 14,
     outline: 'none',
-    boxSizing: 'border-box' as const,
+    boxSizing: 'border-box',
+  }
+
+  const label: React.CSSProperties = {
+    display: 'block',
+    fontSize: 11,
+    fontWeight: 700,
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase',
+    color: '#64748b',
+    marginBottom: 8,
   }
 
   if (status === 'done') {
     return (
-      <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: 'center', padding: '56px 0' }}>
-        <div style={{ fontSize: 36, marginBottom: 20 }}>✅</div>
-        <p style={{ fontSize: 17, fontWeight: 800, color: '#f8fafc', marginBottom: 10 }}>送信しました</p>
-        <p style={{ fontSize: 13, color: '#475569', lineHeight: 1.8 }}>内容を確認次第ご連絡します。</p>
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ textAlign: 'center', padding: '60px 0' }}>
+        <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: 22 }}>✓</div>
+        <p style={{ fontSize: 18, fontWeight: 700, color: '#0f172a', marginBottom: 8 }}>送信しました</p>
+        <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.8 }}>内容を確認次第ご連絡します。</p>
       </motion.div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         <div>
-          <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#334155', marginBottom: 6, textTransform: 'uppercase' as const }}>お名前 <span style={{ color: '#3b82f6' }}>*</span></label>
+          <label style={label}>お名前 <span style={{ color: '#2563eb' }}>*</span></label>
           <input style={field} type="text" placeholder="田中 太郎" value={name} onChange={e => setName(e.target.value)} required />
         </div>
         <div>
-          <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#334155', marginBottom: 6, textTransform: 'uppercase' as const }}>サイト URL</label>
+          <label style={label}>サイト URL</label>
           <input style={field} type="url" placeholder="https://your-shop.jp" value={siteUrl} onChange={e => setSiteUrl(e.target.value)} />
         </div>
       </div>
       <div>
-        <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#334155', marginBottom: 6, textTransform: 'uppercase' as const }}>商品カテゴリ <span style={{ color: '#3b82f6' }}>*</span></label>
+        <label style={label}>商品カテゴリ <span style={{ color: '#2563eb' }}>*</span></label>
         <select style={{ ...field, appearance: 'none', cursor: 'pointer' }} value={category} onChange={e => setCategory(e.target.value)} required>
           <option value="" disabled>選択してください</option>
           {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
       <div>
-        <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#334155', marginBottom: 6, textTransform: 'uppercase' as const }}>気になること・相談内容 <span style={{ color: '#3b82f6' }}>*</span></label>
-        <textarea style={{ ...field, minHeight: 100, resize: 'vertical', lineHeight: 1.7 }} placeholder="取り扱い商品の概要や、現在の課題などをお書きください。" value={message} onChange={e => setMessage(e.target.value)} required />
+        <label style={label}>相談内容 <span style={{ color: '#2563eb' }}>*</span></label>
+        <textarea style={{ ...field, minHeight: 110, resize: 'vertical', lineHeight: 1.75 }} placeholder="取り扱い商品の概要や、現在の課題などをお書きください。" value={message} onChange={e => setMessage(e.target.value)} required />
       </div>
-      {status === 'error' && <p style={{ fontSize: 12, color: '#ef4444', margin: 0 }}>送信に失敗しました。時間をおいて再度お試しください。</p>}
-      <button type="submit" disabled={status === 'sending'} style={{ background: status === 'sending' ? 'rgba(37,99,235,0.4)' : 'linear-gradient(135deg,#1d4ed8,#3b82f6)', color: '#fff', border: 'none', borderRadius: 8, padding: '15px', fontSize: 14, fontWeight: 700, cursor: status === 'sending' ? 'not-allowed' : 'pointer', marginTop: 6, letterSpacing: '0.02em' }}>
-        {status === 'sending' ? '送信中...' : '相談してみる →'}
+      {status === 'error' && <p style={{ fontSize: 12, color: '#dc2626', margin: 0 }}>送信に失敗しました。時間をおいて再度お試しください。</p>}
+      <button type="submit" disabled={status === 'sending'} style={{ background: status === 'sending' ? '#93c5fd' : '#2563eb', color: '#fff', border: 'none', borderRadius: 2, padding: '15px', fontSize: 13, fontWeight: 700, cursor: status === 'sending' ? 'not-allowed' : 'pointer', letterSpacing: '0.06em' }}>
+        {status === 'sending' ? '送信中...' : '無料で相談する'}
       </button>
+      <p style={{ fontSize: 11, color: '#94a3b8', textAlign: 'center', margin: 0 }}>費用はかかりません。まずはお気軽にどうぞ。</p>
     </form>
   )
 }
 
+// ── Page ─────────────────────────────────────────────────
 export default function ServicePage() {
   return (
-    <main style={{ minHeight: '100vh', background: '#060913', color: '#f1f5f9' }}>
+    <div style={{ background: '#fff', color: '#0f172a' }}>
 
       {/* ── Hero ── */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: 'clamp(80px,13vw,140px) 24px 100px', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 800, height: 500, background: 'radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, transparent 65%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(59,130,246,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.022) 1px, transparent 1px)', backgroundSize: '54px 54px', pointerEvents: 'none' }} />
-
-        <div style={{ position: 'relative', maxWidth: 640, margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
-            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1e3a5f', display: 'block', marginBottom: 26 }}>
-              EC向け AI商品提案
-            </span>
-            <h1 style={{ fontSize: 'clamp(28px, 5.5vw, 52px)', fontWeight: 900, letterSpacing: '-0.035em', lineHeight: 1.12, margin: '0 0 26px', ...METALLIC }}>
-              「どれを選べばいい？」を<br />AIが答える機能を、<br />あなたのECサイトへ。
-            </h1>
-            <p style={{ fontSize: 15, color: '#475569', lineHeight: 1.9, maxWidth: 480, margin: '0 auto 48px' }}>
-              お客様が用途・予算・スキルを入力すると、御社の商品からAIが最適なものを提案。
-              まずはお気軽にご相談ください。
+      <section style={{ position: 'relative', height: '88vh', minHeight: 520, display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+        <img
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(100deg, rgba(2,6,23,0.88) 0%, rgba(2,6,23,0.6) 55%, rgba(2,6,23,0.15) 100%)' }} />
+        <div style={{ position: 'relative', maxWidth: 1100, margin: '0 auto', padding: '0 clamp(24px,5vw,80px)', width: '100%' }}>
+          <motion.div initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}>
+            <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 28 }}>
+              EC Site AI Solution
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/board-finder" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 700, color: '#94a3b8', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 22px', borderRadius: 8, textDecoration: 'none' }}>
-                デモを見る →
-              </Link>
-              <a href="#contact" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 700, color: '#fff', background: 'linear-gradient(135deg,#1d4ed8,#3b82f6)', padding: '12px 22px', borderRadius: 8, textDecoration: 'none' }}>
+            <h1 style={{ fontSize: 'clamp(34px,5.5vw,66px)', fontWeight: 800, color: '#fff', lineHeight: 1.15, letterSpacing: '-0.03em', margin: '0 0 28px', maxWidth: 580 }}>
+              商品選びを、<br />AIに任せる。
+            </h1>
+            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', lineHeight: 1.85, maxWidth: 380, marginBottom: 48 }}>
+              お客様の用途・予算に合った商品を自動提案する機能を、御社のECサイトに組み込みます。
+            </p>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <a href="#contact" style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, color: '#fff', background: '#2563eb', padding: '14px 30px', borderRadius: 2, textDecoration: 'none', letterSpacing: '0.06em' }}>
                 無料で相談する
               </a>
+              <Link href="/board-finder" style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.75)', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)', padding: '14px 30px', borderRadius: 2, textDecoration: 'none', letterSpacing: '0.06em' }}>
+                デモを試す →
+              </Link>
             </div>
           </motion.div>
         </div>
+        {/* bottom fade */}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 120, background: 'linear-gradient(to top, #fff, transparent)' }} />
       </section>
 
-      {/* ── What it is ── */}
-      <section style={{ padding: '72px 24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <FadeUp>
-            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1e3a5f', textAlign: 'center', marginBottom: 10 }}>What you get</p>
-            <h2 style={{ fontSize: 'clamp(18px,2.8vw,28px)', fontWeight: 900, letterSpacing: '-0.025em', textAlign: 'center', marginBottom: 48 }}>できること</h2>
-          </FadeUp>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 12 }}>
-            {[
-              { icon: '🔍', title: 'AI商品提案', body: 'お客様の使い方・予算・経験に合わせて、御社の商品ラインナップからAIが最適なものを選んで提示します。' },
-              { icon: '💬', title: '問い合わせ削減', body: '「どれがいいですか？」という定番の質問にAIが自動で対応。サポートの手間を減らせます。' },
-              { icon: '🎨', title: 'サイトに合わせて設置', body: '既存のECサイトやブログに組み込む形で提供します。デザインは御社のイメージに合わせて調整します。' },
-            ].map((item, i) => (
-              <FadeUp key={item.title} delay={i * 0.07}>
-                <div style={{ background: '#0d1425', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '24px 20px' }}>
-                  <p style={{ fontSize: 24, marginBottom: 14 }}>{item.icon}</p>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: '#f1f5f9', marginBottom: 8 }}>{item.title}</p>
-                  <p style={{ fontSize: 12, color: '#475569', lineHeight: 1.85, margin: 0 }}>{item.body}</p>
-                </div>
-              </FadeUp>
-            ))}
+      {/* ── Lead ── */}
+      <section style={{ background: '#fff', padding: '80px 24px 72px' }}>
+        <FadeIn>
+          <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
+            <p style={{ fontSize: 'clamp(16px,2.2vw,22px)', fontWeight: 300, lineHeight: 1.85, color: '#1e293b', letterSpacing: '-0.01em' }}>
+              「どれがいいか分からない」——<br />
+              そのお客様の声に、AIがリアルタイムで答えます。
+            </p>
+            <div style={{ width: 36, height: 2, background: '#2563eb', margin: '36px auto 0' }} />
           </div>
+        </FadeIn>
+      </section>
+
+      {/* ── Feature 1: text left, image right ── */}
+      <section style={{ background: '#f8fafc', padding: '80px 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(24px,5vw,80px)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(40px,6vw,96px)', alignItems: 'center' }}>
+          <FadeIn>
+            <div>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#2563eb', marginBottom: 18 }}>Feature 01</p>
+              <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.25, color: '#0f172a', marginBottom: 22 }}>
+                AIが商品を<br />自動で提案
+              </h2>
+              <div style={{ width: 28, height: 2, background: '#e2e8f0', marginBottom: 24 }} />
+              <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.9 }}>
+                お客様がフリーワードで用途・予算・スキルを入力すると、御社の商品ラインナップの中からAIが最適なものをランキング形式で提示します。
+                「定番の質問」への対応を自動化し、サポートコストを削減します。
+              </p>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <div style={{ borderRadius: 4, overflow: 'hidden', aspectRatio: '4/3', background: '#e2e8f0' }}>
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80"
+                alt="AI商品提案のイメージ"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* ── Demo callout ── */}
-      <section style={{ padding: '64px 24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <FadeUp>
-          <div style={{ maxWidth: 600, margin: '0 auto', background: 'linear-gradient(135deg, #0d1a2e, #0a1220)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: 16, padding: 'clamp(28px,5vw,48px)', textAlign: 'center' }}>
-            <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#3b82f6', marginBottom: 16 }}>Live Demo</p>
-            <h3 style={{ fontSize: 'clamp(16px,2.5vw,22px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#f1f5f9', marginBottom: 14 }}>
-              まず実際に触ってみてください
-            </h3>
-            <p style={{ fontSize: 13, color: '#475569', lineHeight: 1.85, marginBottom: 28 }}>
-              電子工作用ボードを題材に作ったデモです。<br />
-              フリーワードで検索すると、AIが用途に合った商品を提案します。
-            </p>
-            <Link href="/board-finder" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontSize: 13, fontWeight: 700, color: '#fff', background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)', padding: '13px 28px', borderRadius: 8, textDecoration: 'none' }}>
-              デモを試す →
-            </Link>
+      {/* ── Feature 2: image left, text right ── */}
+      <section style={{ background: '#fff', padding: '80px 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(24px,5vw,80px)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(40px,6vw,96px)', alignItems: 'center' }}>
+          <FadeIn delay={0.05}>
+            <div style={{ borderRadius: 4, overflow: 'hidden', aspectRatio: '4/3', background: '#e2e8f0', order: 0 }}>
+              <img
+                src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80"
+                alt="ECサイトへの組み込みイメージ"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          </FadeIn>
+          <FadeIn>
+            <div>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#2563eb', marginBottom: 18 }}>Feature 02</p>
+              <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.25, color: '#0f172a', marginBottom: 22 }}>
+                御社サイトに<br />そのまま組み込む
+              </h2>
+              <div style={{ width: 28, height: 2, background: '#e2e8f0', marginBottom: 24 }} />
+              <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.9 }}>
+                既存のECサイトやブログページに追加する形で提供します。
+                WordPress・独自サイトどちらにも対応しており、御社のデザインや雰囲気に合わせて調整します。
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── Demo CTA ── */}
+      <section style={{ background: '#0f172a', padding: '80px 24px' }}>
+        <FadeIn>
+          <div style={{ maxWidth: 800, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 48, alignItems: 'center' }}>
+            <div>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 18 }}>Live Demo</p>
+              <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-0.025em', color: '#fff', lineHeight: 1.25, marginBottom: 18 }}>
+                まず実際に<br />触ってみてください
+              </h2>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.85 }}>
+                電子工作用ボードを題材に作ったデモです。フリーワードで検索すると、AIが用途に合った商品を提案します。
+              </p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, padding: '16px 20px' }}>
+                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 6 }}>Board Finder Demo</p>
+                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, marginBottom: 16 }}>Arduino・マイコンボード40種の中からAIが提案</p>
+                <Link href="/board-finder" style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, color: '#fff', background: '#2563eb', padding: '11px 22px', borderRadius: 2, textDecoration: 'none', letterSpacing: '0.04em' }}>
+                  デモを試す →
+                </Link>
+              </div>
+            </div>
           </div>
-        </FadeUp>
+        </FadeIn>
       </section>
 
       {/* ── Contact ── */}
-      <section id="contact" style={{ padding: '72px 24px 100px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ maxWidth: 540, margin: '0 auto' }}>
-          <FadeUp>
-            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1e3a5f', textAlign: 'center', marginBottom: 10 }}>Contact</p>
-            <h2 style={{ fontSize: 'clamp(20px,3vw,30px)', fontWeight: 900, letterSpacing: '-0.025em', textAlign: 'center', marginBottom: 12 }}>無料で相談する</h2>
-            <p style={{ fontSize: 13, color: '#475569', textAlign: 'center', lineHeight: 1.9, marginBottom: 36 }}>
-              御社の商品カテゴリに合わせたデモを準備してお見せします。<br />
-              まずは気軽に連絡ください。費用はかかりません。
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.06}>
-            <div style={{ background: '#0d1425', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '28px 24px' }}>
+      <section id="contact" style={{ background: '#f8fafc', padding: '80px 24px 100px', borderTop: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 'clamp(40px,6vw,80px)', alignItems: 'start' }}>
+          <FadeIn>
+            <div style={{ paddingTop: 4 }}>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#2563eb', marginBottom: 18 }}>Contact</p>
+              <h2 style={{ fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-0.025em', color: '#0f172a', lineHeight: 1.25, marginBottom: 22 }}>
+                無料で<br />相談する
+              </h2>
+              <div style={{ width: 28, height: 2, background: '#e2e8f0', marginBottom: 28 }} />
+              <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.9, marginBottom: 36 }}>
+                御社の商品カテゴリに合わせたデモを準備してお見せします。まずは気軽にご連絡ください。費用はかかりません。
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {[
+                  { label: '初期費用', value: '無料' },
+                  { label: '返答', value: '1〜2営業日以内' },
+                ].map(row => (
+                  <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: 14 }}>
+                    <span style={{ fontSize: 12, color: '#94a3b8', fontWeight: 500 }}>{row.label}</span>
+                    <span style={{ fontSize: 13, color: '#0f172a', fontWeight: 700 }}>{row.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <div style={{ background: '#fff', border: '1px solid #e2e8f0', borderRadius: 4, padding: 'clamp(24px,4vw,40px)', boxShadow: '0 4px 24px rgba(0,0,0,0.05)' }}>
               <ContactForm />
             </div>
-          </FadeUp>
+          </FadeIn>
         </div>
       </section>
 
-    </main>
+      {/* ── Footer strip ── */}
+      <div style={{ background: '#0f172a', padding: '22px 24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', margin: 0, letterSpacing: '0.04em' }}>© 2026 Sparkia</p>
+      </div>
+
+    </div>
   )
 }
