@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { HomeClient } from './_components/HomeClient'
+import { ServicePageClient } from './_components/ServicePageClient'
 
 export const metadata: Metadata = {
-  title: 'Sparkia — 電子工作・IoTのためのAIツール集',
-  description: 'マイコンボード選定・電子部品検索など、電子工作・IoT開発を助けるAIツールを提供するプラットフォームです。',
+  title: 'Sparkia — EC向けAI商品提案サービス',
+  description: 'お客様の用途・予算に合った商品をAIが自動提案する機能を、御社のECサイトに組み込みます。まずは無料でご相談ください。',
   alternates: { canonical: 'https://sparkia.jp' },
 }
 
 export default function HomePage() {
-  return <HomeClient />
+  return <ServicePageClient />
 }
