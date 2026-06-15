@@ -20,15 +20,17 @@ export function Header() {
         </Link>
         <nav className="flex items-center gap-6 text-sm" style={{ color: '#475569' }}>
           <Link href="/board-finder" className="hover:text-white transition-colors duration-150">
-            マイコン検索
+            デモを見る
           </Link>
-          <Link href="/tool-finder" className="hover:text-white transition-colors duration-150">
-            工具検索
+          <Link href="/service" className="hover:text-white transition-colors duration-150">
+            サービス
           </Link>
-          <span className="hidden sm:inline cursor-default" style={{ color: '#1e293b' }} title="近日公開">
-            IC・センサー
-          </span>
         </nav>
+        <div style={{ marginLeft: 'auto' }}>
+          <Link href="/service#contact" style={{ fontSize: 12, fontWeight: 700, color: '#fff', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', padding: '7px 16px', borderRadius: 6, textDecoration: 'none' }}>
+            相談する
+          </Link>
+        </div>
       </div>
     </header>
   )
