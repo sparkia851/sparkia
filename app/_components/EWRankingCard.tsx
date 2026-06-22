@@ -21,7 +21,7 @@ function ProductImage({ imageUrl, name }: { imageUrl: string; name: string }) {
         src={imageUrl}
         alt={name}
         fill
-        style={{ objectFit: 'cover' }}
+        style={{ objectFit: 'contain', padding: '8px' }}
         sizes="(max-width: 640px) 100vw, 180px"
       />
     </div>
