@@ -46,14 +46,15 @@ export function EWRankingCard({
   return (
     <article style={{
       background: isFirst ? '#fffdf8' : '#ffffff',
-      border: isFirst ? '1px solid #d4a76a' : '1px solid #ece5db',
+      borderTop: isFirst ? '1px solid #d4a76a' : '1px solid #ece5db',
+      borderRight: isFirst ? '1px solid #d4a76a' : '1px solid #ece5db',
+      borderBottom: isFirst ? '1px solid #d4a76a' : '1px solid #ece5db',
+      borderLeft: isFirst ? '3px solid #b5722a' : '1px solid #ece5db',
       borderRadius: 10,
       overflow: 'hidden',
       boxShadow: isFirst
         ? '0 4px 24px rgba(181,114,42,0.11)'
         : '0 1px 6px rgba(28,20,16,0.05)',
-      /* amber left accent on rank 1 */
-      borderLeft: isFirst ? '3px solid #b5722a' : undefined,
     }}>
 
       <div className="flex flex-col sm:flex-row">
