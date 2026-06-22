@@ -16,13 +16,13 @@ const CATEGORY_COLOR = {
 
 function ProductImage({ imageUrl, name }: { imageUrl: string; name: string }) {
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', background: '#f0ebe2' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%', background: '#ede8e0' }}>
       <Image
         src={imageUrl}
         alt={name}
         fill
         style={{ objectFit: 'cover' }}
-        sizes="(max-width: 640px) 100vw, 176px"
+        sizes="(max-width: 640px) 100vw, 180px"
       />
     </div>
   )
@@ -41,25 +41,28 @@ export function EWRankingCard({
   const catColor = CATEGORY_COLOR[product.category]
   const verdict = aiReason ?? product.verdict
   const isFirst = rank === 1
+  const filledDots = Math.max(1, 6 - rank)
 
   return (
     <article style={{
-      background: '#ffffff',
-      border: isFirst ? '1px solid #d4a76a' : '1px solid #e8e0d4',
-      borderRadius: 8,
+      background: isFirst ? '#fffdf8' : '#ffffff',
+      border: isFirst ? '1px solid #d4a76a' : '1px solid #ece5db',
+      borderRadius: 10,
       overflow: 'hidden',
       boxShadow: isFirst
-        ? '0 2px 20px rgba(181,114,42,0.09)'
-        : '0 1px 4px rgba(28,20,16,0.04)',
+        ? '0 4px 24px rgba(181,114,42,0.11)'
+        : '0 1px 6px rgba(28,20,16,0.05)',
+      /* amber left accent on rank 1 */
+      borderLeft: isFirst ? '3px solid #b5722a' : undefined,
     }}>
 
       <div className="flex flex-col sm:flex-row">
 
-        {/* image — mobile: 3:2 top, desktop: fixed left column */}
+        {/* image */}
         <div className="sm:hidden relative" style={{ aspectRatio: '3/2' }}>
           <ProductImage imageUrl={product.imageUrl} name={product.name} />
         </div>
-        <div className="hidden sm:block relative shrink-0" style={{ width: 176, alignSelf: 'stretch' }}>
+        <div className="hidden sm:block relative shrink-0" style={{ width: 180, alignSelf: 'stretch' }}>
           <ProductImage imageUrl={product.imageUrl} name={product.name} />
         </div>
 
@@ -67,22 +70,23 @@ export function EWRankingCard({
         <div style={{
           flex: 1,
           minWidth: 0,
-          padding: '22px 26px',
+          padding: '20px 24px',
           display: 'flex',
           flexDirection: 'column',
-          gap: 11,
+          gap: 10,
         }}>
 
           {/* rank + badges */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: '0.1em',
-              color: isFirst ? '#b5722a' : '#c8bba8',
-              fontVariantNumeric: 'tabular-nums',
+              fontSize: isFirst ? 22 : 13,
+              fontWeight: 900,
+              letterSpacing: '-0.02em',
+              color: isFirst ? '#b5722a' : '#d4c8bc',
+              fontFamily: 'var(--font-serif-jp), serif',
+              lineHeight: 1,
             }}>
-              {String(rank).padStart(2, '0')}
+              {isFirst ? '01' : String(rank).padStart(2, '0')}
             </span>
             <div style={{ display: 'flex', gap: 5 }}>
               <span style={{
@@ -115,8 +119,9 @@ export function EWRankingCard({
             fontSize: 15,
             fontWeight: 700,
             color: '#1c1410',
-            lineHeight: 1.4,
-            letterSpacing: '0.01em',
+            lineHeight: 1.45,
+            letterSpacing: '0.005em',
+            fontFamily: 'var(--font-serif-jp), serif',
           }}>
             {product.name}
           </h2>
@@ -174,21 +179,17 @@ export function EWRankingCard({
               マッチ度
             </span>
             <div style={{ display: 'flex', gap: 4 }}>
-              {Array.from({ length: 5 }, (_, i) => {
-                const filled = i < Math.max(1, 6 - rank)
-                return (
-                  <span key={i} style={{
-                    display: 'inline-block',
-                    width: 7,
-                    height: 7,
-                    borderRadius: '50%',
-                    background: filled
-                      ? (isFirst ? '#b5722a' : '#c8a87a')
-                      : '#e8e0d4',
-                    transition: 'background 0.2s',
-                  }} />
-                )
-              })}
+              {Array.from({ length: 5 }, (_, i) => (
+                <span key={i} style={{
+                  display: 'inline-block',
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: i < filledDots
+                    ? (isFirst ? '#b5722a' : '#c8a87a')
+                    : '#e8e0d4',
+                }} />
+              ))}
             </div>
             {isFirst && (
               <span style={{
@@ -205,11 +206,12 @@ export function EWRankingCard({
           {/* price + CTA */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 2 }}>
             <span style={{
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: 700,
               color: '#1c1410',
               letterSpacing: '-0.01em',
               fontVariantNumeric: 'tabular-nums',
+              fontFamily: 'var(--font-serif-jp), serif',
             }}>
               {product.price}
             </span>

@@ -29,13 +29,13 @@ export default async function EWSearchPage({
   const results = aiResults ?? recommend(query)
 
   return (
-    <main style={{ minHeight: '100vh', background: '#f5f0e8' }}>
+    <main className="ew-section-cream" style={{ minHeight: '100vh' }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 20px 80px' }}>
 
         {/* header */}
         <div style={{
           padding: '24px 0 20px',
-          marginBottom: 28,
+          marginBottom: 36,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -63,15 +63,23 @@ export default async function EWSearchPage({
         {query ? (
           <>
             {/* query label */}
-            <div style={{ marginBottom: 24 }}>
-              <p style={{
+            <div style={{ marginBottom: 28 }}>
+              <p style={{ margin: '0 0 6px', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#c8bba8' }}>
+                AI Recommendation
+              </p>
+              <h1 style={{
                 margin: 0,
-                fontSize: 13,
-                color: '#b5a090',
-                letterSpacing: '0.02em',
+                fontSize: 'clamp(20px,4vw,28px)',
+                fontWeight: 700,
+                color: '#1c1410',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.3,
+                fontFamily: 'var(--font-serif-jp), serif',
               }}>
-                「<span style={{ color: '#1c1410', fontWeight: 700 }}>{query}</span>」
-                の提案&ensp;—&ensp;{results.length}件
+                「{query}」
+              </h1>
+              <p style={{ margin: '8px 0 0', fontSize: 12, color: '#b5a090', letterSpacing: '0.02em' }}>
+                {results.length}件の提案
               </p>
             </div>
 
