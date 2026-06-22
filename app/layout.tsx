@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Space_Grotesk, Noto_Sans_JP } from 'next/font/google'
+import { Space_Grotesk, Noto_Sans_JP, Noto_Serif_JP } from 'next/font/google'
 import { Header } from './_components/Header'
 import './globals.css'
 
@@ -14,6 +14,13 @@ const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
   weight: ['400', '700', '900'],
   variable: '--font-jp',
+  display: 'swap',
+})
+
+const notoSerifJP = Noto_Serif_JP({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-serif-jp',
   display: 'swap',
 })
 
@@ -34,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <body
-        className={`${spaceGrotesk.variable} ${notoSansJP.variable} antialiased min-h-screen flex flex-col`}
+        className={`${spaceGrotesk.variable} ${notoSansJP.variable} ${notoSerifJP.variable} antialiased min-h-screen flex flex-col`}
         style={{ background: '#05070f', color: '#f1f5f9', fontFamily: 'var(--font-jp), sans-serif' }}
       >
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />

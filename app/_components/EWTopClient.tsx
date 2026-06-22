@@ -214,12 +214,12 @@ export function EWTopClient() {
       </section>
 
       {/* ══ CATALOG ═══════════════════════════════════════════ */}
-      <section style={{ padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)', background: '#f5f0e8' }}>
+      <section className="ew-section-cream" style={{ padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)' }}>
         <FadeUp>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#b5a090', marginBottom: 16 }}>
             Lineup
           </p>
-          <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#1c1410' }}>
+          <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 900, letterSpacing: '-0.03em', color: '#1c1410', fontFamily: 'var(--font-serif-jp), serif' }}>
             全40種。マイコンとセンサーを網羅。
           </h2>
           <p style={{ margin: '0 0 52px', fontSize: 14, color: '#7a6e64', lineHeight: 1.85, maxWidth: 520, letterSpacing: '0.02em' }}>
@@ -256,12 +256,12 @@ export function EWTopClient() {
       </section>
 
       {/* ══ AI CRITERIA ═══════════════════════════════════════ */}
-      <section style={{ background: '#ffffff', padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)' }}>
+      <section className="ew-section-white" style={{ padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)' }}>
         <FadeUp>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#b5a090', marginBottom: 16 }}>
             Selection
           </p>
-          <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#1c1410' }}>
+          <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 900, letterSpacing: '-0.03em', color: '#1c1410', fontFamily: 'var(--font-serif-jp), serif' }}>
             AIが選ぶ5つの軸。
           </h2>
           <p style={{ margin: '0 0 52px', fontSize: 14, color: '#7a6e64', lineHeight: 1.85, maxWidth: 480, letterSpacing: '0.02em' }}>
@@ -282,7 +282,7 @@ export function EWTopClient() {
                 <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#c8bba8', flex: '0 0 72px', paddingTop: 4 }}>
                   {row.label}
                 </span>
-                <span style={{ fontSize: 'clamp(20px,3.5vw,32px)', fontWeight: 800, letterSpacing: '-0.02em', color: '#1c1410', flex: '0 0 auto', lineHeight: 1 }}>
+                <span style={{ fontSize: 'clamp(20px,3.5vw,32px)', fontWeight: 700, letterSpacing: '-0.02em', color: '#1c1410', flex: '0 0 auto', lineHeight: 1, fontFamily: 'var(--font-serif-jp), serif' }}>
                   {row.value}
                 </span>
                 <span style={{ fontSize: 13, color: '#7a6e64', flex: '1 1 200px', alignSelf: 'center', lineHeight: 1.7, letterSpacing: '0.02em' }}>
@@ -295,12 +295,12 @@ export function EWTopClient() {
       </section>
 
       {/* ══ BOTTOM CTA ════════════════════════════════════════ */}
-      <section style={{ background: '#f5f0e8', padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)', textAlign: 'center' }}>
+      <section className="ew-section-cream" style={{ padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)', textAlign: 'center' }}>
         <FadeUp>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#b5a090', marginBottom: 20 }}>
             40 products · AI‑powered
           </p>
-          <h2 style={{ margin: '0 0 12px', fontSize: 'clamp(24px,3.8vw,38px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#1c1410' }}>
+          <h2 style={{ margin: '0 0 12px', fontSize: 'clamp(24px,3.8vw,38px)', fontWeight: 900, letterSpacing: '-0.03em', color: '#1c1410', fontFamily: 'var(--font-serif-jp), serif' }}>
             あなたのプロジェクトに合った<br />部品を見つける
           </h2>
           <p style={{ margin: '0 0 36px', fontSize: 14, color: '#7a6e64', lineHeight: 1.85, letterSpacing: '0.02em' }}>
