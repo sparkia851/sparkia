@@ -29,48 +29,49 @@ export default async function EWSearchPage({
   const results = aiResults ?? recommend(query)
 
   return (
-    <main style={{ minHeight: '100vh', background: '#fafaf8' }}>
-      <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 16px 80px' }}>
+    <main style={{ minHeight: '100vh', background: '#f5f0e8' }}>
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 20px 80px' }}>
 
         {/* header */}
         <div style={{
-          padding: '20px 0 16px',
-          borderBottom: '1px solid #f3f4f6',
-          marginBottom: 24,
+          padding: '24px 0 20px',
+          marginBottom: 28,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: 12,
+          borderBottom: '1px solid #e2d8ca',
         }}>
-          <Link
-            href="/electronicwork"
-            style={{
-              fontSize: 12, fontWeight: 600,
-              color: '#f97316', textDecoration: 'none',
-              display: 'flex', alignItems: 'center', gap: 4,
-              flexShrink: 0,
-            }}
-          >
+          <Link href="/electronicwork" style={{
+            fontSize: 12,
+            color: '#b5a090',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
             ← 戻る
           </Link>
           <span style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
-            color: '#f97316', background: '#fff7ed',
-            border: '1px solid #fed7aa',
-            padding: '3px 12px', borderRadius: 20,
-            flexShrink: 0,
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: '#c8bba8',
           }}>
-            電子工作ステーション × AI 提案
+            電子工作ステーション&ensp;/&ensp;AI 提案
           </span>
         </div>
 
         {query ? (
           <>
-            {/* query display */}
-            <div style={{ marginBottom: 20 }}>
-              <p style={{ margin: 0, fontSize: 14, color: '#6b7280' }}>
-                「<span style={{ fontWeight: 700, color: '#111827' }}>{query}</span>」
-                <span style={{ marginLeft: 6 }}>に最適な商品 — {results.length}件</span>
+            {/* query label */}
+            <div style={{ marginBottom: 24 }}>
+              <p style={{
+                margin: 0,
+                fontSize: 13,
+                color: '#b5a090',
+                letterSpacing: '0.02em',
+              }}>
+                「<span style={{ color: '#1c1410', fontWeight: 700 }}>{query}</span>」
+                の提案&ensp;—&ensp;{results.length}件
               </p>
             </div>
 
@@ -88,15 +89,19 @@ export default async function EWSearchPage({
 
             {/* disclaimer */}
             <p style={{
-              marginTop: 32, fontSize: 11, textAlign: 'center',
-              color: '#9ca3af', lineHeight: 1.8,
+              marginTop: 36,
+              fontSize: 11,
+              textAlign: 'center',
+              color: '#c8bba8',
+              lineHeight: 1.8,
+              letterSpacing: '0.02em',
             }}>
-              ※ 掲載価格・在庫は変動する場合があります。<br />
+              掲載価格・在庫は変動する場合があります。<br />
               最新情報は電子工作ステーションのショップページをご確認ください。
             </p>
           </>
         ) : (
-          <p style={{ fontSize: 14, color: '#6b7280' }}>
+          <p style={{ fontSize: 14, color: '#b5a090' }}>
             検索キーワードを入力してください。
           </p>
         )}

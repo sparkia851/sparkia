@@ -1,7 +1,12 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import Image from 'next/image'
+import { motion, useInView } from 'framer-motion'
+import { catalog } from '../_lib/recommend-ew'
+
+const HERO_PHOTO = 'https://images.unsplash.com/photo-1577962144759-8dec6b55c952?fm=jpg&q=85&w=1600&auto=format&fit=crop'
 
 const EXAMPLES = [
   '温度と湿度を測りたい',
@@ -11,6 +16,51 @@ const EXAMPLES = [
   'CO2濃度を監視したい',
   '距離を測ってロボットに使いたい',
 ]
+
+const MAIKON  = catalog.filter(p => p.category === 'マイコン')
+const SENSOR  = catalog.filter(p => p.category === 'センサー')
+
+const AI_ROWS = [
+  { label: '用途',     value: '初心者〜上級',      sub: 'Lチカ入門からAIエッジ推論・カメラ映像処理まで幅広い用途に対応' },
+  { label: '接続',     value: '8 種',               sub: 'WiFi · BLE · I2C · SPI · 1-Wire · UART · アナログ · デジタル' },
+  { label: '価格帯',   value: '¥40〜¥35,500',       sub: 'タッチセンサー40円からRaspberry Pi 5まで。予算に合った提案が可能' },
+  { label: 'カテゴリ', value: 'マイコン + センサー', sub: '開発ボード20種・センサー20種、合計40商品からAIが選定' },
+  { label: '難易度',   value: '3 段階',              sub: '初心者向け・中級者向け・上級者向けを明示して推薦' },
+]
+
+function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  return (
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function ProductStrip({ products }: { products: typeof catalog }) {
+  return (
+    <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 4 }}
+      className="scrollbar-hide"
+    >
+      {products.map(p => (
+        <div key={p.id} style={{ flexShrink: 0, width: 140 }}>
+          <div style={{ position: 'relative', width: 140, height: 100, borderRadius: 6, overflow: 'hidden', background: '#ede8e0' }}>
+            <Image src={p.imageUrl} alt={p.name} fill style={{ objectFit: 'cover' }} sizes="140px" />
+          </div>
+          <p style={{ margin: '7px 0 2px', fontSize: 10, fontWeight: 700, color: '#1c1410', lineHeight: 1.35, letterSpacing: '0.01em' }}>
+            {p.name.length > 22 ? p.name.slice(0, 22) + '…' : p.name}
+          </p>
+          <p style={{ margin: 0, fontSize: 10, color: '#b5a090' }}>{p.price}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export function EWTopClient() {
   const router = useRouter()
@@ -28,55 +78,62 @@ export function EWTopClient() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', background: '#fafaf8', color: '#111827' }}>
+    <main style={{ background: '#f5f0e8', color: '#1c1410' }}>
 
-      {/* ── hero ── */}
-      <section style={{
-        background: 'linear-gradient(160deg, #fff7ed 0%, #fafaf8 60%)',
-        borderBottom: '1px solid #f3f4f6',
-        padding: 'clamp(56px, 10vw, 96px) 20px clamp(48px, 8vw, 80px)',
-        textAlign: 'center',
-      }}>
-        {/* shop badge */}
-        <div style={{ marginBottom: 24 }}>
-          <span style={{
-            display: 'inline-block',
-            fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
-            color: '#f97316', background: '#fff7ed',
-            border: '1px solid #fed7aa',
-            padding: '5px 16px', borderRadius: 20,
-          }}>
-            電子工作ステーション × AI 商品提案
-          </span>
-        </div>
+      {/* ══ HERO ══════════════════════════════════════════════ */}
+      <section style={{ position: 'relative', height: '88vh', minHeight: 560 }}>
 
-        {/* headline */}
-        <h1 style={{
-          margin: '0 0 16px',
-          fontSize: 'clamp(28px, 6vw, 52px)',
-          fontWeight: 900,
-          letterSpacing: '-0.03em',
-          lineHeight: 1.15,
-          color: '#111827',
+        <Image
+          src={HERO_PHOTO}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          priority
+          sizes="100vw"
+        />
+
+        {/* gradient: light top → dark warm bottom */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(18,10,4,0.08) 0%, rgba(18,10,4,0.82) 100%)',
+        }} />
+
+        {/* content */}
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0,
+          padding: 'clamp(32px, 5vw, 56px) clamp(24px, 7vw, 96px)',
         }}>
-          何を作りたいですか？
-        </h1>
-        <p style={{
-          margin: '0 0 40px',
-          fontSize: 'clamp(14px, 2.5vw, 18px)',
-          color: '#6b7280',
-          lineHeight: 1.7,
-          maxWidth: 560,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}>
-          やりたいことをそのまま入力してください。<br />
-          ショップの商品からAIが最適な部品を提案します。
-        </p>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            style={{ margin: '0 0 18px', fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}
+          >
+            電子工作ステーション&ensp;/&ensp;AI 商品提案
+          </motion.p>
 
-        {/* search form */}
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            style={{ margin: '0 0 14px', fontSize: 'clamp(36px, 5.5vw, 66px)', fontWeight: 900, letterSpacing: '-0.025em', lineHeight: 1.1, color: '#ffffff' }}
+          >
+            何を作りたいですか？
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.45 }}
+            style={{ margin: '0 0 28px', fontSize: 'clamp(13px, 1.4vw, 15px)', color: 'rgba(255,255,255,0.65)', lineHeight: 1.8, letterSpacing: '0.03em' }}
+          >
+            やりたいことを入力するだけ。ショップの商品からAIが最適な部品を提案します。
+          </motion.p>
+
+          {/* search — frosted glass style */}
+          <motion.form
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', gap: 8, maxWidth: 580, marginBottom: 18 }}
+          >
             <input
               type="text"
               value={value}
@@ -84,29 +141,207 @@ export function EWTopClient() {
               placeholder="例：温度を測りたい、人が来たら知らせたい..."
               style={{
                 flex: 1, minWidth: 0,
-                border: '2px solid #e5e7eb',
-                borderRadius: 10,
+                border: '1px solid rgba(255,255,255,0.22)',
+                borderRadius: 6,
                 padding: '14px 18px',
-                fontSize: 15,
-                color: '#111827',
-                background: '#ffffff',
+                fontSize: 14,
+                color: '#ffffff',
+                background: 'rgba(255,255,255,0.12)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
                 outline: 'none',
-                transition: 'border-color 0.15s',
+                letterSpacing: '0.02em',
               }}
-              onFocus={e => { e.currentTarget.style.borderColor = '#f97316' }}
-              onBlur={e => { e.currentTarget.style.borderColor = '#e5e7eb' }}
             />
             <button
               type="submit"
               style={{
                 flexShrink: 0,
-                background: '#f97316',
+                background: '#ffffff',
+                color: '#1c1410',
+                fontWeight: 700,
+                fontSize: 14,
+                letterSpacing: '0.05em',
+                border: 'none',
+                borderRadius: 6,
+                padding: '14px 28px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              提案する
+            </button>
+          </motion.form>
+
+          {/* example pills on photo */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
+            style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}
+          >
+            {EXAMPLES.map(ex => (
+              <button
+                key={ex}
+                type="button"
+                onClick={() => handleExample(ex)}
+                style={{
+                  fontSize: 11,
+                  color: 'rgba(255,255,255,0.6)',
+                  background: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.18)',
+                  borderRadius: 4,
+                  padding: '5px 12px',
+                  cursor: 'pointer',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  letterSpacing: '0.02em',
+                  transition: 'background 0.15s, color 0.15s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.18)'
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.9)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
+                }}
+              >
+                {ex}
+              </button>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══ CATALOG ═══════════════════════════════════════════ */}
+      <section style={{ padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)', background: '#f5f0e8' }}>
+        <FadeUp>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#b5a090', marginBottom: 16 }}>
+            Lineup
+          </p>
+          <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#1c1410' }}>
+            全40種。マイコンとセンサーを網羅。
+          </h2>
+          <p style={{ margin: '0 0 52px', fontSize: 14, color: '#7a6e64', lineHeight: 1.85, maxWidth: 520, letterSpacing: '0.02em' }}>
+            Arduino · ESP32 · Raspberry Pi · XIAO から温度・人感・CO2センサーまで。<br />
+            電子工作に必要な部品をラインナップ。
+          </p>
+        </FadeUp>
+
+        {/* マイコン strip */}
+        <FadeUp delay={0.1}>
+          <div style={{ marginBottom: 44 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', color: '#b5722a', border: '1px solid #e8d4b8', borderRadius: 4, padding: '3px 10px' }}>
+                マイコン
+              </span>
+              <span style={{ fontSize: 12, color: '#b5a090' }}>20種</span>
+            </div>
+            <ProductStrip products={MAIKON} />
+          </div>
+        </FadeUp>
+
+        {/* センサー strip */}
+        <FadeUp delay={0.15}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', color: '#4d7c5a', border: '1px solid #c8dfd0', borderRadius: 4, padding: '3px 10px' }}>
+                センサー
+              </span>
+              <span style={{ fontSize: 12, color: '#b5a090' }}>20種</span>
+            </div>
+            <ProductStrip products={SENSOR} />
+          </div>
+        </FadeUp>
+      </section>
+
+      {/* ══ AI CRITERIA ═══════════════════════════════════════ */}
+      <section style={{ background: '#ffffff', padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)' }}>
+        <FadeUp>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#b5a090', marginBottom: 16 }}>
+            Selection
+          </p>
+          <h2 style={{ margin: '0 0 10px', fontSize: 'clamp(26px,4vw,40px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#1c1410' }}>
+            AIが選ぶ5つの軸。
+          </h2>
+          <p style={{ margin: '0 0 52px', fontSize: 14, color: '#7a6e64', lineHeight: 1.85, maxWidth: 480, letterSpacing: '0.02em' }}>
+            「とりあえず安いやつ」で後から仕様不足に気づく失敗をなくすため、<br />
+            AIは用途・接続・価格・カテゴリ・難易度を一括で評価する。
+          </p>
+        </FadeUp>
+
+        <div style={{ borderTop: '1px solid #f0ebe2' }}>
+          {AI_ROWS.map((row, i) => (
+            <FadeUp key={row.label} delay={i * 0.07}>
+              <div style={{
+                display: 'flex', alignItems: 'baseline',
+                gap: '0 32px', padding: '24px 0',
+                borderBottom: '1px solid #f0ebe2',
+                flexWrap: 'wrap',
+              }}>
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#c8bba8', flex: '0 0 72px', paddingTop: 4 }}>
+                  {row.label}
+                </span>
+                <span style={{ fontSize: 'clamp(20px,3.5vw,32px)', fontWeight: 800, letterSpacing: '-0.02em', color: '#1c1410', flex: '0 0 auto', lineHeight: 1 }}>
+                  {row.value}
+                </span>
+                <span style={{ fontSize: 13, color: '#7a6e64', flex: '1 1 200px', alignSelf: 'center', lineHeight: 1.7, letterSpacing: '0.02em' }}>
+                  {row.sub}
+                </span>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </section>
+
+      {/* ══ BOTTOM CTA ════════════════════════════════════════ */}
+      <section style={{ background: '#f5f0e8', padding: 'clamp(60px,8vw,100px) clamp(24px,7vw,96px)', textAlign: 'center' }}>
+        <FadeUp>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#b5a090', marginBottom: 20 }}>
+            40 products · AI‑powered
+          </p>
+          <h2 style={{ margin: '0 0 12px', fontSize: 'clamp(24px,3.8vw,38px)', fontWeight: 900, letterSpacing: '-0.02em', color: '#1c1410' }}>
+            あなたのプロジェクトに合った<br />部品を見つける
+          </h2>
+          <p style={{ margin: '0 0 36px', fontSize: 14, color: '#7a6e64', lineHeight: 1.85, letterSpacing: '0.02em' }}>
+            用途・予算・接続要件——どんな条件でも即絞り込める。
+          </p>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', gap: 8, maxWidth: 560, margin: '0 auto' }}
+          >
+            <input
+              type="text"
+              value={value}
+              onChange={e => setValue(e.target.value)}
+              placeholder="例：温度を測りたい..."
+              style={{
+                flex: 1, minWidth: 0,
+                border: '1.5px solid #e2d8ca',
+                borderRadius: 6,
+                padding: '14px 18px',
+                fontSize: 14,
+                color: '#1c1410',
+                background: '#ffffff',
+                outline: 'none',
+                letterSpacing: '0.02em',
+                transition: 'border-color 0.15s',
+              }}
+              onFocus={e => { e.currentTarget.style.borderColor = '#b5722a' }}
+              onBlur={e => { e.currentTarget.style.borderColor = '#e2d8ca' }}
+            />
+            <button
+              type="submit"
+              style={{
+                flexShrink: 0,
+                background: '#b5722a',
                 color: '#ffffff',
                 fontWeight: 700,
-                fontSize: 15,
+                fontSize: 14,
+                letterSpacing: '0.06em',
                 border: 'none',
-                borderRadius: 10,
-                padding: '14px 24px',
+                borderRadius: 6,
+                padding: '14px 28px',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
               }}
@@ -114,170 +349,23 @@ export function EWTopClient() {
               提案する
             </button>
           </form>
-
-          {/* example pills */}
-          <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
-            {EXAMPLES.map(ex => (
-              <button
-                key={ex}
-                type="button"
-                onClick={() => handleExample(ex)}
-                style={{
-                  fontSize: 12, fontWeight: 500,
-                  color: '#6b7280',
-                  background: '#ffffff',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: 20,
-                  padding: '6px 14px',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = '#f97316'
-                  e.currentTarget.style.color = '#f97316'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = '#e5e7eb'
-                  e.currentTarget.style.color = '#6b7280'
-                }}
-              >
-                {ex}
-              </button>
-            ))}
-          </div>
-        </div>
+        </FadeUp>
       </section>
 
-      {/* ── category overview ── */}
-      <section style={{
-        maxWidth: 800,
-        margin: '0 auto',
-        padding: 'clamp(40px, 6vw, 64px) 20px',
-      }}>
-        <p style={{
-          textAlign: 'center',
-          fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
-          color: '#9ca3af', textTransform: 'uppercase', marginBottom: 24,
-        }}>
-          対応カテゴリ
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
-
-          {/* マイコン card */}
-          <div style={{
-            background: '#ffffff', border: '1px solid #e5e7eb',
-            borderRadius: 12, padding: '24px 28px',
-            borderTop: '3px solid #f97316',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-              <span style={{
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
-                color: '#f97316', background: '#fff7ed',
-                border: '1px solid #fed7aa',
-                padding: '3px 12px', borderRadius: 4,
-              }}>
-                マイコン
-              </span>
-              <span style={{ fontSize: 13, color: '#9ca3af' }}>20種</span>
-            </div>
-            <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 700, color: '#111827' }}>
-              開発ボード
-            </h3>
-            <p style={{ margin: 0, fontSize: 13, color: '#6b7280', lineHeight: 1.7 }}>
-              Arduino・ESP32・Raspberry Pi・XIAOなど。WiFi・BLE・カメラ・ディスプレイ付きも揃えています。
-            </p>
-          </div>
-
-          {/* センサー card */}
-          <div style={{
-            background: '#ffffff', border: '1px solid #e5e7eb',
-            borderRadius: 12, padding: '24px 28px',
-            borderTop: '3px solid #16a34a',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-              <span style={{
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.06em',
-                color: '#16a34a', background: '#f0fdf4',
-                border: '1px solid #bbf7d0',
-                padding: '3px 12px', borderRadius: 4,
-              }}>
-                センサー
-              </span>
-              <span style={{ fontSize: 13, color: '#9ca3af' }}>20種</span>
-            </div>
-            <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 700, color: '#111827' }}>
-              センサー類
-            </h3>
-            <p style={{ margin: 0, fontSize: 13, color: '#6b7280', lineHeight: 1.7 }}>
-              温湿度・気圧・CO2・距離・人感・ガス・光・音・タッチ・土壌・RFIDなど多彩なセンサーを在庫。
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── how it works ── */}
-      <section style={{
-        background: '#f9fafb',
-        borderTop: '1px solid #f3f4f6',
-        borderBottom: '1px solid #f3f4f6',
-        padding: 'clamp(40px, 6vw, 64px) 20px',
-      }}>
-        <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
-            color: '#9ca3af', textTransform: 'uppercase', marginBottom: 24,
-          }}>
-            使い方
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {[
-              ['01', 'やりたいことを入力', '「温度を測りたい」「人が来たら通知したい」など自然な言葉でOK'],
-              ['02', 'AIが最適な商品を提案', 'ショップのラインナップからあなたのプロジェクトに最適な商品を選びます'],
-              ['03', 'ショップで購入', '提案された商品をそのまま電子工作ステーションで購入できます'],
-            ].map(([num, title, desc]) => (
-              <div key={num} style={{
-                display: 'flex', gap: 20, alignItems: 'flex-start',
-                textAlign: 'left',
-                background: '#ffffff', borderRadius: 10,
-                border: '1px solid #e5e7eb',
-                padding: '18px 22px',
-              }}>
-                <span style={{
-                  fontSize: 13, fontWeight: 800, color: '#f97316',
-                  fontFamily: 'ui-monospace, monospace',
-                  minWidth: 26, paddingTop: 1,
-                }}>
-                  {num}
-                </span>
-                <div>
-                  <p style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: '#111827' }}>{title}</p>
-                  <p style={{ margin: 0, fontSize: 13, color: '#6b7280', lineHeight: 1.6 }}>{desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── footer ── */}
+      {/* ══ FOOTER ════════════════════════════════════════════ */}
       <footer style={{
-        textAlign: 'center',
-        padding: '32px 20px',
-        fontSize: 11,
-        color: '#9ca3af',
-        lineHeight: 2,
+        borderTop: '1px solid #e2d8ca',
+        padding: '22px clamp(24px,7vw,96px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8,
       }}>
-        <p style={{ margin: '0 0 4px' }}>
-          AI提案機能 Powered by{' '}
-          <a href="https://sparkia.jp" target="_blank" rel="noopener noreferrer"
-            style={{ color: '#f97316', textDecoration: 'none', fontWeight: 600 }}>
+        <p style={{ margin: 0, fontSize: 11, color: '#b5a090', letterSpacing: '0.04em' }}>
+          AI 提案機能 Powered by{' '}
+          <a href="https://sparkia.jp" target="_blank" rel="noopener noreferrer" style={{ color: '#b5722a', textDecoration: 'none' }}>
             Sparkia
           </a>
         </p>
-        <p style={{ margin: 0 }}>
-          掲載価格・在庫は変動する場合があります。最新情報はショップページをご確認ください。
+        <p style={{ margin: 0, fontSize: 10, color: '#c8bba8', letterSpacing: '0.02em' }}>
+          掲載価格・在庫は変動する場合があります
         </p>
       </footer>
 
