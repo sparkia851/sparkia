@@ -111,6 +111,7 @@ function ResultsSkeleton() {
 function HeroCard({ hero }: { hero: AIResultTK }) {
   return (
     <div
+      className="tk-search-hero"
       style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
@@ -121,7 +122,7 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
       }}
     >
       <div
-        className="anim-hero-img"
+        className="anim-hero-img tk-search-hero-img"
         style={{
           background: '#f6f4f0',
           display: 'flex',
@@ -150,7 +151,7 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
       </div>
 
       <div
-        className="anim-hero-body"
+        className="anim-hero-body tk-search-hero-body"
         style={{
           padding: '52px 52px 52px 48px',
           display: 'flex',
@@ -248,7 +249,7 @@ async function AIResults({ query }: { query: string }) {
       {hero && <HeroCard hero={hero} />}
 
       {rest.length > 0 && (
-        <div style={{ padding: '0 52px 100px' }}>
+        <div className="tk-search-result-pad" style={{ padding: '0 52px 100px' }}>
           <p
             style={{
               margin: '44px 0 20px',
@@ -292,6 +293,7 @@ export default async function TKSearchPage({
     >
       {/* ── NAV ──────────────────────────────────────────────────────────── */}
       <nav
+        className="tk-search-nav"
         style={{
           position: 'fixed',
           top: 0,
@@ -340,7 +342,7 @@ export default async function TKSearchPage({
         {query && <TKSearchTracker query={query} />}
 
         {/* Query header — rendered immediately */}
-        <div className="anim-query" style={{ padding: '60px 52px 0' }}>
+        <div className="anim-query tk-search-query-pad" style={{ padding: '60px 52px 0' }}>
           <p
             style={{
               margin: '0 0 14px',
@@ -379,6 +381,7 @@ export default async function TKSearchPage({
 
         {/* Footer */}
         <footer
+          className="tk-search-footer"
           style={{
             borderTop: '1px solid #ededed',
             padding: '28px 52px',

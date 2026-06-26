@@ -73,6 +73,37 @@
 .tk-card-reveal:nth-child(3) { animation-delay: 0.16s; }
 .tk-card-reveal:nth-child(4) { animation-delay: 0.24s; }
 
+/* ── TALP KEYBOARD — モバイル対応 ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .tk-nav          { padding: 0 20px !important; }
+  .tk-hero-section { grid-template-columns: 1fr !important; min-height: auto !important; }
+  .tk-hero-text    { padding: 80px 24px 52px !important; }
+  .tk-hero-photo   { display: none !important; }
+  .tk-h1           { font-size: clamp(28px, 8vw, 44px) !important; }
+  .tk-h2           { font-size: clamp(22px, 6vw, 32px) !important; }
+  .tk-h2-cta       { font-size: clamp(28px, 8vw, 40px) !important; }
+  .tk-meta-strip   { padding: 22px 24px !important; gap: 20px !important; flex-wrap: wrap !important; }
+  .tk-hiw-section  { padding: 72px 24px !important; }
+  .tk-hiw-card     { grid-template-columns: 1fr !important; }
+  .tk-split-section{ grid-template-columns: 1fr !important; }
+  .tk-split-left   { border-right: none !important; border-bottom: 1px solid #ededed !important; }
+  .tk-split-pad    { padding: 48px 24px !important; }
+  .tk-lineup-section { padding: 72px 24px !important; }
+  .tk-lineup-header  { flex-direction: column !important; gap: 8px !important; }
+  .tk-lineup-tagline { text-align: left !important; max-width: none !important; margin-top: 0 !important; }
+  .tk-cta-section  { padding: 80px 24px !important; }
+  .tk-footer       { flex-direction: column !important; gap: 10px !important; padding: 28px 24px !important; text-align: center !important; }
+
+  /* 検索ページ */
+  .tk-search-nav        { padding: 0 20px !important; }
+  .tk-search-query-pad  { padding: 40px 20px 0 !important; }
+  .tk-search-hero       { grid-template-columns: 1fr !important; min-height: auto !important; }
+  .tk-search-hero-img   { display: none !important; }
+  .tk-search-hero-body  { padding: 36px 24px 40px !important; }
+  .tk-search-result-pad { padding: 0 20px 80px !important; }
+  .tk-search-footer     { flex-direction: column !important; gap: 8px !important; padding: 28px 20px !important; text-align: center !important; }
+}
+
 /* スクロールバー非表示 */
 .scrollbar-hide {
   -ms-overflow-style: none;
