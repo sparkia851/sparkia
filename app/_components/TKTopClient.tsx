@@ -257,11 +257,11 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: 680, paddingTop: 64 }}>
         {/* Left: text + form */}
         <motion.div
-          className="tk-hero-text"
+          className="tk-hero-text flex flex-col justify-center px-6 py-16 md:py-[88px] md:pl-[72px] md:pr-[60px]"
           initial={{ opacity: 0, x: -60, rotate: -1 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
-          style={{ padding: '88px 60px 88px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
             TALP KEYBOARD × SPARKIA AI
