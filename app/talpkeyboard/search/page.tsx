@@ -111,9 +111,8 @@ function ResultsSkeleton() {
 function HeroCard({ hero }: { hero: AIResultTK }) {
   return (
     <div
-      className="tk-search-hero"
+      className="grid grid-cols-1 md:grid-cols-2"
       style={{
-        display: 'grid',
         borderTop: '1px solid #ededed',
         borderBottom: '1px solid #ededed',
         minHeight: 340,
@@ -121,7 +120,7 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
       }}
     >
       <div
-        className="anim-hero-img tk-search-hero-img"
+        className="anim-hero-img hidden md:flex"
         style={{
           background: '#f6f4f0',
           display: 'flex',

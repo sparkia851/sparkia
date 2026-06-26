@@ -190,7 +190,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
   const keycaps  = products.filter(p => p.category === 'キーキャップ')
 
   return (
-    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
+    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif', overflowX: 'hidden' }}>
       <style>{`
         /* デスクトップ: グリッドカラム定義 */
         .tk-hero-section  { grid-template-columns: 1fr 1fr; }
@@ -254,7 +254,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="tk-hero-section" style={{ display: 'grid', minHeight: 680, paddingTop: 64 }}>
+      <section className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: 680, paddingTop: 64 }}>
         {/* Left: text + form */}
         <motion.div
           className="tk-hero-text"
@@ -305,7 +305,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
         </motion.div>
 
         {/* Right: photo with parallax */}
-        <div className="tk-hero-photo" style={{ overflow: 'hidden', position: 'relative' }}>
+        <div className="hidden md:block" style={{ overflow: 'hidden', position: 'relative' }}>
         <motion.div
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -369,8 +369,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
               —「<strong style={{ color: '#16140f', fontWeight: 600 }}>{HOW_IT_WORKS.query}</strong>」と入力すると
             </p>
 
-            <div className="tk-hiw-card" style={{
-              display: 'grid',
+            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr]" style={{
               border: '1px solid #e8e8e8', borderLeft: '3px solid #b08d57',
               borderRadius: 4, overflow: 'hidden',
             }}>
@@ -432,7 +431,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── EDITOR'S PICK + ALSO POPULAR ─────────────────────────────────── */}
-      <section className="tk-split-section" style={{ display: 'grid', borderTop: '1px solid #ededed' }}>
+      <section className="grid grid-cols-1 md:grid-cols-[1.25fr_1fr]" style={{ borderTop: '1px solid #ededed' }}>
         {/* Left */}
         <motion.div
           ref={pickRef}
