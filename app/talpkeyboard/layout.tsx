@@ -12,6 +12,15 @@ export default function TalpKeyboardLayout({ children }: { children: React.React
         gtag('js',new Date());
         gtag('config','${TALP_GA_ID}');
       `}</Script>
+      {/* Server-rendered responsive CSS — hoisted to <head> before first paint */}
+      <style precedence="default" href="tk-layout">{`
+        .tk-hs { display: grid; grid-template-columns: 1fr 1fr; min-height: 680px; }
+        .tk-hp { overflow: hidden; position: relative; }
+        @media (max-width: 1023px) {
+          .tk-hs { grid-template-columns: 1fr !important; min-height: auto !important; }
+          .tk-hp { display: none !important; }
+        }
+      `}</style>
       {children}
     </div>
   )

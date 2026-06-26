@@ -188,12 +188,8 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section style={{
-        display: 'grid',
-        gridTemplateColumns: sp ? '1fr' : '1fr 1fr',
-        minHeight: sp ? 'auto' : 680,
-        paddingTop: 64,
-      }}>
+      {/* grid + photo visibility are CSS-only (no inline conflict) — see layout.tsx <style> */}
+      <section className="tk-hs" style={{ paddingTop: 64 }}>
         <motion.div
           initial={{ opacity: 0, x: -60, rotate: -1 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
@@ -207,7 +203,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
             言葉で伝えると、<br />仕様まで読んで<br />選んでくれる。
           </h1>
           <p style={{ margin: '0 0 40px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, letterSpacing: '0.03em', maxWidth: 380 }}>
-            162商品の説明文を、AIがそのまま読み解いて提案。あなたの言葉に、最適な一台を。
+            {products.length}商品の説明文を、AIがそのまま読み解いて提案。あなたの言葉に、最適な一台を。
           </p>
           <form
             onSubmit={handleSubmit}
@@ -230,21 +226,19 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
           </p>
         </motion.div>
 
-        {/* Photo — only rendered on desktop (>= 1024px) */}
-        {!sp && (
-          <div style={{ overflow: 'hidden', position: 'relative' }}>
-            <motion.div
-              initial={{ opacity: 0, scale: 1.06 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
-              style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative', height: '100%' }}
-            >
-              <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y: photoY }}>
-                <Image src={HERO_PHOTO} alt="TALP KEYBOARD" fill style={{ objectFit: 'cover' }} priority sizes="50vw" />
-              </motion.div>
+        {/* Photo — always in DOM; CSS hides it on mobile via .tk-hp { display:none } */}
+        <div className="tk-hp">
+          <motion.div
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
+            style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative', height: '100%' }}
+          >
+            <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y: photoY }}>
+              <Image src={HERO_PHOTO} alt="TALP KEYBOARD" fill style={{ objectFit: 'cover' }} priority sizes="50vw" />
             </motion.div>
-          </div>
-        )}
+          </motion.div>
+        </div>
       </section>
 
       {/* ── METADATA STRIP ───────────────────────────────────────────────── */}
@@ -255,7 +249,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
           borderTop: '1px solid #ededed', borderBottom: '1px solid #ededed',
         }}>
           <div>
-            <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>{products.length || 162}</span>
+            <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>{products.length}</span>
             <span style={{ fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em', marginLeft: 6 }}>商品</span>
           </div>
           <span style={{ display: 'inline-block', width: 1, height: 14, background: '#e6e6e6' }} />
@@ -274,7 +268,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
           <Reveal>
             <p style={{ margin: '0 0 22px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>HOW IT WORKS</p>
             <h2 style={{ margin: '0 0 16px', fontFamily: SERIF, fontSize: 38, fontWeight: 500, lineHeight: 1.3, color: '#16140f' }}>
-              162商品の説明文を、<br />全部読んで選んでいます。
+              {products.length}商品の説明文を、<br />全部読んで選んでいます。
             </h2>
             <p style={{ margin: '0 0 48px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, maxWidth: 520 }}>
               スイッチのPOMステムやアクチュエーション荷重、ルブの有無まで——TALPが商品ページに書いている仕様を、AIがそのまま読んで判断します。
