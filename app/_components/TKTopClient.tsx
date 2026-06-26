@@ -197,7 +197,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
   const keycaps  = products.filter(p => p.category === 'キーキャップ')
 
   return (
-    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif', overflowX: 'hidden' }}>
+    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
       <style>{`
         /* デスクトップ: グリッドカラム定義 */
         .tk-hero-section  { grid-template-columns: 1fr 1fr; }
@@ -532,7 +532,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── LINEUP ───────────────────────────────────────────────────────── */}
-      <section ref={lineupRef} className="tk-lineup-section" style={{ borderTop: '1px solid #ededed', padding: '84px 52px' }}>
+      <section ref={lineupRef} className="tk-lineup-section" style={{ borderTop: '1px solid #ededed', padding: '84px 52px', overflowX: 'hidden' }}>
         <Reveal>
           <div className="tk-lineup-header" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 48 }}>
             <div>
