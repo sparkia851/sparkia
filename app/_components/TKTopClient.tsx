@@ -261,13 +261,14 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', minHeight: isMobile ? 'auto' : 680, paddingTop: 64 }}>
+      <section className="tk-hero-section" style={{ paddingTop: 64 }}>
         {/* Left: text + form */}
         <motion.div
-          initial={{ opacity: 0, x: isMobile ? 0 : -60, rotate: isMobile ? 0 : -1 }}
+          className="tk-hero-text"
+          initial={{ opacity: 0, x: -60, rotate: -1 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
-          style={{ padding: isMobile ? '72px 24px 48px' : '88px 60px 88px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
             TALP KEYBOARD × SPARKIA AI
@@ -311,7 +312,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
         </motion.div>
 
         {/* Right: photo with parallax */}
-        <div style={{ display: isMobile ? 'none' : 'block', overflow: 'hidden', position: 'relative' }}>
+        <div className="tk-hero-photo" style={{ overflow: 'hidden', position: 'relative' }}>
         <motion.div
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -375,7 +376,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
               —「<strong style={{ color: '#16140f', fontWeight: 600 }}>{HOW_IT_WORKS.query}</strong>」と入力すると
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '160px 1fr',
+            <div className="tk-hiw-card" style={{
               border: '1px solid #e8e8e8', borderLeft: '3px solid #b08d57',
               borderRadius: 4, overflow: 'hidden',
             }}>
@@ -437,16 +438,16 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── EDITOR'S PICK + ALSO POPULAR ─────────────────────────────────── */}
-      <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.25fr 1fr', borderTop: '1px solid #ededed' }}>
+      <section className="tk-split-section" style={{ borderTop: '1px solid #ededed' }}>
         {/* Left */}
         <motion.div
           ref={pickRef}
-          initial={{ opacity: 0, x: isMobile ? 0 : -60 }}
+          initial={{ opacity: 0, x: -60 }}
           animate={pickInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.85, ease: EASE }}
-          style={{ borderRight: isMobile ? 'none' : '1px solid #ededed', borderBottom: isMobile ? '1px solid #ededed' : 'none' }}
+          className="tk-split-left"
         >
-          <div style={{ padding: isMobile ? '48px 24px' : '72px 52px' }}>
+          <div className="tk-split-pad">
             <p style={{ margin: '0 0 28px', fontSize: 10, fontWeight: 600, letterSpacing: '0.28em', color: '#b08d57', textTransform: 'uppercase' }}>
               EDITOR&apos;S PICK
             </p>
@@ -493,7 +494,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
           animate={popularInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.85, ease: EASE, delay: 0.08 }}
         >
-          <div style={{ padding: isMobile ? '48px 24px' : '72px 52px' }}>
+          <div className="tk-split-pad">
             <p style={{ margin: '0 0 24px', fontSize: 10, fontWeight: 600, letterSpacing: '0.28em', color: '#b08d57', textTransform: 'uppercase' }}>
               ALSO POPULAR
             </p>
@@ -615,12 +616,9 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer style={{
+      <footer className="tk-footer" style={{
         borderTop: '1px solid #ededed',
-        padding: isMobile ? '28px 24px' : '28px 52px',
-        display: 'flex', flexDirection: isMobile ? 'column' : 'row',
-        justifyContent: 'space-between', alignItems: 'center', gap: isMobile ? 8 : 0,
-        textAlign: isMobile ? 'center' : 'left',
+        justifyContent: 'space-between', alignItems: 'center',
       }}>
         <span style={{ fontSize: 10, color: '#ccc' }}>
           掲載価格・在庫は変動する場合があります。最新情報はTALP KEYBOARDのショップページをご確認ください。
