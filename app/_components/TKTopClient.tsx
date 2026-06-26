@@ -191,6 +191,27 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
 
   return (
     <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .tk-hero-photo   { display: none !important; }
+          .tk-hero-section { grid-template-columns: 1fr !important; min-height: auto !important; }
+          .tk-hero-text    { padding: 80px 24px 52px !important; }
+          .tk-h1           { font-size: clamp(28px, 8vw, 44px) !important; }
+          .tk-meta-strip   { padding: 22px 24px !important; gap: 20px !important; flex-wrap: wrap !important; }
+          .tk-hiw-section  { padding: 72px 24px !important; }
+          .tk-hiw-card     { grid-template-columns: 1fr !important; }
+          .tk-split-section{ grid-template-columns: 1fr !important; }
+          .tk-split-left   { border-right: none !important; border-bottom: 1px solid #ededed !important; }
+          .tk-split-pad    { padding: 48px 24px !important; }
+          .tk-lineup-section { padding: 72px 24px !important; }
+          .tk-lineup-header  { flex-direction: column !important; gap: 8px !important; }
+          .tk-lineup-tagline { text-align: left !important; max-width: none !important; margin-top: 0 !important; }
+          .tk-cta-section  { padding: 80px 24px !important; }
+          .tk-h2-cta       { font-size: clamp(28px, 8vw, 40px) !important; }
+          .tk-footer       { flex-direction: column !important; gap: 10px !important; padding: 28px 24px !important; text-align: center !important; }
+          .tk-nav          { padding: 0 20px !important; }
+        }
+      `}</style>
 
       {/* ── NAV ──────────────────────────────────────────────────────────── */}
       <nav className="tk-nav" style={{
@@ -279,12 +300,12 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
         </motion.div>
 
         {/* Right: photo with parallax */}
+        <div className="tk-hero-photo" style={{ overflow: 'hidden', position: 'relative' }}>
         <motion.div
-          className="tk-hero-photo"
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
-          style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative' }}
+          style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative', height: '100%' }}
         >
           <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y: photoY }}>
             <Image
@@ -297,6 +318,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
             />
           </motion.div>
         </motion.div>
+        </div>
       </section>
 
       {/* ── METADATA STRIP ───────────────────────────────────────────────── */}
