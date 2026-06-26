@@ -166,7 +166,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
   const sp = isMobile  // shorthand
 
   return (
-    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
+    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif', overflowX: 'hidden' }}>
 
       {/* ── NAV ──────────────────────────────────────────────────────────── */}
       <nav style={{
