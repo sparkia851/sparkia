@@ -111,7 +111,7 @@ function ResultsSkeleton() {
 function HeroCard({ hero }: { hero: AIResultTK }) {
   return (
     <div
-      className="grid grid-cols-1 md:grid-cols-2"
+      className="tk-sh"
       style={{
         borderTop: '1px solid #ededed',
         borderBottom: '1px solid #ededed',
@@ -120,7 +120,7 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
       }}
     >
       <div
-        className="anim-hero-img hidden md:flex"
+        className="anim-hero-img tk-sh-img"
         style={{
           background: '#f6f4f0',
           display: 'flex',
@@ -149,7 +149,7 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
       </div>
 
       <div
-        className="anim-hero-body tk-search-hero-body"
+        className="anim-hero-body tk-sh-body"
         style={{
           padding: '52px 52px 52px 48px',
           display: 'flex',
@@ -247,7 +247,7 @@ async function AIResults({ query }: { query: string }) {
       {hero && <HeroCard hero={hero} />}
 
       {rest.length > 0 && (
-        <div className="tk-search-result-pad" style={{ padding: '0 52px 100px' }}>
+        <div className="tk-sr" style={{ padding: '0 52px 100px' }}>
           <p
             style={{
               margin: '44px 0 20px',
@@ -290,21 +290,20 @@ export default async function TKSearchPage({
       }}
     >
       <style>{`
-        .tk-search-hero { grid-template-columns: 1fr 1fr; }
-
+        .tk-sh { display: grid; grid-template-columns: 1fr 1fr; }
         @media (max-width: 768px) {
-          .tk-search-nav        { padding: 0 20px; }
-          .tk-search-query-pad  { padding: 40px 20px 0; }
-          .tk-search-hero       { grid-template-columns: 1fr; min-height: auto; }
-          .tk-search-hero-img   { display: none; }
-          .tk-search-hero-body  { padding: 36px 24px 40px; }
-          .tk-search-result-pad { padding: 0 20px 80px; }
-          .tk-search-footer     { flex-direction: column; gap: 8px; padding: 28px 20px; text-align: center; }
+          .tk-sh       { grid-template-columns: 1fr; }
+          .tk-sh-img   { display: none; }
+          .tk-sh-body  { padding: 32px 20px 36px !important; }
+          .tk-sq       { padding: 40px 20px 0 !important; }
+          .tk-sr       { padding: 0 20px 80px !important; }
+          .tk-sf       { flex-direction: column; gap: 8px; padding: 28px 20px !important; text-align: center; }
+          .tk-snav     { padding: 0 20px !important; }
         }
       `}</style>
       {/* ── NAV ──────────────────────────────────────────────────────────── */}
       <nav
-        className="tk-search-nav"
+        className="tk-snav"
         style={{
           position: 'fixed',
           top: 0,
@@ -353,7 +352,7 @@ export default async function TKSearchPage({
         {query && <TKSearchTracker query={query} />}
 
         {/* Query header — rendered immediately */}
-        <div className="anim-query tk-search-query-pad" style={{ padding: '60px 52px 0' }}>
+        <div className="anim-query tk-sq" style={{ padding: '60px 52px 0' }}>
           <p
             style={{
               margin: '0 0 14px',
@@ -392,7 +391,7 @@ export default async function TKSearchPage({
 
         {/* Footer */}
         <footer
-          className="tk-search-footer"
+          className="tk-sf"
           style={{
             borderTop: '1px solid #ededed',
             padding: '28px 52px',
