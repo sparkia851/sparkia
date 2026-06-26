@@ -191,15 +191,15 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       {/* grid + photo visibility are CSS-only (no inline conflict) — see layout.tsx <style> */}
       <section className="tk-hs" style={{ paddingTop: 64 }}>
         <motion.div
+          className="tk-ht"
           initial={{ opacity: 0, x: -60, rotate: -1 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
-          style={{ padding: sp ? '72px 24px 52px' : '88px 60px 88px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
             TALP KEYBOARD × SPARKIA AI
           </p>
-          <h1 style={{ margin: '0 0 18px', fontFamily: SERIF, fontSize: sp ? 'clamp(28px,8vw,44px)' : 50, fontWeight: 500, lineHeight: 1.32, letterSpacing: '0.01em', color: '#16140f' }}>
+          <h1 className="tk-h1" style={{ fontFamily: SERIF }}>
             言葉で伝えると、<br />仕様まで読んで<br />選んでくれる。
           </h1>
           <p style={{ margin: '0 0 40px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, letterSpacing: '0.03em', maxWidth: 380 }}>
