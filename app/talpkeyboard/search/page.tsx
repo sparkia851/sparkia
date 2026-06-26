@@ -114,7 +114,6 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
       className="tk-search-hero"
       style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
         borderTop: '1px solid #ededed',
         borderBottom: '1px solid #ededed',
         minHeight: 340,
@@ -292,14 +291,16 @@ export default async function TKSearchPage({
       }}
     >
       <style>{`
+        .tk-search-hero { grid-template-columns: 1fr 1fr; }
+
         @media (max-width: 768px) {
-          .tk-search-nav        { padding: 0 20px !important; }
-          .tk-search-query-pad  { padding: 40px 20px 0 !important; }
-          .tk-search-hero       { grid-template-columns: 1fr !important; min-height: auto !important; }
-          .tk-search-hero-img   { display: none !important; }
-          .tk-search-hero-body  { padding: 36px 24px 40px !important; }
-          .tk-search-result-pad { padding: 0 20px 80px !important; }
-          .tk-search-footer     { flex-direction: column !important; gap: 8px !important; padding: 28px 20px !important; text-align: center !important; }
+          .tk-search-nav        { padding: 0 20px; }
+          .tk-search-query-pad  { padding: 40px 20px 0; }
+          .tk-search-hero       { grid-template-columns: 1fr; min-height: auto; }
+          .tk-search-hero-img   { display: none; }
+          .tk-search-hero-body  { padding: 36px 24px 40px; }
+          .tk-search-result-pad { padding: 0 20px 80px; }
+          .tk-search-footer     { flex-direction: column; gap: 8px; padding: 28px 20px; text-align: center; }
         }
       `}</style>
       {/* ── NAV ──────────────────────────────────────────────────────────── */}

@@ -192,24 +192,29 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
   return (
     <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
       <style>{`
+        /* デスクトップ: グリッドカラム定義 */
+        .tk-hero-section  { grid-template-columns: 1fr 1fr; }
+        .tk-split-section { grid-template-columns: 1.25fr 1fr; }
+        .tk-hiw-card      { grid-template-columns: 160px 1fr; }
+
         @media (max-width: 768px) {
-          .tk-hero-photo   { display: none !important; }
-          .tk-hero-section { grid-template-columns: 1fr !important; min-height: auto !important; }
-          .tk-hero-text    { padding: 80px 24px 52px !important; }
-          .tk-h1           { font-size: clamp(28px, 8vw, 44px) !important; }
-          .tk-meta-strip   { padding: 22px 24px !important; gap: 20px !important; flex-wrap: wrap !important; }
-          .tk-hiw-section  { padding: 72px 24px !important; }
-          .tk-hiw-card     { grid-template-columns: 1fr !important; }
-          .tk-split-section{ grid-template-columns: 1fr !important; }
-          .tk-split-left   { border-right: none !important; border-bottom: 1px solid #ededed !important; }
-          .tk-split-pad    { padding: 48px 24px !important; }
-          .tk-lineup-section { padding: 72px 24px !important; }
-          .tk-lineup-header  { flex-direction: column !important; gap: 8px !important; }
-          .tk-lineup-tagline { text-align: left !important; max-width: none !important; margin-top: 0 !important; }
-          .tk-cta-section  { padding: 80px 24px !important; }
-          .tk-h2-cta       { font-size: clamp(28px, 8vw, 40px) !important; }
-          .tk-footer       { flex-direction: column !important; gap: 10px !important; padding: 28px 24px !important; text-align: center !important; }
-          .tk-nav          { padding: 0 20px !important; }
+          .tk-nav           { padding: 0 20px; }
+          .tk-hero-section  { grid-template-columns: 1fr; min-height: auto; }
+          .tk-hero-text     { padding: 80px 24px 52px; }
+          .tk-hero-photo    { display: none; }
+          .tk-h1            { font-size: clamp(28px, 8vw, 44px); }
+          .tk-meta-strip    { padding: 22px 24px; gap: 20px; flex-wrap: wrap; }
+          .tk-hiw-section   { padding: 72px 24px; }
+          .tk-hiw-card      { grid-template-columns: 1fr; }
+          .tk-split-section { grid-template-columns: 1fr; }
+          .tk-split-left    { border-right: none; border-bottom: 1px solid #ededed; }
+          .tk-split-pad     { padding: 48px 24px; }
+          .tk-lineup-section{ padding: 72px 24px; }
+          .tk-lineup-header { flex-direction: column; gap: 8px; }
+          .tk-lineup-tagline{ text-align: left; max-width: none; margin-top: 0; }
+          .tk-cta-section   { padding: 80px 24px; }
+          .tk-h2-cta        { font-size: clamp(28px, 8vw, 40px); }
+          .tk-footer        { flex-direction: column; gap: 10px; padding: 28px 24px; text-align: center; }
         }
       `}</style>
 
@@ -249,7 +254,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="tk-hero-section" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 680, paddingTop: 64 }}>
+      <section className="tk-hero-section" style={{ display: 'grid', minHeight: 680, paddingTop: 64 }}>
         {/* Left: text + form */}
         <motion.div
           className="tk-hero-text"
@@ -365,7 +370,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
             </p>
 
             <div className="tk-hiw-card" style={{
-              display: 'grid', gridTemplateColumns: '160px 1fr',
+              display: 'grid',
               border: '1px solid #e8e8e8', borderLeft: '3px solid #b08d57',
               borderRadius: 4, overflow: 'hidden',
             }}>
@@ -427,7 +432,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── EDITOR'S PICK + ALSO POPULAR ─────────────────────────────────── */}
-      <section className="tk-split-section" style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', borderTop: '1px solid #ededed' }}>
+      <section className="tk-split-section" style={{ display: 'grid', borderTop: '1px solid #ededed' }}>
         {/* Left */}
         <motion.div
           ref={pickRef}
