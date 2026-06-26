@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+html, body { overflow-x: hidden; max-width: 100%; }
+
 /* PCB 基板パターン — 検索ページ背景用 */
 .pcb-bg {
   background-color: #f4f9f5;

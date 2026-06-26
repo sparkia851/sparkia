@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import Image from 'next/image'
 import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
 import type { TKProduct } from '../_lib/talp-catalog'
@@ -95,7 +95,7 @@ function Reveal({
       </motion.div>
     )
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 80, rotate: 1.5 }} animate={inView ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 80, rotate: 1.5 }} transition={{ duration: 0.75, delay, ease: EASE }}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 60 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }} transition={{ duration: 0.75, delay, ease: EASE }}>
       {children}
     </motion.div>
   )
@@ -123,9 +123,12 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
   const heroInputRef = useRef<HTMLInputElement>(null)
   const [isMobile, setIsMobile] = useState(isMobileHint)
 
+  useLayoutEffect(() => {
+    setIsMobile(window.innerWidth < 1024)
+  }, [])
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024)
-    check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
@@ -146,8 +149,8 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
     target: lineupRef,
     offset: ['start end', 'end start'],
   })
-  const switchesX = useTransform(lineupProgress, [0, 1], [64, -64])
-  const keycapsX = useTransform(lineupProgress, [0, 1], [-64, 64])
+  const switchesX = useTransform(lineupProgress, [0, 1], [0, -80])
+  const keycapsX = useTransform(lineupProgress, [0, 1], [0, 80])
 
   const pickRef = useRef(null)
   const pickInView = useInView(pickRef, { once: true, margin: '-80px' })
@@ -192,8 +195,8 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       <section className="tk-hs" style={{ paddingTop: 64 }}>
         <motion.div
           className="tk-ht"
-          initial={{ opacity: 0, x: -60, rotate: -1 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
+          initial={{ opacity: 0, x: -60 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
