@@ -117,11 +117,11 @@ function StripCard({ product }: { product: TKProduct }) {
   )
 }
 
-export function TKTopClient({ products }: { products: TKProduct[] }) {
+export function TKTopClient({ products, isMobileHint = false }: { products: TKProduct[], isMobileHint?: boolean }) {
   const router = useRouter()
   const [query, setQuery] = useState('')
   const heroInputRef = useRef<HTMLInputElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(isMobileHint)
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024)

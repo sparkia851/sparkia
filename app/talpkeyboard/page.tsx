@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { TKTopClient } from '../_components/TKTopClient'
 import { fetchTalpProducts } from '../_lib/talp-catalog'
 
@@ -8,6 +9,8 @@ export const metadata: Metadata = {
 }
 
 export default async function TalpKeyboardPage() {
-  const products = await fetchTalpProducts()
-  return <TKTopClient products={products} />
+  const [products, headersList] = await Promise.all([fetchTalpProducts(), headers()])
+  const ua = headersList.get('user-agent') ?? ''
+  const isMobileHint = /iPhone|iPod|Android|Mobile|BlackBerry|IEMobile/i.test(ua)
+  return <TKTopClient products={products} isMobileHint={isMobileHint} />
 }
