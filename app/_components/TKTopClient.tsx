@@ -1,10 +1,11 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
 import type { TKProduct } from '../_lib/talp-catalog'
+import styles from './TKTopClient.module.css'
 
 // ── Design tokens ────────────────────────────────────────────────────────────
 const SERIF = 'var(--font-serif-jp), serif'
@@ -149,13 +150,6 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
   const router = useRouter()
   const [query, setQuery] = useState('')
   const heroInputRef = useRef<HTMLInputElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
 
   // Global scroll
   const { scrollY, scrollYProgress } = useScroll()
@@ -198,43 +192,9 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
 
   return (
     <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
-      <style>{`
-        /* デスクトップ: グリッドカラム定義 */
-        .tk-hero-section  { grid-template-columns: 1fr 1fr; }
-        .tk-split-section { grid-template-columns: 1.25fr 1fr; }
-        .tk-hiw-card      { grid-template-columns: 160px 1fr; }
-
-        @media (max-width: 768px) {
-          .tk-nav           { padding: 0 20px; }
-          .tk-hero-section  { grid-template-columns: 1fr; min-height: auto; }
-          .tk-hero-text     { padding: 80px 24px 52px; }
-          .tk-hero-photo    { display: none; }
-          .tk-h1            { font-size: clamp(28px, 8vw, 44px); }
-          .tk-meta-strip    { padding: 22px 24px; gap: 20px; flex-wrap: wrap; }
-          .tk-hiw-section   { padding: 72px 24px; }
-          .tk-hiw-card      { grid-template-columns: 1fr; }
-          .tk-split-section { grid-template-columns: 1fr; }
-          .tk-split-left    { border-right: none; border-bottom: 1px solid #ededed; }
-          .tk-split-pad     { padding: 48px 24px; }
-          .tk-lineup-section{ padding: 72px 24px; }
-          .tk-lineup-header { flex-direction: column; gap: 8px; }
-          .tk-lineup-tagline{ text-align: left; max-width: none; margin-top: 0; }
-          .tk-cta-section   { padding: 80px 24px; }
-          .tk-h2-cta        { font-size: clamp(28px, 8vw, 40px); }
-          .tk-footer        { flex-direction: column; gap: 10px; padding: 28px 24px; text-align: center; }
-        }
-      `}</style>
 
       {/* ── NAV ──────────────────────────────────────────────────────────── */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        height: 64,
-        background: 'rgba(255,255,255,0.94)',
-        backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid #ededed',
-        display: 'flex', alignItems: 'center',
-        padding: isMobile ? '0 20px' : '0 52px', justifyContent: 'space-between',
-      }}>
+      <nav className={styles.nav}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.2em', color: '#16140f' }}>
             TALP KEYBOARD
@@ -261,19 +221,18 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="tk-hero-section" style={{ paddingTop: 64 }}>
+      <section className={styles.heroSection}>
         {/* Left: text + form */}
         <motion.div
-          className="tk-hero-text"
+          className={styles.heroText}
           initial={{ opacity: 0, x: -60, rotate: -1 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
-          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
             TALP KEYBOARD × SPARKIA AI
           </p>
-          <h1 className="tk-h1" style={{ margin: '0 0 18px', fontFamily: SERIF, fontSize: 50, fontWeight: 500, lineHeight: 1.32, letterSpacing: '0.01em', color: '#16140f' }}>
+          <h1 className={styles.h1} style={{ fontFamily: SERIF }}>
             言葉で伝えると、<br />仕様まで読んで<br />選んでくれる。
           </h1>
           <p style={{ margin: '0 0 40px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, letterSpacing: '0.03em', maxWidth: 380 }}>
@@ -311,35 +270,31 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
           </p>
         </motion.div>
 
-        {/* Right: photo with parallax */}
-        <div className="tk-hero-photo" style={{ overflow: 'hidden', position: 'relative' }}>
-        <motion.div
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
-          style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative', height: '100%' }}
-        >
-          <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y: photoY }}>
-            <Image
-              src={HERO_PHOTO}
-              alt="TALP KEYBOARD"
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-              sizes="50vw"
-            />
+        {/* Right: photo with parallax — hidden on mobile via CSS Module */}
+        <div className={styles.heroPhoto}>
+          <motion.div
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
+            style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative', height: '100%' }}
+          >
+            <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y: photoY }}>
+              <Image
+                src={HERO_PHOTO}
+                alt="TALP KEYBOARD"
+                fill
+                style={{ objectFit: 'cover' }}
+                priority
+                sizes="50vw"
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
         </div>
       </section>
 
       {/* ── METADATA STRIP ───────────────────────────────────────────────── */}
       <Reveal>
-        <div className="tk-meta-strip" style={{
-          display: 'flex', alignItems: 'center', gap: 48,
-          padding: '22px 52px',
-          borderTop: '1px solid #ededed', borderBottom: '1px solid #ededed',
-        }}>
+        <div className={styles.metaStrip}>
           <div>
             <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>
               {products.length || 162}
@@ -357,7 +312,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </Reveal>
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
-      <section className="tk-hiw-section" style={{ padding: '96px 52px', background: '#f9f8f6' }}>
+      <section className={styles.hiwSection}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <Reveal>
             <p style={{ margin: '0 0 22px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>
@@ -376,10 +331,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
               —「<strong style={{ color: '#16140f', fontWeight: 600 }}>{HOW_IT_WORKS.query}</strong>」と入力すると
             </p>
 
-            <div className="tk-hiw-card" style={{
-              border: '1px solid #e8e8e8', borderLeft: '3px solid #b08d57',
-              borderRadius: 4, overflow: 'hidden',
-            }}>
+            <div className={styles.hiwCard}>
               <div style={{ background: '#f6f4f0', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
                 {/* Floating product image */}
                 <motion.div
@@ -438,16 +390,16 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── EDITOR'S PICK + ALSO POPULAR ─────────────────────────────────── */}
-      <section className="tk-split-section" style={{ borderTop: '1px solid #ededed' }}>
+      <section className={styles.splitSection}>
         {/* Left */}
         <motion.div
           ref={pickRef}
           initial={{ opacity: 0, x: -60 }}
           animate={pickInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.85, ease: EASE }}
-          className="tk-split-left"
+          className={styles.splitLeft}
         >
-          <div className="tk-split-pad">
+          <div className={styles.splitPad}>
             <p style={{ margin: '0 0 28px', fontSize: 10, fontWeight: 600, letterSpacing: '0.28em', color: '#b08d57', textTransform: 'uppercase' }}>
               EDITOR&apos;S PICK
             </p>
@@ -494,7 +446,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
           animate={popularInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.85, ease: EASE, delay: 0.08 }}
         >
-          <div className="tk-split-pad">
+          <div className={styles.splitPad}>
             <p style={{ margin: '0 0 24px', fontSize: 10, fontWeight: 600, letterSpacing: '0.28em', color: '#b08d57', textTransform: 'uppercase' }}>
               ALSO POPULAR
             </p>
@@ -533,9 +485,9 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── LINEUP ───────────────────────────────────────────────────────── */}
-      <section ref={lineupRef} className="tk-lineup-section" style={{ borderTop: '1px solid #ededed', padding: '84px 52px', overflowX: 'hidden' }}>
+      <section ref={lineupRef} className={styles.lineupSection}>
         <Reveal>
-          <div className="tk-lineup-header" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 48 }}>
+          <div className={styles.lineupHeader}>
             <div>
               <p style={{ margin: '0 0 14px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>
                 LINEUP
@@ -544,7 +496,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
                 TALP在庫を<br />リアルタイムで参照。
               </h2>
             </div>
-            <p className="tk-lineup-tagline" style={{ margin: '40px 0 0', fontSize: 13, color: '#8a8a8a', lineHeight: 1.9, maxWidth: 240, textAlign: 'right' }}>
+            <p className={styles.lineupTagline}>
               キースイッチ・キーキャップ・パーツ、<br />{products.length}商品すべてが選定対象です。
             </p>
           </div>
@@ -556,7 +508,6 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
               <p style={{ margin: '0 0 18px', fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em' }}>
                 キースイッチ <span style={{ color: '#16140f', fontWeight: 600 }}>{switches.length}</span>種
               </p>
-              {/* Counter-drift wrapper — switches drift left as you scroll down */}
               <motion.div style={{ x: switchesX }}>
                 <div className="scrollbar-hide" style={{ display: 'flex', gap: 14, overflowX: 'auto', paddingBottom: 4 }}>
                   {switches.map(p => <StripCard key={p.id} product={p} />)}
@@ -572,7 +523,6 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
               <p style={{ margin: '0 0 18px', fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em' }}>
                 キーキャップ <span style={{ color: '#16140f', fontWeight: 600 }}>{keycaps.length}</span>種
               </p>
-              {/* Counter-drift wrapper — keycaps drift right as you scroll down */}
               <motion.div style={{ x: keycapsX }}>
                 <div className="scrollbar-hide" style={{ display: 'flex', gap: 14, overflowX: 'auto', paddingBottom: 4 }}>
                   {keycaps.map(p => <StripCard key={p.id} product={p} />)}
@@ -584,12 +534,12 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="tk-cta-section" style={{ padding: '112px 52px', textAlign: 'center', background: '#f9f8f6' }}>
+      <section className={styles.ctaSection}>
         <Reveal>
           <p style={{ margin: '0 0 20px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>
             TRY IT NOW
           </p>
-          <h2 className="tk-h2-cta" style={{ margin: '0 0 12px', fontFamily: SERIF, fontSize: 46, fontWeight: 500, lineHeight: 1.3, color: '#16140f' }}>
+          <h2 className={styles.h2Cta} style={{ fontFamily: SERIF }}>
             自分の言葉で、<br />探してみる。
           </h2>
           <p style={{ margin: '0 0 36px', fontSize: 13, color: '#8a8a8a', lineHeight: 2 }}>
@@ -616,10 +566,7 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer className="tk-footer" style={{
-        borderTop: '1px solid #ededed',
-        justifyContent: 'space-between', alignItems: 'center',
-      }}>
+      <footer className={styles.footer}>
         <span style={{ fontSize: 10, color: '#ccc' }}>
           掲載価格・在庫は変動する場合があります。最新情報はTALP KEYBOARDのショップページをご確認ください。
         </span>

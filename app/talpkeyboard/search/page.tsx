@@ -123,9 +123,6 @@ function HeroCard({ hero }: { hero: AIResultTK }) {
         className="anim-hero-img tk-sh-img"
         style={{
           background: '#f6f4f0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           padding: 52,
         }}
       >
@@ -291,13 +288,14 @@ export default async function TKSearchPage({
     >
       <style>{`
         .tk-sh { display: grid; grid-template-columns: 1fr 1fr; }
+        .tk-sh-img { display: flex; align-items: center; justify-content: center; }
         @media (max-width: 768px) {
-          .tk-sh       { grid-template-columns: 1fr; }
-          .tk-sh-img   { display: none; }
+          .tk-sh       { grid-template-columns: 1fr !important; }
+          .tk-sh-img   { display: none !important; }
           .tk-sh-body  { padding: 32px 20px 36px !important; }
           .tk-sq       { padding: 40px 20px 0 !important; }
           .tk-sr       { padding: 0 20px 80px !important; }
-          .tk-sf       { flex-direction: column; gap: 8px; padding: 28px 20px !important; text-align: center; }
+          .tk-sf       { flex-direction: column !important; gap: 8px; padding: 28px 20px !important; text-align: center; }
           .tk-snav     { padding: 0 20px !important; }
         }
       `}</style>
