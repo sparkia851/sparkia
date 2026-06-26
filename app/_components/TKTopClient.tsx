@@ -9,6 +9,9 @@ import type { TKProduct } from '../_lib/talp-catalog'
 const SERIF = 'var(--font-serif-jp), serif'
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
+const HERO_PHOTO =
+  'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=1200&q=85&auto=format&fit=crop'
+
 const HOW_IT_WORKS = {
   query: '静かにタイピングしたい',
   rank: '01',
@@ -121,13 +124,14 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
+    const check = () => setIsMobile(window.innerWidth < 1024)
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  const { scrollYProgress } = useScroll()
+  const { scrollY, scrollYProgress } = useScroll()
+  const photoY = useTransform(scrollY, [0, 680], [0, 140])
   const progressSpring = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
 
   const pickImageContainerRef = useRef(null)
@@ -184,12 +188,17 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section style={{ paddingTop: 64 }}>
+      <section style={{
+        display: 'grid',
+        gridTemplateColumns: sp ? '1fr' : '1fr 1fr',
+        minHeight: sp ? 'auto' : 680,
+        paddingTop: 64,
+      }}>
         <motion.div
           initial={{ opacity: 0, x: -60, rotate: -1 }}
           animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
-          style={{ padding: sp ? '72px 24px 52px' : '88px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center', maxWidth: 720 }}
+          style={{ padding: sp ? '72px 24px 52px' : '88px 60px 88px 72px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
             TALP KEYBOARD × SPARKIA AI
@@ -220,6 +229,22 @@ export function TKTopClient({ products }: { products: TKProduct[] }) {
             SILENT · LINEAR · TACTILE · ARTISAN
           </p>
         </motion.div>
+
+        {/* Photo — only rendered on desktop (>= 1024px) */}
+        {!sp && (
+          <div style={{ overflow: 'hidden', position: 'relative' }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 1.06 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: EASE, delay: 0.15 }}
+              style={{ background: '#1a1a1a', overflow: 'hidden', position: 'relative', height: '100%' }}
+            >
+              <motion.div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, y: photoY }}>
+                <Image src={HERO_PHOTO} alt="TALP KEYBOARD" fill style={{ objectFit: 'cover' }} priority sizes="50vw" />
+              </motion.div>
+            </motion.div>
+          </div>
+        )}
       </section>
 
       {/* ── METADATA STRIP ───────────────────────────────────────────────── */}
