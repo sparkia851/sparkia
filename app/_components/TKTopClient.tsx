@@ -150,7 +150,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
     offset: ['start end', 'end start'],
   })
   const switchesX = useTransform(lineupProgress, [0, 1], [0, -80])
-  const keycapsX = useTransform(lineupProgress, [0, 1], [0, 80])
+  const keycapsX = useTransform(lineupProgress, [0, 1], [0, -44])
 
   const pickRef = useRef(null)
   const pickInView = useInView(pickRef, { once: true, margin: '-80px' })
