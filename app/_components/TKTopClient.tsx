@@ -64,6 +64,22 @@ const ALSO_POPULAR = [
   },
 ]
 
+function useCountUp(target: number, inView: boolean, duration = 1200) {
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    if (!inView) return
+    const startTime = performance.now()
+    const tick = (now: number) => {
+      const t = Math.min((now - startTime) / duration, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setCount(Math.round(eased * target))
+      if (t < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }, [inView, target, duration])
+  return count
+}
+
 function Reveal({
   children,
   delay = 0,
@@ -98,6 +114,23 @@ function Reveal({
     <motion.div ref={ref} initial={{ opacity: 0, y: 60 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }} transition={{ duration: 0.75, delay, ease: EASE }}>
       {children}
     </motion.div>
+  )
+}
+
+function RevealLine({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  return (
+    <span ref={ref} style={{ display: 'block', overflow: 'hidden' }}>
+      <motion.span
+        style={{ display: 'block' }}
+        initial={{ opacity: 0, y: 72 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 72 }}
+        transition={{ duration: 0.6, delay, ease: EASE }}
+      >
+        {children}
+      </motion.span>
+    </span>
   )
 }
 
@@ -156,6 +189,11 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
   const pickInView = useInView(pickRef, { once: true, margin: '-80px' })
   const popularRef = useRef(null)
   const popularInView = useInView(popularRef, { once: true, margin: '-80px' })
+
+  const stripRef = useRef<HTMLDivElement>(null)
+  const stripInView = useInView(stripRef, { once: true, margin: '-60px' })
+  const productCount = useCountUp(products.length, stripInView)
+  const categoryCount = useCountUp(3, stripInView)
 
   function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault()
@@ -246,18 +284,21 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
 
       {/* ── METADATA STRIP ───────────────────────────────────────────────── */}
       <Reveal>
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: sp ? 20 : 48, flexWrap: 'wrap',
-          padding: sp ? '22px 24px' : '22px 52px',
-          borderTop: '1px solid #ededed', borderBottom: '1px solid #ededed',
-        }}>
+        <div
+          ref={stripRef}
+          style={{
+            display: 'flex', alignItems: 'center', gap: sp ? 20 : 48, flexWrap: 'wrap',
+            padding: sp ? '22px 24px' : '22px 52px',
+            borderTop: '1px solid #ededed', borderBottom: '1px solid #ededed',
+          }}
+        >
           <div>
-            <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>{products.length}</span>
+            <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>{productCount}</span>
             <span style={{ fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em', marginLeft: 6 }}>商品</span>
           </div>
           <span style={{ display: 'inline-block', width: 1, height: 14, background: '#e6e6e6' }} />
           <div>
-            <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>3</span>
+            <span style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: '#16140f' }}>{categoryCount}</span>
             <span style={{ fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em', marginLeft: 6 }}>カテゴリ</span>
           </div>
           <span style={{ display: 'inline-block', width: 1, height: 14, background: '#e6e6e6' }} />
@@ -270,9 +311,13 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <Reveal>
             <p style={{ margin: '0 0 22px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>HOW IT WORKS</p>
+          </Reveal>
+          <RevealLine delay={0.06}>
             <h2 style={{ margin: '0 0 16px', fontFamily: SERIF, fontSize: 38, fontWeight: 500, lineHeight: 1.3, color: '#16140f' }}>
               {products.length}商品の説明文を、<br />全部読んで選んでいます。
             </h2>
+          </RevealLine>
+          <Reveal delay={0.1}>
             <p style={{ margin: '0 0 48px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, maxWidth: 520 }}>
               スイッチのPOMステムやアクチュエーション荷重、ルブの有無まで——TALPが商品ページに書いている仕様を、AIがそのまま読んで判断します。
             </p>
@@ -336,7 +381,9 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
                 <Image src={EDITORS_PICK.imageUrl} alt={EDITORS_PICK.name} fill style={{ objectFit: 'contain', padding: 24 }} sizes="(max-width:1200px) 55vw, 700px" />
               </motion.div>
             </div>
-            <h3 style={{ margin: '0 0 4px', fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: '#16140f', lineHeight: 1.3 }}>{EDITORS_PICK.name}</h3>
+            <RevealLine>
+              <h3 style={{ margin: '0 0 4px', fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: '#16140f', lineHeight: 1.3 }}>{EDITORS_PICK.name}</h3>
+            </RevealLine>
             <p style={{ margin: '0 0 16px', fontSize: 13, color: '#a5a5a5' }}>{EDITORS_PICK.subName}</p>
             <p style={{ margin: '0 0 24px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1 }}>{EDITORS_PICK.description}</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
@@ -381,19 +428,23 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
 
       {/* ── LINEUP ───────────────────────────────────────────────────────── */}
       <section ref={lineupRef} style={{ borderTop: '1px solid #ededed', padding: sp ? '72px 24px' : '84px 52px', overflowX: 'hidden' }}>
-        <Reveal>
-          <div style={{ display: 'flex', alignItems: sp ? 'flex-start' : 'flex-start', flexDirection: sp ? 'column' : 'row', justifyContent: 'space-between', gap: sp ? 8 : 0, marginBottom: 48 }}>
-            <div>
+        <div style={{ display: 'flex', alignItems: sp ? 'flex-start' : 'flex-start', flexDirection: sp ? 'column' : 'row', justifyContent: 'space-between', gap: sp ? 8 : 0, marginBottom: 48 }}>
+          <div>
+            <Reveal>
               <p style={{ margin: '0 0 14px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>LINEUP</p>
+            </Reveal>
+            <RevealLine delay={0.05}>
               <h2 style={{ margin: 0, fontFamily: SERIF, fontSize: 38, fontWeight: 500, lineHeight: 1.3, color: '#16140f' }}>
                 TALP在庫を<br />リアルタイムで参照。
               </h2>
-            </div>
+            </RevealLine>
+          </div>
+          <Reveal delay={0.1}>
             <p style={{ margin: sp ? 0 : '40px 0 0', fontSize: 13, color: '#8a8a8a', lineHeight: 1.9, maxWidth: sp ? 'none' : 240, textAlign: sp ? 'left' : 'right' }}>
               キースイッチ・キーキャップ・パーツ、<br />{products.length}商品すべてが選定対象です。
             </p>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
 
         {switches.length > 0 && (
           <Reveal delay={0.05}>
@@ -430,9 +481,13 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       <section style={{ padding: sp ? '80px 24px' : '112px 52px', textAlign: 'center', background: '#f9f8f6' }}>
         <Reveal>
           <p style={{ margin: '0 0 20px', fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', color: '#b08d57', textTransform: 'uppercase' }}>TRY IT NOW</p>
+        </Reveal>
+        <RevealLine delay={0.06}>
           <h2 style={{ margin: '0 0 12px', fontFamily: SERIF, fontSize: sp ? 'clamp(28px,8vw,40px)' : 46, fontWeight: 500, lineHeight: 1.3, color: '#16140f' }}>
             自分の言葉で、<br />探してみる。
           </h2>
+        </RevealLine>
+        <Reveal delay={0.12}>
           <p style={{ margin: '0 0 36px', fontSize: 13, color: '#8a8a8a', lineHeight: 2 }}>どんな言葉でも大丈夫です。</p>
           <button
             type="button"
