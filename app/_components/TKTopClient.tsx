@@ -206,6 +206,13 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
 
   const sp = isMobile  // shorthand
 
+  const editorsPickUrl = products.find(p => p.name.includes('Oil King Pink'))?.shopUrl ?? EDITORS_PICK.shopUrl
+
+  useEffect(() => {
+    document.body.style.overscrollBehavior = 'none'
+    return () => { document.body.style.overscrollBehavior = '' }
+  }, [])
+
   return (
     <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif', overflowX: 'hidden' }}>
 
@@ -404,7 +411,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
             <p style={{ margin: '0 0 24px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1 }}>{EDITORS_PICK.description}</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
               <span style={{ fontFamily: SERIF, fontSize: 20, color: '#16140f' }}>{EDITORS_PICK.price}</span>
-              <a href={EDITORS_PICK.shopUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, fontWeight: 600, color: '#ffffff', background: '#16140f', borderRadius: 2, padding: '9px 20px', textDecoration: 'none', letterSpacing: '0.04em' }}>購入する →</a>
+              <a href={editorsPickUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, fontWeight: 600, color: '#ffffff', background: '#16140f', borderRadius: 2, padding: '9px 20px', textDecoration: 'none', letterSpacing: '0.04em' }}>購入する →</a>
             </div>
           </div>
         </motion.div>
