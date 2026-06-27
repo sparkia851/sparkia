@@ -133,6 +133,11 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
     return () => window.removeEventListener('resize', check)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflowX = isMobile ? 'hidden' : ''
+    return () => { document.body.style.overflowX = '' }
+  }, [isMobile])
+
   const { scrollY, scrollYProgress } = useScroll()
   const photoY = useTransform(scrollY, [0, 680], [0, 140])
   const progressSpring = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
