@@ -233,8 +233,8 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       <section className="tk-hs" style={{ paddingTop: 64 }}>
         <motion.div
           className="tk-ht"
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={sp ? { opacity: 0 } : { opacity: 0, x: -60 }}
+          animate={sp ? { opacity: 1 } : { opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
         >
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
@@ -246,22 +246,38 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
           <p style={{ margin: '0 0 40px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, letterSpacing: '0.03em', maxWidth: 380 }}>
             {products.length}商品の説明文を、AIがそのまま読み解いて提案。あなたの言葉に、最適な一台を。
           </p>
-          <form
-            onSubmit={handleSubmit}
-            style={{ display: 'flex', border: '1px solid #16140f', borderRadius: 2, overflow: 'hidden', maxWidth: 440 }}
-          >
-            <input
-              ref={heroInputRef}
-              type="text"
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              placeholder="例：静音で軽めのリニアスイッチがほしい"
-              style={{ flex: 1, padding: '16px 18px', fontSize: 13, color: '#16140f', background: '#ffffff', border: 'none', outline: 'none', letterSpacing: '0.02em', fontFamily: 'var(--font-jp), sans-serif' }}
-            />
-            <button type="submit" style={{ background: '#16140f', color: '#ffffff', border: 'none', padding: '0 26px', fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'var(--font-jp), sans-serif' }}>
-              提案する
-            </button>
-          </form>
+          {sp ? (
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+              <input
+                ref={heroInputRef}
+                type="text"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="例：静音で軽めのリニアスイッチ"
+                style={{ width: '100%', boxSizing: 'border-box', padding: '14px 16px', fontSize: 13, color: '#16140f', background: '#ffffff', border: '1px solid #16140f', borderRadius: 2, outline: 'none', letterSpacing: '0.02em', fontFamily: 'var(--font-jp), sans-serif' }}
+              />
+              <button type="submit" style={{ width: '100%', boxSizing: 'border-box', background: '#16140f', color: '#ffffff', border: 'none', borderRadius: 2, padding: '14px 0', fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', cursor: 'pointer', fontFamily: 'var(--font-jp), sans-serif' }}>
+                提案する
+              </button>
+            </form>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              style={{ display: 'flex', border: '1px solid #16140f', borderRadius: 2, overflow: 'hidden', maxWidth: 440 }}
+            >
+              <input
+                ref={heroInputRef}
+                type="text"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="例：静音で軽めのリニアスイッチがほしい"
+                style={{ flex: 1, minWidth: 0, padding: '16px 18px', fontSize: 13, color: '#16140f', background: '#ffffff', border: 'none', outline: 'none', letterSpacing: '0.02em', fontFamily: 'var(--font-jp), sans-serif' }}
+              />
+              <button type="submit" style={{ background: '#16140f', color: '#ffffff', border: 'none', padding: '0 26px', fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'var(--font-jp), sans-serif' }}>
+                提案する
+              </button>
+            </form>
+          )}
           <p style={{ margin: '22px 0 0', fontSize: 11, color: '#c8bfb0', letterSpacing: '0.14em' }}>
             SILENT · LINEAR · TACTILE · ARTISAN
           </p>
