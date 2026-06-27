@@ -191,13 +191,15 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section style={{
+      {/* CSS classes + html.tk-sp rules handle layout when JS sp is wrong */}
+      <section className="tk-hs" style={{
         paddingTop: 64,
         display: 'grid',
         gridTemplateColumns: sp ? '1fr' : '1fr 1fr',
         minHeight: sp ? 'auto' : 680,
       }}>
         <motion.div
+          className="tk-ht"
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
@@ -209,7 +211,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
           <p style={{ margin: '0 0 30px', fontSize: 10, fontWeight: 600, letterSpacing: '0.32em', color: '#b08d57', textTransform: 'uppercase' }}>
             TALP KEYBOARD × SPARKIA AI
           </p>
-          <h1 style={{ margin: '0 0 18px', fontFamily: SERIF, fontSize: sp ? 'clamp(28px, 8vw, 44px)' : 50, fontWeight: 500, lineHeight: 1.32, letterSpacing: '0.01em', color: '#16140f' }}>
+          <h1 className="tk-h1" style={{ fontFamily: SERIF, fontSize: sp ? 'clamp(28px, 8vw, 44px)' : 50 }}>
             言葉で伝えると、<br />仕様まで読んで<br />選んでくれる。
           </h1>
           <p style={{ margin: '0 0 40px', fontSize: 13, color: '#8a8a8a', lineHeight: 2.1, letterSpacing: '0.03em', maxWidth: 380 }}>
@@ -237,7 +239,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
         </motion.div>
 
         {!sp && (
-          <div style={{ overflow: 'hidden', position: 'relative' }}>
+          <div className="tk-hp" style={{ overflow: 'hidden', position: 'relative' }}>
             <motion.div
               initial={{ opacity: 0, scale: 1.06 }}
               animate={{ opacity: 1, scale: 1 }}

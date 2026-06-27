@@ -40,6 +40,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
+      {/* Runs before React loads — sets tk-sp class on <html> for CSS mobile overrides */}
+      <Script id="tk-sp-detect" strategy="beforeInteractive">{`
+        document.documentElement.classList.toggle('tk-sp', window.innerWidth < 1024);
+      `}</Script>
       <body
         className={`${spaceGrotesk.variable} ${notoSansJP.variable} ${notoSerifJP.variable} antialiased min-h-screen flex flex-col`}
         style={{ background: '#05070f', color: '#f1f5f9', fontFamily: 'var(--font-jp), sans-serif' }}
