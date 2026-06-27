@@ -248,7 +248,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
           </p>
           <form
             onSubmit={handleSubmit}
-            style={{ display: 'flex', border: '1px solid #16140f', borderRadius: 2, overflow: 'hidden', maxWidth: 440 }}
+            style={{ display: 'flex', border: '1px solid #16140f', borderRadius: 2, overflow: 'hidden' }}
           >
             <input
               ref={heroInputRef}
