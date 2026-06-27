@@ -95,7 +95,7 @@ function Reveal({
       </motion.div>
     )
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 60 }} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }} transition={{ duration: 0.75, delay, ease: EASE }}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 80, rotate: 1.5 }} animate={inView ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 80, rotate: 1.5 }} transition={{ duration: 0.75, delay, ease: EASE }}>
       {children}
     </motion.div>
   )
@@ -149,8 +149,8 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
     target: lineupRef,
     offset: ['start end', 'end start'],
   })
-  const switchesX = useTransform(lineupProgress, [0, 1], [0, -80])
-  const keycapsX = useTransform(lineupProgress, [0, 1], [0, -44])
+  const switchesX = useTransform(lineupProgress, [0, 1], [64, -64])
+  const keycapsX = useTransform(lineupProgress, [0, 1], [-64, 64])
 
   const pickRef = useRef(null)
   const pickInView = useInView(pickRef, { once: true, margin: '-80px' })
@@ -169,7 +169,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
   const sp = isMobile  // shorthand
 
   return (
-    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif', overflowX: 'hidden' }}>
+    <main style={{ background: '#ffffff', color: '#16140f', fontFamily: 'var(--font-jp), sans-serif' }}>
 
       {/* ── NAV ──────────────────────────────────────────────────────────── */}
       <nav style={{
@@ -200,8 +200,8 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
       }}>
         <motion.div
           className="tk-ht"
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -60, rotate: -1 }}
+          animate={{ opacity: 1, x: 0, rotate: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.05 }}
           style={{
             padding: sp ? '64px 24px 52px' : '88px 60px 88px 72px',

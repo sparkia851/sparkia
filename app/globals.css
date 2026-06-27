@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
-html, body { overflow-x: hidden; }
+/* モバイルのみ横スクロール禁止 — デスクトップアニメーションは遮断しない */
+html.tk-sp, html.tk-sp body { overflow-x: hidden; }
+@media (max-width: 1023px) { html, body { overflow-x: hidden; } }
 
 /* PCB 基板パターン — 検索ページ背景用 */
 .pcb-bg {
