@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+html, body { overflow-x: hidden; max-width: 100%; }
 
 /* PCB 基板パターン — 検索ページ背景用 */
 .pcb-bg {
@@ -100,12 +101,18 @@
   .tk-meta-strip    { padding: 22px 24px; gap: 20px; flex-wrap: wrap; }
 }
 
-/* TALP — ヒーローグリッド */
+/* TALP — ヒーローグリッド（inline style競合なし版） */
 .tk-hs { display: grid; grid-template-columns: 1fr 1fr; min-height: 680px; }
 .tk-hp { overflow: hidden; position: relative; }
 .tk-ht { padding: 88px 60px 88px 72px; display: flex; flex-direction: column; justify-content: center; }
 .tk-h1 { margin: 0 0 18px; font-size: 50px; font-weight: 500; line-height: 1.32; letter-spacing: 0.01em; color: #16140f; }
 
+@media (max-width: 1023px) {
+  .tk-hs { grid-template-columns: 1fr !important; min-height: auto !important; }
+  .tk-hp { display: none !important; }
+  .tk-ht { padding: 72px 24px 52px !important; }
+  .tk-h1 { font-size: clamp(28px, 8vw, 44px) !important; }
+}
 
 /* スクロールバー非表示 */
 .scrollbar-hide {
