@@ -102,7 +102,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 /* TALP — ヒーローグリッド（inline style競合なし版） */
-.tk-hs { display: grid; grid-template-columns: 1fr 1fr; min-height: 680px; }
+.tk-hs { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
 .tk-hp { overflow: hidden; position: relative; }
 .tk-ht { padding: 88px 60px 88px 72px; display: flex; flex-direction: column; justify-content: center; }
 .tk-h1 { margin: 0 0 18px; font-size: 50px; font-weight: 500; line-height: 1.32; letter-spacing: 0.01em; color: #16140f; }
