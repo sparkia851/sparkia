@@ -452,7 +452,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
               <p style={{ margin: '0 0 18px', fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em' }}>
                 キースイッチ <span style={{ color: '#16140f', fontWeight: 600 }}>{switches.length}</span>種
               </p>
-              <motion.div style={{ x: switchesX }}>
+              <motion.div style={sp ? {} : { x: switchesX }}>
                 <div className="scrollbar-hide" style={{ display: 'flex', gap: 14, overflowX: 'auto', paddingBottom: 4 }}>
                   {switches.map(p => <StripCard key={p.id} product={p} />)}
                 </div>
@@ -467,7 +467,7 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
               <p style={{ margin: '0 0 18px', fontSize: 11, color: '#a5a5a5', letterSpacing: '0.04em' }}>
                 キーキャップ <span style={{ color: '#16140f', fontWeight: 600 }}>{keycaps.length}</span>種
               </p>
-              <motion.div style={{ x: keycapsX }}>
+              <motion.div style={sp ? {} : { x: keycapsX }}>
                 <div className="scrollbar-hide" style={{ display: 'flex', gap: 14, overflowX: 'auto', paddingBottom: 4 }}>
                   {keycaps.map(p => <StripCard key={p.id} product={p} />)}
                 </div>
