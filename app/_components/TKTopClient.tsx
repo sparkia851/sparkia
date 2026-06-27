@@ -209,8 +209,15 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
   const editorsPickUrl = products.find(p => p.name.includes('Oil King Pink'))?.shopUrl ?? EDITORS_PICK.shopUrl
 
   useEffect(() => {
-    document.body.style.overscrollBehavior = 'none'
-    return () => { document.body.style.overscrollBehavior = '' }
+    const header = document.getElementById('sparkia-site-header')
+    if (header) header.style.display = 'none'
+    document.documentElement.style.background = '#ffffff'
+    document.body.style.background = '#ffffff'
+    return () => {
+      if (header) header.style.display = ''
+      document.documentElement.style.background = ''
+      document.body.style.background = ''
+    }
   }, [])
 
   return (

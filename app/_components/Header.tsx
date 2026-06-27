@@ -4,6 +4,7 @@ import { SparkiaLogo } from './SparkiaLogo'
 export function Header() {
   return (
     <header
+      id="sparkia-site-header"
       className="sticky top-0 z-50"
       style={{
         background: 'rgba(5,7,15,0.85)',
