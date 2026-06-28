@@ -399,7 +399,7 @@ export default async function TKSearchPage({
           }}
         >
           <span style={{ fontSize: 10, color: '#ccc' }}>
-            掲載価格・在庫は変動する場合があります。最新情報はTALP KEYBOARDのショップページをご確認ください。
+            AI提案の内容には誤りが含まれる場合があります。掲載価格・在庫は変動する場合があります。最新情報はTALP KEYBOARDのショップページをご確認ください。
           </span>
           <span style={{ fontSize: 10, color: '#ccc', letterSpacing: '0.08em' }}>
             TALP KEYBOARD AI 商品提案 POWERED BY SPARKIA
