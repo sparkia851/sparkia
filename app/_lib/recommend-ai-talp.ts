@@ -56,7 +56,7 @@ async function _recommendAI(query: string): Promise<AIResultTK[]> {
       {
         type: 'text' as const,
         text: SYSTEM_INTRO + catalogText,
-        cache_control: { type: 'ephemeral' as const, ttl: '1h' },
+        cache_control: { type: 'ephemeral' as const, ttl: '1h' as const },
       },
     ],
     messages: [{ role: 'user' as const, content: query }],
