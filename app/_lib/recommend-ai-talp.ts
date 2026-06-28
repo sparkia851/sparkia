@@ -49,18 +49,30 @@ async function _recommendAI(query: string): Promise<AIResultTK[]> {
   const products = await fetchTalpProducts()
   const catalogText = buildCatalogText(products)
 
-  const response = await client.messages.create({
+  const params = {
     model: 'claude-haiku-4-5-20251001',
     max_tokens: 1024,
     system: [
       {
-        type: 'text',
+        type: 'text' as const,
         text: SYSTEM_INTRO + catalogText,
-        cache_control: { type: 'ephemeral' },
+        cache_control: { type: 'ephemeral' as const, ttl: '1h' },
       },
     ],
-    messages: [{ role: 'user', content: query }],
-  })
+    messages: [{ role: 'user' as const, content: query }],
+  }
+
+  let response
+  try {
+    response = await client.messages.create(params)
+  } catch (err: unknown) {
+    if ((err as { status?: number })?.status === 429) {
+      await new Promise(r => setTimeout(r, 3000))
+      response = await client.messages.create(params)
+    } else {
+      throw err
+    }
+  }
 
   const raw = response.content[0].type === 'text' ? response.content[0].text : '{}'
   const match = raw.match(/\{[\s\S]*\}/)

@@ -376,7 +376,7 @@ export default async function TKSearchPage({
             「{query}」
           </h1>
           <p style={{ margin: '12px 0 0', fontSize: 11, color: '#bbb' }}>
-            AIが162商品の仕様を読んで選定中…
+            AIが仕様を読んで選定中… 少しお待ちください
           </p>
         </div>
 

@@ -164,7 +164,7 @@ export default function TKSearchLoading() {
             animation: 'tk-shimmer 0.9s ease-in-out infinite',
           }}
         />
-        162商品の仕様を読んで選定中…
+        商品の仕様を読んで選定中… 少しお待ちください
       </div>
     </main>
   )
