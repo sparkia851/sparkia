@@ -27,6 +27,9 @@ export async function generateMetadata({
 function ResultsSkeleton() {
   return (
     <>
+      <p style={{ margin: '12px 52px 0', fontSize: 11, color: '#bbb' }}>
+        AIが仕様を読んで選定中… 少しお待ちください
+      </p>
       <style>{`
         @keyframes tk-shimmer {
           0%, 100% { opacity: 0.4; }
@@ -375,9 +378,6 @@ export default async function TKSearchPage({
           >
             「{query}」
           </h1>
-          <p style={{ margin: '12px 0 0', fontSize: 11, color: '#bbb' }}>
-            AIが仕様を読んで選定中… 少しお待ちください
-          </p>
           <p style={{ margin: '10px 0 0', fontSize: 11, color: '#999' }}>
             ※ AIによる提案のため、内容に誤りが含まれる場合があります
           </p>
