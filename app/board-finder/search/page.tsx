@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { SearchBox } from '../../_components/SearchBox'
 import { RankingCard } from '../../_components/RankingCard'
+import { BFSearchTracker } from '../../_components/BFSearchTracker'
 import { recommend } from '../../_lib/recommend'
 import { recommendAI } from '../../_lib/recommend-ai'
 
@@ -28,6 +29,7 @@ export default async function SearchPage({
 
   return (
     <main style={{ minHeight: '100vh' }}>
+      {query && <BFSearchTracker query={query} />}
       <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="mb-6">
         <SearchBox defaultValue={query} compact dark searchPath="/board-finder/search" />

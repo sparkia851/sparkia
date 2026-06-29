@@ -1,3 +1,4 @@
+'use client'
 import type { ArduinoBoard, Level } from '../_lib/recommend'
 import { BoardPhoto } from './BoardPhoto'
 
@@ -161,6 +162,7 @@ export function RankingCard({ mc, rank, aiReason, query }: { mc: ArduinoBoard; r
               href={mc.officialUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => (window as any).gtag?.('event', 'official_link_click', { item_id: mc.id, item_name: mc.name, rank })}
               style={{
                 fontSize: 11,
                 fontWeight: 600,
@@ -178,6 +180,7 @@ export function RankingCard({ mc, rank, aiReason, query }: { mc: ArduinoBoard; r
               href={`https://www.amazon.co.jp/s?k=${encodeURIComponent(mc.name)}&tag=sparkia-22`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => (window as any).gtag?.('event', 'amazon_link_click', { item_id: mc.id, item_name: mc.name, rank })}
               style={{
                 flex: 1,
                 fontSize: 12,
