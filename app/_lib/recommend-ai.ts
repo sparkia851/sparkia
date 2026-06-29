@@ -3,7 +3,7 @@ import { unstable_cache } from 'next/cache'
 import { catalog } from './recommend'
 import type { ArduinoBoard } from './recommend'
 
-const client = new Anthropic()
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY_BOARD })
 
 const CATALOG_FOR_PROMPT = catalog.map(b => ({
   id: b.id,
