@@ -292,7 +292,10 @@ export function TKTopClient({ products, isMobileHint = false }: { products: TKPr
               </button>
             </form>
           )}
-          <p style={{ margin: '22px 0 0', fontSize: 11, color: '#c8bfb0', letterSpacing: '0.14em' }}>
+          <p style={{ margin: '14px 0 0', fontSize: 10, color: '#c8bfb0', lineHeight: 1.7 }}>
+            ※ 試験提供中のため、予告なく停止・終了する場合があります
+          </p>
+          <p style={{ margin: '16px 0 0', fontSize: 11, color: '#c8bfb0', letterSpacing: '0.14em' }}>
             SILENT · LINEAR · TACTILE · ARTISAN
           </p>
         </motion.div>
