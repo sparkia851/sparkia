@@ -397,16 +397,21 @@ export default async function TKSearchPage({
             borderTop: '1px solid #ededed',
             padding: '28px 52px',
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            flexDirection: 'column',
+            gap: 10,
           }}
         >
-          <span style={{ fontSize: 10, color: '#ccc' }}>
-            掲載価格・在庫は変動する場合があります。最新情報はTALP KEYBOARDのショップページをご確認ください。
-          </span>
-          <span style={{ fontSize: 10, color: '#ccc', letterSpacing: '0.08em' }}>
-            TALP KEYBOARD AI 商品提案 POWERED BY SPARKIA
-          </span>
+          <p style={{ margin: 0, fontSize: 9, color: '#ccc', lineHeight: 1.7, textAlign: 'center' }}>
+            本機能は試験提供中のため、システム障害、外部サービスの仕様変更、利用集中、運用コストの増加その他の事情により、予告なく一時停止または提供を終了する場合があります。
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <span style={{ fontSize: 10, color: '#ccc' }}>
+              掲載価格・在庫は変動する場合があります。最新情報はTALP KEYBOARDのショップページをご確認ください。
+            </span>
+            <span style={{ fontSize: 10, color: '#ccc', letterSpacing: '0.08em' }}>
+              TALP KEYBOARD AI 商品提案 POWERED BY SPARKIA
+            </span>
+          </div>
         </footer>
 
       </div>
